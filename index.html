@@ -9,39 +9,42 @@
 </head>
 
 <body>
+
+  <!-- Background -->
   <div class="bg-glow" aria-hidden="true"></div>
   <div class="bg-noise" aria-hidden="true"></div>
 
+  <!-- NAVBAR -->
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="brand" href="#">
         <span class="brand-mark">N</span>
-        <span class="brand-text">nfoedy</span>
+        <span class="brand-text">Nfoedy</span>
       </a>
 
       <nav class="nav">
-        <a href="#timeline">timeline</a>
-        <a href="#work">work</a>
-        <a href="#about">about</a>
-        <a href="#links">links</a>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
       </nav>
 
       <div class="top-actions">
-        <a class="icon-btn" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer" title="GitHub">⌁</a>
-        <a class="icon-btn" href="#" title="Theme">☾</a>
+        <a class="icon-btn" href="https://github.com/Nfoedy" target="_blank">⌁</a>
       </div>
     </div>
   </header>
 
   <main class="container">
+
     <!-- HERO -->
-    <section class="hero" id="timeline">
+    <section class="hero">
       <div class="hero-left">
+
         <div class="avatar">
-          <!-- Metti la tua foto qui: assets/avatar.jpg -->
-          <img src="assets/avatar.jpg" alt="Foto profilo"
-               onerror="this.style.display='none'; this.parentElement.classList.add('avatar-fallback');" />
-          <div class="avatar-fallback-inner"><span>RC</span></div>
+          <img src="assets/avatar.jpg"
+               alt="Profile picture"
+               onerror="this.style.display='none'; this.parentElement.classList.add('avatar-fallback');">
+          <div class="avatar-fallback-inner">RC</div>
         </div>
 
         <div class="hero-meta">
@@ -49,36 +52,39 @@
           <p class="handle">@Nfoedy</p>
 
           <p class="bio">
-            Game Developer & ML. Unreal Engine 5 (Blueprint/C++), C++, Python.
-            Sto costruendo <b>IronSpin</b> e sperimentando con sistemi e AI.
+            Game Developer & Machine Learning student.
+            Focused on Unreal Engine 5, C++, and interactive systems.
           </p>
 
-          <div class="chips" id="about">
+          <div class="chips">
             <span class="chip">Unreal Engine 5</span>
             <span class="chip">Blueprint</span>
             <span class="chip">C++</span>
-            <span class="chip">ML / SSL</span>
+            <span class="chip">Python</span>
           </div>
 
           <div class="cta-row">
-            <a class="btn primary" href="#work">Vedi progetti</a>
-            <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="btn primary" href="#work">View Projects</a>
+            <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank">GitHub</a>
           </div>
         </div>
+
       </div>
 
       <div class="hero-right">
         <div class="glass-card">
-          <div class="glass-title">Adesso</div>
+          <div class="glass-title">Currently Working On</div>
           <p class="glass-text">
-            Sto lavorando su <b>IronSpin</b> (UE5.7) e su un platformer in Raylib.
-            Mi interessa la parte tecnica: gameplay systems, UI, fisica, tools.
+            Developing <b>IronSpin</b> (UE5.7) and experimenting with
+            gameplay systems and ML research.
           </p>
+
           <div class="mini-stats">
             <div class="stat">
               <div class="stat-k">Focus</div>
               <div class="stat-v">Game Systems</div>
             </div>
+
             <div class="stat">
               <div class="stat-k">Stack</div>
               <div class="stat-v">UE5 • C++ • Python</div>
@@ -88,136 +94,107 @@
       </div>
     </section>
 
-    <!-- WORK -->
+    <!-- PROJECTS -->
     <section class="section" id="work">
       <div class="section-head">
         <h2>Current Projects</h2>
-        <a class="link" href="https://github.com/Nfoedy?tab=repositories" target="_blank" rel="noreferrer">All works →</a>
+        <a class="link" href="https://github.com/Nfoedy?tab=repositories" target="_blank">
+          All repositories →
+        </a>
       </div>
 
       <div class="grid">
-        <!-- CARD 1 -->
-        <article class="card card-video" data-video>
+
+        <!-- Project 1 -->
+        <article class="card">
           <div class="card-badge wip">WIP</div>
+          <div class="thumb t1"></div>
 
-          <div class="media">
-            <video class="preview"
-                   muted loop playsinline preload="metadata"
-                   poster="assets/posters/ironspin.jpg">
-              <source src="assets/videos/ironspin.mp4" type="video/mp4" />
-            </video>
+          <h3>IronSpin</h3>
+          <p>
+            Pinball game built in Unreal Engine 5 using Blueprint.
+            Physics, scoring system and UI.
+          </p>
 
-            <div class="overlay">
-              <h3>IronSpin</h3>
-              <p>
-                Flipper in UE5.7 fatto in Blueprint: fisica, score system, UI, game loop e feedback.
-              </p>
-              <div class="card-row">
-                <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
-                <span class="muted">UE5 • Blueprint</span>
-              </div>
-            </div>
+          <div class="card-row">
+            <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank">Repo</a>
+            <span class="muted">UE5 • Blueprint</span>
           </div>
         </article>
 
-        <!-- CARD 2 -->
-        <article class="card card-video" data-video>
+        <!-- Project 2 -->
+        <article class="card">
           <div class="card-badge new">NEW</div>
+          <div class="thumb t2"></div>
 
-          <div class="media">
-            <video class="preview"
-                   muted loop playsinline preload="metadata"
-                   poster="assets/posters/raylib.jpg">
-              <source src="assets/videos/raylib.mp4" type="video/mp4" />
-            </video>
+          <h3>Raylib Platformer</h3>
+          <p>
+            2D C++ platformer with scene system, pickups and physics.
+          </p>
 
-            <div class="overlay">
-              <h3>Raylib Platformer</h3>
-              <p>
-                Gioco 2D C++: scene system, pickups, piattaforme, debug tools e gameplay loop.
-              </p>
-              <div class="card-row">
-                <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
-                <span class="muted">C++ • Raylib</span>
-              </div>
-            </div>
+          <div class="card-row">
+            <a class="btn small" href="#" target="_blank">Repo</a>
+            <span class="muted">C++ • Raylib</span>
           </div>
         </article>
 
-        <!-- CARD 3 -->
-        <article class="card card-video" data-video>
+        <!-- Project 3 -->
+        <article class="card">
           <div class="card-badge wip">WIP</div>
+          <div class="thumb t3"></div>
 
-          <div class="media">
-            <video class="preview"
-                   muted loop playsinline preload="metadata"
-                   poster="assets/posters/obscura.jpg">
-              <source src="assets/videos/obscura.mp4" type="video/mp4" />
-            </video>
+          <h3>Obscura</h3>
+          <p>
+            Horror prototype in Unreal Engine 5.
+            Stamina system, flashlight and AI.
+          </p>
 
-            <div class="overlay">
-              <h3>Obscura (UE5)</h3>
-              <p>
-                Prototipo horror: stamina, flashlight, AI, interazioni e atmosfera.
-              </p>
-              <div class="card-row">
-                <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
-                <span class="muted">UE5 • Gameplay</span>
-              </div>
-            </div>
+          <div class="card-row">
+            <a class="btn small" href="#" target="_blank">Repo</a>
+            <span class="muted">UE5 • Gameplay</span>
           </div>
         </article>
 
-        <!-- CARD 4 -->
-        <article class="card card-video" data-video>
+        <!-- Project 4 -->
+        <article class="card">
           <div class="card-badge">LAB</div>
+          <div class="thumb t4"></div>
 
-          <div class="media">
-            <video class="preview"
-                   muted loop playsinline preload="metadata"
-                   poster="assets/posters/ssl.jpg">
-              <source src="assets/videos/ssl.mp4" type="video/mp4" />
-            </video>
+          <h3>SSL Thesis Experiments</h3>
+          <p>
+            Semi-Supervised Learning experiments with LapSVM and S3VM.
+          </p>
 
-            <div class="overlay">
-              <h3>SSL Thesis</h3>
-              <p>
-                Pipeline SSL: LapSVM, S3VM, LT-SVM, hyperparam search e report dei risultati.
-              </p>
-              <div class="card-row">
-                <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
-                <span class="muted">Python • Optuna</span>
-              </div>
-            </div>
+          <div class="card-row">
+            <a class="btn small" href="#" target="_blank">Repo</a>
+            <span class="muted">Python • ML</span>
           </div>
         </article>
+
       </div>
     </section>
 
-    <!-- SAY HI -->
-    <section class="section" id="links">
+    <!-- CONTACT -->
+    <section class="section" id="contact">
       <div class="sayhi">
-        <div class="sayhi-left">
-          <h2>Say hi!</h2>
+        <div>
+          <h2>Contact</h2>
           <p>
-            Vuoi parlare di un progetto, collaborazione o solo fare due chiacchiere?
-            Scrivimi pure.
+            Interested in collaboration or just want to connect?
           </p>
 
           <div class="contact">
-            <a class="contact-item" href="mailto:tuamail@example.com">✉ tuamail@example.com</a>
-            <a class="contact-item" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">⌁ github.com/Nfoedy</a>
-            <a class="contact-item" href="#" target="_blank" rel="noreferrer">in LinkedIn</a>
-          </div>
+            <a class="contact-item" href="mailto:tuamail@example.com">
+              ✉ tuamail@example.com
+            </a>
 
-          <a class="btn primary" href="mailto:tuamail@example.com">Send message</a>
-        </div>
+            <a class="contact-item" href="https://github.com/Nfoedy" target="_blank">
+              ⌁ github.com/Nfoedy
+            </a>
 
-        <div class="sayhi-right">
-          <div class="bubbles" aria-hidden="true">
-            <div class="bubble b1"></div>
-            <div class="bubble b2"></div>
-            <div class="bubble b3"></div>
+            <a class="contact-item" href="#" target="_blank">
+              LinkedIn
+            </a>
           </div>
         </div>
       </div>
@@ -225,27 +202,14 @@
 
     <footer class="footer">
       <span>© <span id="year"></span> Riccardo Conforti</span>
-      <span class="muted">Built on GitHub Pages</span>
+      <span>Built with GitHub Pages</span>
     </footer>
+
   </main>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Autoplay on hover for video cards (desktop)
-    document.querySelectorAll("[data-video]").forEach(card => {
-      const video = card.querySelector("video");
-      if (!video) return;
-
-      card.addEventListener("mouseenter", async () => {
-        try { await video.play(); } catch (e) {}
-      });
-
-      card.addEventListener("mouseleave", () => {
-        video.pause();
-        video.currentTime = 0; // riparte da inizio
-      });
-    });
   </script>
+
 </body>
 </html>
