@@ -17,6 +17,10 @@
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
+html{
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px; /* evita che la topbar copra le sezioni */
+}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -196,7 +200,7 @@ body{
   border-radius: 999px;
 }
 
-.cta-row{ display:flex; gap: 10px; }
+.cta-row{ display:flex; gap: 10px; flex-wrap: wrap; }
 
 .btn{
   display:inline-flex;
@@ -212,19 +216,17 @@ body{
   font-weight: 800;
   font-size: 14px;
 }
-.btn:hover{ background: rgba(255,255,255,0.07); }
+.btn:hover{ background: rgba(255,255,255,0.07); text-decoration:none; }
 
 .btn.primary{
   border: none;
   background: linear-gradient(135deg, rgba(124,58,237,0.95), rgba(34,211,238,0.75));
   box-shadow: 0 14px 40px rgba(124,58,237,0.25);
 }
-.btn.primary:hover{
-  filter: brightness(1.05);
-}
-.btn.ghost{
-  background: rgba(255,255,255,0.03);
-}
+.btn.primary:hover{ filter: brightness(1.05); }
+
+.btn.ghost{ background: rgba(255,255,255,0.03); }
+
 .btn.small{
   padding: 8px 12px;
   border-radius: 12px;
@@ -264,7 +266,8 @@ body{
 
 /* Sections */
 .section{
-  padding: 26px 0;
+  padding: 18px 0;
+  scroll-margin-top: 90px;
 }
 .section-head{
   display:flex;
@@ -288,9 +291,66 @@ body{
   border: 1px solid rgba(255,255,255,0.08);
   background: rgba(255,255,255,0.03);
 }
-.link:hover{ background: rgba(255,255,255,0.06); color: var(--text); }
+.link:hover{ background: rgba(255,255,255,0.06); color: var(--text); text-decoration:none; }
 
-/* Cards grid */
+.muted2{ color: var(--muted2); font-weight: 800; font-size: 12px; }
+
+/* Tools banner */
+.toolstrip{
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  padding: 14px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(135deg,
+    rgba(124,58,237,0.16),
+    rgba(34,211,238,0.08),
+    rgba(251,113,133,0.08)
+  );
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.tool{
+  display: grid;
+  gap: 6px;
+  padding: 12px 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.20);
+  backdrop-filter: blur(12px);
+  min-height: 86px;
+}
+
+.tool-ico{
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 12px;
+  color: rgba(255,255,255,0.92);
+  border: 1px solid rgba(255,255,255,0.12);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.22), transparent 55%),
+    linear-gradient(135deg, rgba(124,58,237,0.75), rgba(34,211,238,0.55));
+}
+
+.tool-name{
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+
+.tool-sub{
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* Cards grid (current projects) */
 .grid{
   display:grid;
   grid-template-columns: repeat(4, 1fr);
@@ -311,7 +371,6 @@ body{
   background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
 }
 
-/* Thumbnail placeholder gradients */
 .thumb{
   height: 120px;
   border-radius: 16px;
@@ -320,6 +379,8 @@ body{
   background-size: cover;
   background-position: center;
 }
+
+/* Gradient placeholders */
 .thumb.t1{
   background-image:
     radial-gradient(circle at 30% 20%, rgba(124,58,237,0.9), transparent 45%),
@@ -376,10 +437,20 @@ body{
   background: rgba(0,0,0,0.35);
   backdrop-filter: blur(10px);
 }
-.card-badge.wip{ box-shadow: 0 10px 30px rgba(34,211,238,0.10); }
-.card-badge.new{ box-shadow: 0 10px 30px rgba(251,113,133,0.12); }
+.card-badge.wip{
+  border-color: rgba(34,211,238,0.26);
+  box-shadow: 0 10px 30px rgba(34,211,238,0.10);
+}
+.card-badge.new{
+  border-color: rgba(251,113,133,0.28);
+  box-shadow: 0 10px 30px rgba(251,113,133,0.12);
+}
+.card-badge.lab{
+  border-color: rgba(124,58,237,0.28);
+  box-shadow: 0 10px 30px rgba(124,58,237,0.12);
+}
 
-/* Say hi block */
+/* Contact block */
 .sayhi{
   display:grid;
   grid-template-columns: 1.2fr 1fr;
@@ -413,6 +484,7 @@ body{
   position:absolute;
   border-radius: 999px;
   opacity: 0.9;
+  filter: blur(0px);
 }
 .bubble.b1{
   width: 150px; height: 150px;
@@ -450,9 +522,11 @@ body{
   .grid{ grid-template-columns: repeat(2, 1fr); }
   .sayhi{ grid-template-columns: 1fr; }
   .nav{ display:none; }
+  .toolstrip{ grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 560px){
   .grid{ grid-template-columns: 1fr; }
   .hero-left{ flex-direction: column; }
   .avatar{ width: 76px; height: 76px; border-radius: 28px; }
+  .toolstrip{ grid-template-columns: repeat(2, 1fr); }
 }
