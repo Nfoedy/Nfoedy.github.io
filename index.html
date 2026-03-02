@@ -1,49 +1,190 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riccardo Conforti | Game Dev & ML</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Riccardo Conforti — Portfolio</title>
+  <meta name="description" content="Portfolio di Riccardo Conforti — Game Dev & ML." />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+  <!-- Background glow -->
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-noise" aria-hidden="true"></div>
 
-    <header>
-        <h1>Riccardo Conforti</h1>
-        <p>Game Developer • Machine Learning • Unreal Engine 5</p>
-    </header>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">
+        <span class="brand-mark">N</span>
+        <span class="brand-text">nfoedy</span>
+      </a>
 
-    <section>
-        <h2>About</h2>
-        <p>
-            Master's student in Computer Game Development and Mathematics.
-            Focused on Unreal Engine 5, C++, and Machine Learning.
-            Passionate about building interactive systems and intelligent models.
-        </p>
-    </section>
+      <nav class="nav">
+        <a href="#timeline">timeline</a>
+        <a href="#work">work</a>
+        <a href="#about">about</a>
+        <a href="#links">links</a>
+      </nav>
 
-    <section>
-        <h2>Projects</h2>
+      <div class="top-actions">
+        <a class="icon-btn" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer" title="GitHub">⌁</a>
+        <a class="icon-btn" href="#" title="Theme">☾</a>
+      </div>
+    </div>
+  </header>
 
-        <div class="card">
-            <h3>IronSpin</h3>
-            <p>Pinball game built in Unreal Engine 5 using Blueprints.</p>
-            <a href="https://github.com/Nfoedy/IronSpin" target="_blank">View Project</a>
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" id="timeline">
+      <div class="hero-left">
+        <div class="avatar">
+          <!-- Metti la tua foto qui: /assets/avatar.jpg -->
+          <img src="assets/avatar.jpg" alt="Foto profilo" onerror="this.style.display='none'; this.parentElement.classList.add('avatar-fallback');" />
+          <div class="avatar-fallback-inner">
+            <span>RC</span>
+          </div>
         </div>
 
-        <div class="card">
-            <h3>Raylib Platformer</h3>
-            <p>2D C++ platformer with physics and pickups system.</p>
-            <a href="https://github.com/Nfoedy/NOME_REPO" target="_blank">View Project</a>
+        <div class="hero-meta">
+          <h1>Riccardo Conforti</h1>
+          <p class="handle">@Nfoedy</p>
+
+          <p class="bio">
+            Game Developer & ML. Unreal Engine 5 (Blueprint/C++), C++, Python.
+            Sto costruendo <b>IronSpin</b> e sperimentando con sistemi e AI.
+          </p>
+
+          <div class="chips" id="about">
+            <span class="chip">Unreal Engine 5</span>
+            <span class="chip">Blueprint</span>
+            <span class="chip">C++</span>
+            <span class="chip">ML / SSL</span>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#work">Vedi progetti</a>
+            <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="glass-card">
+          <div class="glass-title">Adesso</div>
+          <p class="glass-text">
+            Sto lavorando su <b>IronSpin</b> (UE5.7) e su un platformer in Raylib.
+            Mi interessa la parte tecnica: gameplay systems, UI, fisica, tools.
+          </p>
+          <div class="mini-stats">
+            <div class="stat">
+              <div class="stat-k">Focus</div>
+              <div class="stat-v">Game Systems</div>
+            </div>
+            <div class="stat">
+              <div class="stat-k">Stack</div>
+              <div class="stat-v">UE5 • C++ • Python</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="section" id="work">
+      <div class="section-head">
+        <h2>Current Projects</h2>
+        <a class="link" href="https://github.com/Nfoedy?tab=repositories" target="_blank" rel="noreferrer">All works →</a>
+      </div>
+
+      <div class="grid">
+        <!-- CARD 1 -->
+        <article class="card">
+          <div class="card-badge wip">WIP</div>
+          <div class="thumb t1"></div>
+          <h3>IronSpin</h3>
+          <p>Flipper in Unreal Engine 5.7 fatto in Blueprint. Fisica, UI, score, game loop.</p>
+          <div class="card-row">
+            <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
+            <span class="muted">UE5 • Blueprint</span>
+          </div>
+        </article>
+
+        <!-- CARD 2 -->
+        <article class="card">
+          <div class="card-badge new">NEW</div>
+          <div class="thumb t2"></div>
+          <h3>Raylib Platformer</h3>
+          <p>Gioco 2D C++ con scene system, pickups, piattaforme, spawn e debug tools.</p>
+          <div class="card-row">
+            <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+            <span class="muted">C++ • Raylib</span>
+          </div>
+        </article>
+
+        <!-- CARD 3 -->
+        <article class="card">
+          <div class="card-badge wip">WIP</div>
+          <div class="thumb t3"></div>
+          <h3>Obscura (UE5)</h3>
+          <p>Prototipo horror: stamina, flashlight, AI, interazioni e sound design.</p>
+          <div class="card-row">
+            <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+            <span class="muted">UE5 • Gameplay</span>
+          </div>
+        </article>
+
+        <!-- CARD 4 -->
+        <article class="card">
+          <div class="card-badge">LAB</div>
+          <div class="thumb t4"></div>
+          <h3>SSL Thesis Experiments</h3>
+          <p>Pipeline sperimentale per Semi-Supervised Learning: LapSVM, S3VM, etc.</p>
+          <div class="card-row">
+            <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+            <span class="muted">Python • Optuna</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SAY HI -->
+    <section class="section" id="links">
+      <div class="sayhi">
+        <div class="sayhi-left">
+          <h2>Say hi!</h2>
+          <p>
+            Vuoi parlare di un progetto, collaborazione o solo fare due chiacchiere?
+            Scrivimi pure.
+          </p>
+
+          <div class="contact">
+            <a class="contact-item" href="mailto:tuamail@example.com">✉ tuaemail@example.com</a>
+            <a class="contact-item" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">⌁ github.com/Nfoedy</a>
+            <a class="contact-item" href="#" target="_blank" rel="noreferrer">in LinkedIn</a>
+          </div>
+
+          <a class="btn primary" href="mailto:tuamail@example.com">Send message</a>
         </div>
 
+        <div class="sayhi-right">
+          <div class="bubbles" aria-hidden="true">
+            <div class="bubble b1"></div>
+            <div class="bubble b2"></div>
+            <div class="bubble b3"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section>
-        <h2>Contact</h2>
-        <p>Email: tuaemail@example.com</p>
-        <p>GitHub: <a href="https://github.com/Nfoedy">github.com/Nfoedy</a></p>
-    </section>
+    <footer class="footer">
+      <span>© <span id="year"></span> Riccardo Conforti</span>
+      <span class="muted">Built on GitHub Pages</span>
+    </footer>
+  </main>
 
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
