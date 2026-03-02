@@ -99,14 +99,34 @@
 
       <div class="grid">
         <!-- CARD 1 -->
-        <article class="card">
+        <article class="card card-video" data-video>
           <div class="card-badge wip">WIP</div>
-          <div class="thumb t1"></div>
-          <h3>IronSpin</h3>
-          <p>Flipper in Unreal Engine 5.7 fatto in Blueprint. Fisica, UI, score, game loop.</p>
-          <div class="card-row">
-            <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
-            <span class="muted">UE5 • Blueprint</span>
+
+          <div class="media">
+            <!-- Metti i video nella cartella assets/videos/ -->
+            <video
+              class="preview"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="assets/posters/ironspin.jpg"
+            >
+              <source src="assets/videos/ironspin.mp4" type="video/mp4" />
+            </video>
+
+            <div class="overlay">
+              <h3>IronSpin</h3>
+              <p>
+                Pinball in UE5.7 fatto in Blueprint: fisica, score system, UI, game loop e feedback
+                audio/visivi. Focus su game systems e feel.
+              </p>
+
+              <div class="card-row">
+                <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
+                <span class="muted">UE5 • Blueprint</span>
+              </div>
+            </div>
           </div>
         </article>
 
