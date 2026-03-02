@@ -3,87 +3,190 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Preview — Hover video cards</title>
+  <title>Riccardo Conforti — Portfolio</title>
+  <meta name="description" content="Portfolio di Riccardo Conforti — Game Dev & ML." />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="bg-glow" aria-hidden="true"></div>
-  <main class="container">
-    <header class="header">
-      <div class="brand"><span class="dot"></span> Nfoedy</div>
-      <div class="subtitle">Preview: cards che si ingrandiscono e fanno partire il video al passaggio mouse</div>
-    </header>
+  <div class="bg-noise" aria-hidden="true"></div>
 
-    <section class="section">
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">
+        <span class="brand-mark">N</span>
+        <span class="brand-text">nfoedy</span>
+      </a>
+
+      <nav class="nav">
+        <a href="#timeline">timeline</a>
+        <a href="#work">work</a>
+        <a href="#about">about</a>
+        <a href="#links">links</a>
+      </nav>
+
+      <div class="top-actions">
+        <a class="icon-btn" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer" title="GitHub">⌁</a>
+        <a class="icon-btn" href="#" title="Theme">☾</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" id="timeline">
+      <div class="hero-left">
+        <div class="avatar">
+          <!-- Metti la tua foto qui: assets/avatar.jpg -->
+          <img src="assets/avatar.jpg" alt="Foto profilo"
+               onerror="this.style.display='none'; this.parentElement.classList.add('avatar-fallback');" />
+          <div class="avatar-fallback-inner"><span>RC</span></div>
+        </div>
+
+        <div class="hero-meta">
+          <h1>Riccardo Conforti</h1>
+          <p class="handle">@Nfoedy</p>
+
+          <p class="bio">
+            Game Developer & ML. Unreal Engine 5 (Blueprint/C++), C++, Python.
+            Sto costruendo <b>IronSpin</b> e sperimentando con sistemi e AI.
+          </p>
+
+          <div class="chips" id="about">
+            <span class="chip">Unreal Engine 5</span>
+            <span class="chip">Blueprint</span>
+            <span class="chip">C++</span>
+            <span class="chip">ML / SSL</span>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn primary" href="#work">Vedi progetti</a>
+            <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="glass-card">
+          <div class="glass-title">Adesso</div>
+          <p class="glass-text">
+            Sto lavorando su <b>IronSpin</b> (UE5.7) e su un platformer in Raylib.
+            Mi interessa la parte tecnica: gameplay systems, UI, fisica, tools.
+          </p>
+          <div class="mini-stats">
+            <div class="stat">
+              <div class="stat-k">Focus</div>
+              <div class="stat-v">Game Systems</div>
+            </div>
+            <div class="stat">
+              <div class="stat-k">Stack</div>
+              <div class="stat-v">UE5 • C++ • Python</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section class="section" id="work">
       <div class="section-head">
         <h2>Current Projects</h2>
-        <span class="hint">Passa il mouse sopra una card</span>
+        <a class="link" href="https://github.com/Nfoedy?tab=repositories" target="_blank" rel="noreferrer">All works →</a>
       </div>
 
       <div class="grid">
+        <!-- CARD 1 -->
         <article class="card card-video" data-video>
-          <div class="badge wip">WIP</div>
+          <div class="card-badge wip">WIP</div>
+
           <div class="media">
-            <video class="preview" muted loop playsinline preload="metadata" poster="assets/posters/ironspin.jpg">
+            <video class="preview"
+                   muted loop playsinline preload="metadata"
+                   poster="assets/posters/ironspin.jpg">
               <source src="assets/videos/ironspin.mp4" type="video/mp4" />
             </video>
+
             <div class="overlay">
               <h3>IronSpin</h3>
-              <p>Pinball UE5.7 in Blueprint: fisica, score system, UI, game loop e feedback.</p>
-              <div class="row">
-                <a class="btn" href="#" onclick="return false;">Repo</a>
-                <span class="meta">UE5 • Blueprint</span>
+              <p>
+                Flipper in UE5.7 fatto in Blueprint: fisica, score system, UI, game loop e feedback.
+              </p>
+              <div class="card-row">
+                <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
+                <span class="muted">UE5 • Blueprint</span>
               </div>
             </div>
           </div>
         </article>
 
+        <!-- CARD 2 -->
         <article class="card card-video" data-video>
-          <div class="badge new">NEW</div>
+          <div class="card-badge new">NEW</div>
+
           <div class="media">
-            <video class="preview" muted loop playsinline preload="metadata" poster="assets/posters/raylib.jpg">
+            <video class="preview"
+                   muted loop playsinline preload="metadata"
+                   poster="assets/posters/raylib.jpg">
               <source src="assets/videos/raylib.mp4" type="video/mp4" />
             </video>
+
             <div class="overlay">
               <h3>Raylib Platformer</h3>
-              <p>Gioco 2D C++: scene system, pickups, piattaforme, debug tools.</p>
-              <div class="row">
-                <a class="btn" href="#" onclick="return false;">Repo</a>
-                <span class="meta">C++ • Raylib</span>
+              <p>
+                Gioco 2D C++: scene system, pickups, piattaforme, debug tools e gameplay loop.
+              </p>
+              <div class="card-row">
+                <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+                <span class="muted">C++ • Raylib</span>
               </div>
             </div>
           </div>
         </article>
 
+        <!-- CARD 3 -->
         <article class="card card-video" data-video>
-          <div class="badge wip">WIP</div>
+          <div class="card-badge wip">WIP</div>
+
           <div class="media">
-            <video class="preview" muted loop playsinline preload="metadata" poster="assets/posters/obscura.jpg">
+            <video class="preview"
+                   muted loop playsinline preload="metadata"
+                   poster="assets/posters/obscura.jpg">
               <source src="assets/videos/obscura.mp4" type="video/mp4" />
             </video>
+
             <div class="overlay">
               <h3>Obscura (UE5)</h3>
-              <p>Horror prototype: stamina, flashlight, AI, interazioni, sound mood.</p>
-              <div class="row">
-                <a class="btn" href="#" onclick="return false;">Repo</a>
-                <span class="meta">UE5 • Gameplay</span>
+              <p>
+                Prototipo horror: stamina, flashlight, AI, interazioni e atmosfera.
+              </p>
+              <div class="card-row">
+                <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+                <span class="muted">UE5 • Gameplay</span>
               </div>
             </div>
           </div>
         </article>
 
+        <!-- CARD 4 -->
         <article class="card card-video" data-video>
-          <div class="badge">LAB</div>
+          <div class="card-badge">LAB</div>
+
           <div class="media">
-            <video class="preview" muted loop playsinline preload="metadata" poster="assets/posters/ssl.jpg">
+            <video class="preview"
+                   muted loop playsinline preload="metadata"
+                   poster="assets/posters/ssl.jpg">
               <source src="assets/videos/ssl.mp4" type="video/mp4" />
             </video>
+
             <div class="overlay">
               <h3>SSL Thesis</h3>
-              <p>Esperimenti SSL: LapSVM, S3VM, LT-SVM, pipeline e plots.</p>
-              <div class="row">
-                <a class="btn" href="#" onclick="return false;">Repo</a>
-                <span class="meta">Python • Optuna</span>
+              <p>
+                Pipeline SSL: LapSVM, S3VM, LT-SVM, hyperparam search e report dei risultati.
+              </p>
+              <div class="card-row">
+                <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+                <span class="muted">Python • Optuna</span>
               </div>
             </div>
           </div>
@@ -91,12 +194,45 @@
       </div>
     </section>
 
+    <!-- SAY HI -->
+    <section class="section" id="links">
+      <div class="sayhi">
+        <div class="sayhi-left">
+          <h2>Say hi!</h2>
+          <p>
+            Vuoi parlare di un progetto, collaborazione o solo fare due chiacchiere?
+            Scrivimi pure.
+          </p>
+
+          <div class="contact">
+            <a class="contact-item" href="mailto:tuamail@example.com">✉ tuamail@example.com</a>
+            <a class="contact-item" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">⌁ github.com/Nfoedy</a>
+            <a class="contact-item" href="#" target="_blank" rel="noreferrer">in LinkedIn</a>
+          </div>
+
+          <a class="btn primary" href="mailto:tuamail@example.com">Send message</a>
+        </div>
+
+        <div class="sayhi-right">
+          <div class="bubbles" aria-hidden="true">
+            <div class="bubble b1"></div>
+            <div class="bubble b2"></div>
+            <div class="bubble b3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="footer">
-      Tip: su mobile l’hover non esiste → overlay sempre visibile e video non parte automaticamente.
+      <span>© <span id="year"></span> Riccardo Conforti</span>
+      <span class="muted">Built on GitHub Pages</span>
     </footer>
   </main>
 
   <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Autoplay on hover for video cards (desktop)
     document.querySelectorAll("[data-video]").forEach(card => {
       const video = card.querySelector("video");
       if (!video) return;
@@ -107,7 +243,7 @@
 
       card.addEventListener("mouseleave", () => {
         video.pause();
-        video.currentTime = 0;
+        video.currentTime = 0; // riparte da inizio
       });
     });
   </script>
