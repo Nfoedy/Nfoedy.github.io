@@ -116,6 +116,85 @@
       </div>
     </section>
 
+    <!--PROJECTS -->
+    <section class="section" id="projects">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <span class="muted2">Completed / Showcase</span>
+      </div>
+
+      <div class="projects-grid">
+
+        <article class="p-card"
+          data-yt="VIDEO_ID_IRONSPIN"
+          data-title="IronSpin">
+          <button class="p-media" type="button" aria-label="Play IronSpin video">
+            <img class="p-poster" src="assets/posters/ironspin.jpg" alt="IronSpin poster">
+            <span class="p-play" aria-hidden="true">▶</span>
+          </button>
+
+          <div class="p-body">
+            <h3 class="p-title">IronSpin</h3>
+            <p class="p-desc">Pinball prototype with scoring, spawner and UI flow.</p>
+            <div class="p-row">
+              <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
+              <span class="muted">UE5 • Blueprint</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="p-card"
+          data-yt="VIDEO_ID_RAYLIB"
+          data-title="Raylib Platformer">
+          <button class="p-media" type="button" aria-label="Play Raylib Platformer video">
+            <img class="p-poster" src="assets/posters/raylib.jpg" alt="Raylib Platformer poster">
+            <span class="p-play" aria-hidden="true">▶</span>
+          </button>
+
+          <div class="p-body">
+            <h3 class="p-title">Raylib Platformer</h3>
+            <p class="p-desc">2D platformer with scenes, pickups and physics.</p>
+            <div class="p-row">
+              <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+              <span class="muted">C++ • Raylib</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- YT MODAL -->
+    <div class="vmodal" id="vmodal" aria-hidden="true">
+      <div class="vmodal__backdrop" data-close="1"></div>
+
+      <div class="vmodal__panel" role="dialog" aria-modal="true" aria-label="Project video">
+        <div class="vmodal__top">
+          <div class="vmodal__title" id="vmodalTitle">Project</div>
+          <button class="vmodal__close" type="button" aria-label="Close" data-close="1">✕</button>
+        </div>
+
+        <div class="vmodal__frame-wrap">
+          <iframe
+            id="vmodalFrame"
+            class="vmodal__frame"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
     <!-- CURRENT PROJECTS (5) -->
     <section class="section" id="work">
       <div class="section-head">
