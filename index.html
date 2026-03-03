@@ -22,7 +22,7 @@
       </a>
 
       <nav class="nav" aria-label="Primary">
-        <a href="#work">Work</a>
+        <a href="#projects">Work</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -283,5 +283,48 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+
+  <script>
+  const modal = document.getElementById("vmodal");
+  const frame = document.getElementById("vmodalFrame");
+  const titleEl = document.getElementById("vmodalTitle");
+
+  function ytUrl(id){
+    // autoplay + modestbranding + rel=0 per evitare suggerimenti “random”
+    return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
+      "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+  }
+
+  function openModal({ id, title }){
+    titleEl.textContent = title || "Project";
+    frame.src = ytUrl(id);
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(){
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    frame.src = ""; // stop video
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".p-card").forEach(card => {
+    const btn = card.querySelector(".p-media");
+    btn.addEventListener("click", () => {
+      openModal({ id: card.dataset.yt, title: card.dataset.title });
+    });
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target?.dataset?.close) closeModal();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+  });
+</script>
+
 </body>
 </html>
