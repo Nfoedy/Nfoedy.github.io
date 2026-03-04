@@ -119,27 +119,7 @@
         <span class="muted2">Showcase</span>
       </div>
 
-      <div class="projects-grid" id="personalGrid">
-
-        <!-- Obscura -->
-        <article class="p-card" data-yt="pcYNW_uPQRI" data-title="Obscura">
-          <button class="p-media" type="button" aria-label="Play Obscura video">
-            <img class="p-poster" src="https://i.ytimg.com/vi/pcYNW_uPQRI/hqdefault.jpg" alt="Obscura thumbnail">
-            <span class="p-play" aria-hidden="true">▶</span>
-          </button>
-
-          <div class="p-body">
-            <h3 class="p-title">Obscura</h3>
-            <p class="p-desc">Survival horror prototype in Unreal Engine 5 with stamina, flashlight mechanics and AI enemy.</p>
-
-            <div class="p-row">
-              <a class="btn small" href="https://github.com/Nfoedy/Obscura" target="_blank" rel="noreferrer">Repo</a>
-              <span class="muted">UE5 • Gameplay</span>
-            </div>
-          </div>
-        </article>
-
-      </div>
+      <div class="projects-grid" id="personalGrid" aria-label="Personal projects list"></div>
     </section>
 
     <!-- MASTER PROJECTS (big cards, 2 per riga) -->
@@ -149,18 +129,16 @@
         <span class="muted2">University / Team</span>
       </div>
 
-      <!-- JS riempie qui -->
       <div class="projects-grid" id="masterGrid" aria-label="Master projects list"></div>
     </section>
 
-    <!-- OTHER PROJECTS (compact list + tags/chips) -->
+    <!-- OTHER PROJECTS (compact banners) -->
     <section class="section" id="other">
       <div class="section-head">
         <h2>Other Projects</h2>
         <span class="muted2">Smaller / experiments</span>
       </div>
 
-      <!-- JS riempie qui -->
       <div class="other-list" id="otherList" aria-label="Other projects list"></div>
     </section>
 
@@ -248,20 +226,11 @@
       document.body.style.overflow = "";
     }
 
-    // Close handlers
     vmodal.addEventListener("click", (e) => {
       if (e.target?.dataset?.close) closeModal();
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && vmodal.classList.contains("is-open")) closeModal();
-    });
-
-    // Bind click for existing p-cards (Personal)
-    document.querySelectorAll(".p-card[data-yt]").forEach(card => {
-      const btn = card.querySelector(".p-media");
-      btn?.addEventListener("click", () => {
-        openModal({ id: card.dataset.yt, title: card.dataset.title });
-      });
     });
 
     // =========================================================
@@ -329,35 +298,65 @@
     loadCurrentlyWorkingOn();
 
     // =========================================================
-    // 2) Master Projects (AUTO) - all your repos (excluding Personal/Other)
+    // 2) Curated repos (YOU decide placement)
+    //    - Put repos here and set section = "personal" | "master" | "other"
+    //    - Data (name/desc/lang/url) is always fetched from GitHub
     // =========================================================
-    async function loadMasterProjects() {
-      const grid = document.getElementById("masterGrid");
-      if (!grid) return;
+    const CURATED = [
+      // Example (keep or remove). Add your repos below:
+      { repo: "Nfoedy/Obscura", section: "personal" },
 
-      const USER = "Nfoedy";
-      const cacheKey = "master_cache_v1";
-      const cacheHours = 6;
+      { repo: "Nfoedy/IronSpin", section: "master" },
+      { repo: "Lord-Platypus/mask_museum", section: "master" },
+      { repo: "Bosang6/cpp-raylib-platformer", section: "master" },
 
-      // Repo che NON devono finire in Master
-      // (Personal + Other + sito)
-      const EXCLUDE = new Set([
-        "nfoedy.github.io",   // sito
-        "Obscura",            // Personal (se lo vuoi lì)
-        "Fablora",            // Other
-        "aquaflow"            // Other
-      ].map(x => x.toLowerCase()));
+      { repo: "Nfoedy/Fablora", section: "other" },
+      { repo: "Nfoedy/aquaflow", section: "other" },
+    ];
 
-      // Quando avrai i trailer, metti qui gli ID YouTube:
-      // chiave = full_name (es: "Nfoedy/IronSpin")
-      const YT = {
-        // "Nfoedy/IronSpin": "VIDEO_ID",
-      };
+    // Optional: YouTube trailers (when you have them)
+    // key = "Owner/Repo", value = "VIDEO_ID"
+    const YT = {
+      "Nfoedy/Obscura": "pcYNW_uPQRI"
+      // "Nfoedy/IronSpin": "VIDEO_ID",
+    };
+
+    async function loadCuratedProjects() {
+      const personalGrid = document.getElementById("personalGrid");
+      const masterGrid   = document.getElementById("masterGrid");
+      const otherList    = document.getElementById("otherList");
+      if (!personalGrid || !masterGrid || !otherList) return;
 
       const headers = { "Accept": "application/vnd.github+json" };
       const safe = (s) => (typeof s === "string" ? s : "");
 
+      // --- de-duplicate by repo (first occurrence wins) ---
+      const seen = new Set();
+      const curatedUnique = [];
+      for (const item of CURATED) {
+        const key = (item?.repo || "").toLowerCase().trim();
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+        curatedUnique.push({ repo: item.repo.trim(), section: item.section });
+      }
+
+      async function fetchRepo(fullName) {
+        const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers });
+        if (!res.ok) throw new Error("Repo fetch failed: " + fullName);
+        return await res.json();
+      }
+
+      function badgeHtmlFor(repo){
+        // Badge COLLAB se owner != Nfoedy (utile per master)
+        const owner = (repo.owner?.login || "").toLowerCase();
+        if (owner && owner !== "nfoedy") {
+          return `<div class="card-badge collab" style="right:12px; left:auto;">COLLAB</div>`;
+        }
+        return "";
+      }
+
       function mediaHtml(name, ytId){
+        // No images uploaded: placeholder now, swap to video later by adding YT id
         if (ytId) {
           return `
             <button class="p-media" type="button" aria-label="Play ${name} video">
@@ -366,7 +365,6 @@
             </button>
           `;
         }
-
         return `
           <button class="p-media is-disabled" type="button" aria-label="${name} video coming soon" disabled>
             <div class="p-poster p-poster--placeholder" aria-hidden="true"></div>
@@ -375,22 +373,12 @@
         `;
       }
 
-      function badgeHtmlFor(repo){
-        // Se vuoi il badge COLLAB solo per repo non tuoi, qui lo puoi riattivare
-        // Per ora Master = tuoi repo, quindi di default niente badge.
-        const owner = (repo.owner?.login || "").toLowerCase();
-        if (owner !== USER.toLowerCase()) {
-          return `<div class="card-badge collab" style="right:12px; left:auto;">COLLAB</div>`;
-        }
-        return "";
-      }
-
-      function cardHtml(repo){
+      function masterOrPersonalCard(repo){
         const full = safe(repo.full_name);
         const name = safe(repo.name);
         const desc = safe(repo.description) || "No description yet.";
         const lang = repo.language || "—";
-        const url = repo.html_url;
+        const url  = repo.html_url;
 
         const ytId = YT[full];
 
@@ -412,112 +400,102 @@
         `;
       }
 
-      function render(repos){
-        grid.innerHTML = repos.map(cardHtml).join("");
+      function otherBanner(repo){
+        const name = safe(repo.name);
+        const desc = safe(repo.description) || "No description yet.";
+        const url  = repo.html_url;
 
-        // bind modal solo per quelli con data-yt
-        grid.querySelectorAll(".p-card[data-yt]").forEach(card => {
+        // In other, keep it simple like you wanted (Fablora style):
+        // show the main language line as "X • Y" if you want later
+        const tags = [repo.language].filter(Boolean);
+        const tagLine = tags.length
+          ? `<div class="muted" style="margin-top:8px;">${tags.join(" • ")}</div>`
+          : ``;
+
+        return `
+          <div class="other-item">
+            <div class="other-main">
+              <div class="other-title">${name}</div>
+              <div class="other-desc">${desc}</div>
+              ${tagLine}
+            </div>
+
+            <div class="other-action">
+              <a class="other-link" href="${url}" target="_blank" rel="noreferrer">Repo →</a>
+            </div>
+          </div>
+        `;
+      }
+
+      function bindModalClicks(root){
+        root.querySelectorAll(".p-card[data-yt]").forEach(card => {
           const btn = card.querySelector(".p-media");
+          if (btn?.disabled) return;
           btn?.addEventListener("click", () => {
             openModal({ id: card.dataset.yt, title: card.dataset.title });
           });
         });
       }
 
-      // cache
-      try {
-        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-        if (cached && cached.t && Array.isArray(cached.repos) &&
-            (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
-          render(cached.repos);
-          return;
-        }
-      } catch(_) {}
+      // If list is empty, show placeholders
+      if (curatedUnique.length === 0) {
+        personalGrid.innerHTML = `<p class="muted2">Add repos in the CURATED array.</p>`;
+        masterGrid.innerHTML   = `<p class="muted2">Add repos in the CURATED array.</p>`;
+        otherList.innerHTML    = `<p class="muted2">Add repos in the CURATED array.</p>`;
+        return;
+      }
 
       try {
-        const url = `https://api.github.com/users/${USER}/repos?per_page=100&sort=updated`;
-        const res = await fetch(url, { headers });
-        if (!res.ok) throw new Error("GitHub API error (master)");
+        const results = await Promise.allSettled(
+          curatedUnique.map(async (item) => ({
+            section: item.section,
+            repo: await fetchRepo(item.repo)
+          }))
+        );
 
-        const repos = await res.json();
+        const ok = results
+          .filter(r => r.status === "fulfilled")
+          .map(r => r.value);
 
-        const filtered = repos
-          .filter(r => !r.fork && !r.archived && !r.disabled)
-          .filter(r => !EXCLUDE.has((r.name || "").toLowerCase()))
+        const personal = ok
+          .filter(x => x.section === "personal")
+          .map(x => x.repo)
           .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
 
-        render(filtered);
+        const master = ok
+          .filter(x => x.section === "master")
+          .map(x => x.repo)
+          .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
 
-        // salva cache “slim”
-        try {
-          const slim = filtered.map(r => ({
-            name: r.name,
-            full_name: r.full_name,
-            description: r.description,
-            language: r.language,
-            html_url: r.html_url,
-            owner: { login: r.owner?.login || "" },
-            updated_at: r.updated_at
-          }));
-          localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), repos: slim }));
-        } catch(_) {}
+        const other = ok
+          .filter(x => x.section === "other")
+          .map(x => x.repo)
+          .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+        personalGrid.innerHTML = personal.length
+          ? personal.map(masterOrPersonalCard).join("")
+          : `<p class="muted2">No personal projects yet.</p>`;
+
+        masterGrid.innerHTML = master.length
+          ? master.map(masterOrPersonalCard).join("")
+          : `<p class="muted2">No master projects yet.</p>`;
+
+        otherList.innerHTML = other.length
+          ? other.map(otherBanner).join("")
+          : `<p class="muted2">No other projects yet.</p>`;
+
+        bindModalClicks(personalGrid);
+        bindModalClicks(masterGrid);
 
       } catch (e) {
         console.error(e);
-        grid.innerHTML = `<p class="muted2">Could not load Master Projects right now.</p>`;
+        personalGrid.innerHTML = `<p class="muted2">Could not load Personal Projects right now.</p>`;
+        masterGrid.innerHTML   = `<p class="muted2">Could not load Master Projects right now.</p>`;
+        otherList.innerHTML    = `<p class="muted2">Could not load Other Projects right now.</p>`;
       }
     }
-    loadMasterProjects();
 
-    // =========================================================
-    // 3) Other Projects (compact list + tags/chips)
-    // =========================================================
-    function renderOtherProjects(){
-      const root = document.getElementById("otherList");
-      if (!root) return;
-
-      const OTHER = [
-        {
-          title: "Fablora",
-          desc: "RPG 2D top-down in stile Pixel Art. Implemented in C++ with SFML.",
-          repo: "https://github.com/Nfoedy/Fablora",
-          tags: ["C++", "SFML", "Game Systems"]
-        },
-        {
-          title: "Acquaflow",
-          desc: "Demo website for a fictional water company. Built with HTML, CSS and JavaScript.",
-          repo: "https://github.com/Nfoedy/aquaflow",
-          tags: ["HTML", "CSS", "JavaScript"]
-        },
-        {
-          title: "nfoedy.github.io",
-          desc: "Portfolio website (GitHub Pages). UI layout, components and animations.",
-          repo: "https://github.com/Nfoedy/nfoedy.github.io",
-          tags: ["HTML", "CSS", "GitHub Pages"]
-        }
-      ];
-
-      const chipRow = (tags) => `
-        <div class="muted" style="margin-top:8px;">
-          ${(tags || []).join(" • ")}
-        </div>
-      `;
-
-      root.innerHTML = OTHER.map(p => `
-        <div class="other-item">
-          <div class="other-main">
-            <div class="other-title">${p.title}</div>
-            <div class="other-desc">${p.desc}</div>
-            ${chipRow(p.tags)}
-          </div>
-
-          <div class="other-action">
-            <a class="other-link" href="${p.repo}" target="_blank" rel="noreferrer">Repo →</a>
-          </div>
-        </div>
-      `).join("");
-    }
-    renderOtherProjects();
+    loadCuratedProjects();
   </script>
 
 </body>
