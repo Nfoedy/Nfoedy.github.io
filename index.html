@@ -72,12 +72,12 @@
         <div class="mini-stats">
           <div class="stat">
             <div class="stat-k">Repo</div>
-            <div class="stat-v" id="cwRepo"></div>
+            <div class="stat-v" id="cwRepo">—</div>
           </div>
 
           <div class="stat">
             <div class="stat-k">Stack</div>
-            <div class="stat-v" id="cwStack"></div>
+            <div class="stat-v" id="cwStack">—</div>
           </div>
         </div>
       </div>
@@ -112,7 +112,7 @@
       </div>
     </section>
 
-    <!-- PERSONAL PROJECTS (big cards) -->
+    <!-- PERSONAL PROJECTS -->
     <section class="section" id="personal">
       <div class="section-head">
         <h2>Personal Projects</h2>
@@ -122,7 +122,7 @@
       <div class="projects-grid" id="personalGrid" aria-label="Personal projects list"></div>
     </section>
 
-    <!-- MASTER PROJECTS (big cards, 2 per riga) -->
+    <!-- MASTER PROJECTS -->
     <section class="section" id="master">
       <div class="section-head">
         <h2>Master Projects</h2>
@@ -132,7 +132,7 @@
       <div class="projects-grid" id="masterGrid" aria-label="Master projects list"></div>
     </section>
 
-    <!-- OTHER PROJECTS (compact banners) -->
+    <!-- OTHER PROJECTS -->
     <section class="section" id="other">
       <div class="section-head">
         <h2>Other Projects</h2>
@@ -150,6 +150,7 @@
           <p>Interested in collaboration or just want to connect?</p>
 
           <div class="contact">
+            <!-- TODO: change these -->
             <a class="contact-item" href="mailto:tuamail@example.com">✉ tuamail@example.com</a>
             <a class="contact-item" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">⌁ github.com/Nfoedy</a>
             <a class="contact-item" href="#" target="_blank" rel="noreferrer">LinkedIn</a>
@@ -194,22 +195,27 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
   <script>
-    // Footer year
+    // =========================================================
+    // Setup
+    // =========================================================
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    const USER = "Nfoedy";
+    const GH_HEADERS = { "Accept": "application/vnd.github+json" };
+
+    const safe = (s) => (typeof s === "string" ? s : "");
+
     // =========================================================
-    // 0) YouTube modal helpers (GLOBAL)
+    // YouTube modal helpers
     // =========================================================
     const vmodal = document.getElementById("vmodal");
     const vmodalFrame = document.getElementById("vmodalFrame");
     const vmodalTitle = document.getElementById("vmodalTitle");
 
-    function ytUrl(id){
-      return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
-        "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
-    }
+    const ytUrl = (id) =>
+      "https://www.youtube.com/embed/" + encodeURIComponent(id) +
+      "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
 
     function openModal({ id, title }){
       vmodalTitle.textContent = title || "Project";
@@ -229,100 +235,99 @@
     vmodal.addEventListener("click", (e) => {
       if (e.target?.dataset?.close) closeModal();
     });
+
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && vmodal.classList.contains("is-open")) closeModal();
     });
 
     // =========================================================
-    // 1) Currently Working On (auto from GitHub)
+    // 1) Currently Working On (auto from GitHub) - excludes nfoedy.github.io
     // =========================================================
     async function loadCurrentlyWorkingOn() {
-    const user = "Nfoedy";
-    const cacheKey = "cw_cache_v3";
-    const cacheHours = 6;
+      const cacheKey = "cw_cache_v4";
+      const cacheHours = 6;
 
-    const cwText = document.getElementById("cwText");
-    const cwRepo = document.getElementById("cwRepo");
-    const cwStack = document.getElementById("cwStack");
+      const cwText = document.getElementById("cwText");
+      const cwRepo = document.getElementById("cwRepo");
+      const cwStack = document.getElementById("cwStack");
 
-    const formatDateIT = (iso) => {
+      const formatDateIT = (iso) => {
+        try {
+          const d = new Date(iso);
+          const fmt = new Intl.DateTimeFormat("it-IT", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+          });
+          return fmt.format(d).replace(".", "");
+        } catch {
+          return "";
+        }
+      };
+
+      // cache
       try {
-        const d = new Date(iso);
-        const fmt = new Intl.DateTimeFormat("it-IT", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric"
-        });
-        return fmt.format(d).replace(".", "");
-      } catch {
-        return "";
-      }
-    };
-
-    try {
-      const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-      if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
-        cwText.innerHTML = cached.text;
-        cwRepo.innerHTML = cached.repoHtml;
-        cwStack.textContent = cached.stack;
-        return;
-      }
-    } catch(_) {}
-
-    try {
-      const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
-      const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-      if (!res.ok) throw new Error("GitHub API error");
-      const repos = await res.json();
-
-      const repo = repos.find(r =>
-        !r.fork &&
-        !r.archived &&
-        !r.disabled &&
-        (r.name || "").toLowerCase() !== "nfoedy.github.io"
-      );
-
-      if (!repo) throw new Error("No repo found");
-
-      const name = repo.name;
-      const desc = repo.description || "Recently updated project.";
-      const lang = repo.language || "—";
-      const date = formatDateIT(repo.pushed_at || repo.updated_at);
-
-      const textHtml =
-        `Working on <b>${name}</b> — ${desc}${date ? ` <span style="opacity:.8">(${date}).</span>` : ""}`;
-
-      const repoHtml =
-        `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
-
-      cwText.innerHTML = textHtml;
-      cwRepo.innerHTML = repoHtml;
-      cwStack.textContent = lang;
-
-      try {
-        localStorage.setItem(cacheKey, JSON.stringify({
-          t: Date.now(),
-          text: textHtml,
-          repoHtml,
-          stack: lang
-        }));
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+        if (cached?.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
+          cwText.innerHTML = cached.text;
+          cwRepo.innerHTML = cached.repoHtml;
+          cwStack.textContent = cached.stack;
+          return;
+        }
       } catch(_) {}
 
-    } catch (e) {
-      cwText.textContent = "Currently updating projects on GitHub.";
-      cwRepo.textContent = "—";
-      cwStack.textContent = "—";
+      try {
+        const url = `https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`;
+        const res = await fetch(url, { headers: GH_HEADERS });
+        if (!res.ok) throw new Error("GitHub API error (CW): " + res.status);
+        const repos = await res.json();
+
+        const repo = repos.find(r =>
+          !r.fork &&
+          !r.archived &&
+          !r.disabled &&
+          (r.name || "").toLowerCase() !== "nfoedy.github.io"
+        );
+
+        if (!repo) throw new Error("No repo found for CW");
+
+        const name = repo.name;
+        const desc = repo.description || "Recently updated project.";
+        const lang = repo.language || "—";
+        const date = formatDateIT(repo.pushed_at || repo.updated_at);
+
+        const textHtml =
+          `Working on <b>${name}</b> — ${desc}${date ? ` <span style="opacity:.8">(${date}).</span>` : ""}`;
+        const repoHtml =
+          `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
+
+        cwText.innerHTML = textHtml;
+        cwRepo.innerHTML = repoHtml;
+        cwStack.textContent = lang;
+
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            t: Date.now(),
+            text: textHtml,
+            repoHtml,
+            stack: lang
+          }));
+        } catch(_) {}
+
+      } catch (e) {
+        console.error(e);
+        cwText.textContent = "Currently updating projects on GitHub.";
+        cwRepo.textContent = "—";
+        cwStack.textContent = "—";
+      }
     }
-  }
-    loadCurrentlyWorkingOn();
 
     // =========================================================
-    // 2) Curated repos (YOU decide placement)
-    //    - Put repos here and set section = "personal" | "master" | "other"
-    //    - Data (name/desc/lang/url) is always fetched from GitHub
+    // 2) Curated Projects (YOU decide placement)
+    //    - section = "personal" | "master" | "other"
+    //    - Data (name/desc/lang/url) is fetched from GitHub
     // =========================================================
     const CURATED = [
-      // Example (keep or remove). Add your repos below:
       { repo: "Nfoedy/Obscura", section: "personal" },
 
       { repo: "Nfoedy/IronSpin", section: "master" },
@@ -334,9 +339,8 @@
     ];
 
     // Optional: YouTube trailers (when you have them)
-    // key = "Owner/Repo", value = "VIDEO_ID"
     const YT = {
-      "Nfoedy/Obscura": "pcYNW_uPQRI"
+      "Nfoedy/Obscura": "pcYNW_uPQRI",
       // "Nfoedy/IronSpin": "VIDEO_ID",
     };
 
@@ -346,10 +350,12 @@
       const otherList    = document.getElementById("otherList");
       if (!personalGrid || !masterGrid || !otherList) return;
 
-      const headers = { "Accept": "application/vnd.github+json" };
-      const safe = (s) => (typeof s === "string" ? s : "");
+      // reset content (avoid stale state)
+      personalGrid.innerHTML = "";
+      masterGrid.innerHTML = "";
+      otherList.innerHTML = "";
 
-      // --- de-duplicate by repo (first occurrence wins) ---
+      // de-duplicate by repo (first occurrence wins)
       const seen = new Set();
       const curatedUnique = [];
       for (const item of CURATED) {
@@ -359,23 +365,29 @@
         curatedUnique.push({ repo: item.repo.trim(), section: item.section });
       }
 
+      if (curatedUnique.length === 0) {
+        personalGrid.innerHTML = `<p class="muted2">Add repos in the CURATED array.</p>`;
+        masterGrid.innerHTML   = `<p class="muted2">Add repos in the CURATED array.</p>`;
+        otherList.innerHTML    = `<p class="muted2">Add repos in the CURATED array.</p>`;
+        return;
+      }
+
       async function fetchRepo(fullName) {
-        const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers });
-        if (!res.ok) throw new Error("Repo fetch failed: " + fullName);
+        const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers: GH_HEADERS });
+        if (!res.ok) throw new Error(`Repo fetch failed (${res.status}): ${fullName}`);
         return await res.json();
       }
 
       function badgeHtmlFor(repo){
-        // Badge COLLAB se owner != Nfoedy (utile per master)
+        // Badge COLLAB if owner != USER
         const owner = (repo.owner?.login || "").toLowerCase();
-        if (owner && owner !== "nfoedy") {
+        if (owner && owner !== USER.toLowerCase()) {
           return `<div class="card-badge collab" style="right:12px; left:auto;">COLLAB</div>`;
         }
         return "";
       }
 
       function mediaHtml(name, ytId){
-        // No images uploaded: placeholder now, swap to video later by adding YT id
         if (ytId) {
           return `
             <button class="p-media" type="button" aria-label="Play ${name} video">
@@ -392,7 +404,7 @@
         `;
       }
 
-      function masterOrPersonalCard(repo){
+      function cardHtml(repo){
         const full = safe(repo.full_name);
         const name = safe(repo.name);
         const desc = safe(repo.description) || "No description yet.";
@@ -419,13 +431,11 @@
         `;
       }
 
-      function otherBanner(repo){
+      function otherBannerHtml(repo){
         const name = safe(repo.name);
         const desc = safe(repo.description) || "No description yet.";
         const url  = repo.html_url;
 
-        // In other, keep it simple like you wanted (Fablora style):
-        // show the main language line as "X • Y" if you want later
         const tags = [repo.language].filter(Boolean);
         const tagLine = tags.length
           ? `<div class="muted" style="margin-top:8px;">${tags.join(" • ")}</div>`
@@ -456,14 +466,6 @@
         });
       }
 
-      // If list is empty, show placeholders
-      if (curatedUnique.length === 0) {
-        personalGrid.innerHTML = `<p class="muted2">Add repos in the CURATED array.</p>`;
-        masterGrid.innerHTML   = `<p class="muted2">Add repos in the CURATED array.</p>`;
-        otherList.innerHTML    = `<p class="muted2">Add repos in the CURATED array.</p>`;
-        return;
-      }
-
       try {
         const results = await Promise.allSettled(
           curatedUnique.map(async (item) => ({
@@ -476,35 +478,34 @@
           .filter(r => r.status === "fulfilled")
           .map(r => r.value);
 
-        const personal = ok
-          .filter(x => x.section === "personal")
-          .map(x => x.repo)
-          .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+        // If some repos fail, you still get partial render
+        const personal = ok.filter(x => x.section === "personal").map(x => x.repo);
+        const master   = ok.filter(x => x.section === "master").map(x => x.repo);
+        const other    = ok.filter(x => x.section === "other").map(x => x.repo);
 
-        const master = ok
-          .filter(x => x.section === "master")
-          .map(x => x.repo)
-          .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
-
-        const other = ok
-          .filter(x => x.section === "other")
-          .map(x => x.repo)
-          .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+        // sort by last update (newest first)
+        personal.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+        master.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+        other.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
 
         personalGrid.innerHTML = personal.length
-          ? personal.map(masterOrPersonalCard).join("")
+          ? personal.map(cardHtml).join("")
           : `<p class="muted2">No personal projects yet.</p>`;
 
         masterGrid.innerHTML = master.length
-          ? master.map(masterOrPersonalCard).join("")
+          ? master.map(cardHtml).join("")
           : `<p class="muted2">No master projects yet.</p>`;
 
         otherList.innerHTML = other.length
-          ? other.map(otherBanner).join("")
+          ? other.map(otherBannerHtml).join("")
           : `<p class="muted2">No other projects yet.</p>`;
 
         bindModalClicks(personalGrid);
         bindModalClicks(masterGrid);
+
+        // Helpful console logs while you tune
+        const failed = results.filter(r => r.status === "rejected").map(r => r.reason?.message || "unknown");
+        if (failed.length) console.warn("Some repos failed to load:", failed);
 
       } catch (e) {
         console.error(e);
@@ -514,6 +515,8 @@
       }
     }
 
+    // Run
+    loadCurrentlyWorkingOn();
     loadCuratedProjects();
   </script>
 
