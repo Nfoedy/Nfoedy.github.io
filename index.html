@@ -363,7 +363,7 @@
         !r.fork &&
         !r.archived &&
         !r.disabled &&
-        r.name !== "nfoedy.github.io"
+        r.name.toLowerCase() !== "nfoedy.github.io"
       );
 
       if (!repo) throw new Error("No repo found");
