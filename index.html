@@ -22,7 +22,7 @@
       </a>
 
       <nav class="nav" aria-label="Primary">
-        <a href="#projects">Work</a>
+        <a href="#personal">Work</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -58,15 +58,15 @@
           </div>
 
           <div class="cta-row">
-            <a class="btn primary" href="#work">View Projects</a>
+            <a class="btn primary" href="#personal">View Projects</a>
             <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
       </div>
 
+      <!-- Currently Working On (auto via JS) -->
       <div class="glass-card">
         <div class="glass-title">Currently Working On</div>
-
         <p class="glass-text" id="cwText">Loading...</p>
 
         <div class="mini-stats">
@@ -93,30 +93,26 @@
         <div class="tool-icon" title="Unreal Engine">
           <img src="assets/icons/unrealengine.svg" alt="Unreal Engine">
         </div>
-
         <div class="tool-icon" title="Unity">
           <img src="assets/icons/unity.svg" alt="Unity">
         </div>
-
         <div class="tool-icon" title="C++">
           <img src="assets/icons/cplusplus.svg" alt="C++">
         </div>
-
         <div class="tool-icon" title="C#">
           <img src="assets/icons/csharp.svg" alt="C#">
         </div>
-
         <div class="tool-icon" title="Git">
           <img src="assets/icons/git.svg" alt="Git">
         </div>
       </div>
     </section>
 
-    <!-- PROJECTS (Completed / Showcase) -->
-    <section class="section" id="projects">
+    <!-- PERSONAL PROJECT (solo Obscura) -->
+    <section class="section" id="personal">
       <div class="section-head">
-        <h2>Projects</h2>
-        <span class="muted2">Completed / Showcase</span>
+        <h2>Personal Project</h2>
+        <span class="muted2">Main showcase</span>
       </div>
 
       <div class="projects-grid">
@@ -128,10 +124,11 @@
 
           <div class="p-body">
             <h3 class="p-title">Obscura</h3>
-            <p class="p-desc">Horror prototype in Unreal Engine 5. Flashlight, stamina system and AI.</p>
+            <!-- Nota: qui puoi tenere la stessa descrizione che userai anche su GitHub -->
+            <p class="p-desc">Survival horror prototype in Unreal Engine 5 with stamina, flashlight mechanics and AI enemy.</p>
 
             <div class="p-row">
-              <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
+              <a class="btn small" href="https://github.com/Nfoedy/Obscura" target="_blank" rel="noreferrer">Repo</a>
               <span class="muted">UE5 • Gameplay</span>
             </div>
           </div>
@@ -139,16 +136,50 @@
       </div>
     </section>
 
-    <!-- CURRENT PROJECTS (auto from GitHub + collaborations whitelist) -->
-    <section class="section" id="work">
+    <!-- MASTER PROJECTS (auto from GitHub + collaborations whitelist) -->
+    <section class="section" id="master">
       <div class="section-head">
-        <h2>Current Projects</h2>
+        <h2>Master Projects</h2>
         <a class="link" href="https://github.com/Nfoedy?tab=repositories" target="_blank" rel="noreferrer">
           All repositories →
         </a>
       </div>
 
-      <div class="grid" id="repoGrid" aria-label="Repository list"></div>
+      <!-- JS riempie qui (solo master projects) -->
+      <div class="grid" id="masterGrid" aria-label="Master projects list"></div>
+    </section>
+
+    <!-- OTHER PROJECTS (lista compatta) -->
+    <section class="section" id="other">
+      <div class="section-head">
+        <h2>Other Projects</h2>
+      </div>
+
+      <div class="other-list" aria-label="Other projects">
+        <div class="other-item">
+          <div>
+            <h3>Fablora</h3>
+            <p>Pixel-art RPG prototype in C++ using SFML.</p>
+          </div>
+          <a class="repo-link" href="https://github.com/Nfoedy/Fablora" target="_blank" rel="noreferrer">Repo →</a>
+        </div>
+
+        <div class="other-item">
+          <div>
+            <h3>Aquaflow</h3>
+            <p>Demo website built with HTML, CSS and JavaScript.</p>
+          </div>
+          <a class="repo-link" href="https://github.com/Nfoedy/aquaflow" target="_blank" rel="noreferrer">Repo →</a>
+        </div>
+
+        <div class="other-item">
+          <div>
+            <h3>Portfolio</h3>
+            <p>This portfolio website (GitHub Pages).</p>
+          </div>
+          <a class="repo-link" href="https://github.com/Nfoedy/nfoedy.github.io" target="_blank" rel="noreferrer">Repo →</a>
+        </div>
+      </div>
     </section>
 
     <!-- CONTACT -->
@@ -203,14 +234,12 @@
     </div>
   </div>
 
-  <!-- SCRIPTS -->
+  <!-- SCRIPTS  -->
   <script>
     // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // =========================================================
-    // 1) YouTube modal (Projects)
-    // =========================================================
+    // YouTube modal
     (function () {
       const modal = document.getElementById("vmodal");
       const frame = document.getElementById("vmodalFrame");
@@ -232,7 +261,7 @@
       function closeModal(){
         modal.classList.remove("is-open");
         modal.setAttribute("aria-hidden", "true");
-        frame.src = ""; // stop video
+        frame.src = "";
         document.body.style.overflow = "";
       }
 
@@ -251,238 +280,148 @@
         if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
       });
     })();
+  </script>
 
-    // =========================================================
-    // 2) Currently Working On (auto from GitHub)
-    // =========================================================
-    async function loadCurrentlyWorkingOn() {
-      const user = "Nfoedy";
-      const cacheKey = "cw_cache_v2";
-      const cacheHours = 6;
+  <script>
 
-      const cwText = document.getElementById("cwText");
-      const cwRepo = document.getElementById("cwRepo");
-      const cwStack = document.getElementById("cwStack");
+  // CURRENTLY WORKING ON (GitHub auto)
 
-      // cache
-      try {
-        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-        if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
-          cwText.innerHTML = cached.text;
-          cwRepo.innerHTML = cached.repoHtml;
-          cwStack.textContent = cached.stack;
-          return;
-        }
-      } catch(_) {}
+  async function loadCurrentlyWorkingOn() {
 
-      try {
-        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
-        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-        if (!res.ok) throw new Error("GitHub API error");
-        const repos = await res.json();
+    const user = "Nfoedy";
 
-        // exclude site repo from "Currently Working On"
-        const repo = repos.find(r =>
-          !r.fork &&
-          !r.archived &&
-          !r.disabled &&
-          (r.name || "").toLowerCase() !== "nfoedy.github.io"
-        );
-        if (!repo) throw new Error("No repo found");
+    const cwText = document.getElementById("cwText");
+    const cwRepo = document.getElementById("cwRepo");
+    const cwStack = document.getElementById("cwStack");
 
-        const name = repo.name;
-        const desc = repo.description || "Active development.";
-        const lang = repo.language || "—";
+    try {
 
-        const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
-        const repoHtml = `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
+      const url = `https://api.github.com/users/${user}/repos?sort=pushed&per_page=100`;
+      const res = await fetch(url);
 
-        cwText.innerHTML = textHtml;
-        cwRepo.innerHTML = repoHtml;
-        cwStack.textContent = lang;
+      if (!res.ok) throw new Error("GitHub API error");
 
-        // save cache
-        try {
-          localStorage.setItem(cacheKey, JSON.stringify({
-            t: Date.now(),
-            text: textHtml,
-            repoHtml,
-            stack: lang
-          }));
-        } catch(_) {}
+      const repos = await res.json();
 
-      } catch (e) {
-        cwText.textContent = "Currently updating projects on GitHub.";
-        cwRepo.textContent = "—";
-        cwStack.textContent = "—";
-      }
+      const repo = repos.find(r =>
+        !r.fork &&
+        !r.archived &&
+        r.name.toLowerCase() !== "nfoedy.github.io"
+      );
+
+      if (!repo) return;
+
+      const name = repo.name;
+      const desc = repo.description || "Active development.";
+      const lang = repo.language || "—";
+
+      cwText.innerHTML = `Currently working on <b>${name}</b> — ${desc}`;
+      cwRepo.innerHTML = `<a href="${repo.html_url}" target="_blank">${name}</a>`;
+      cwStack.textContent = lang;
+
+    }
+    catch (err) {
+
+      cwText.textContent = "Currently updating projects on GitHub.";
+      cwRepo.textContent = "—";
+      cwStack.textContent = "—";
+
+      console.error(err);
     }
 
-    loadCurrentlyWorkingOn();
+  }
+  loadCurrentlyWorkingOn();
 
-    // =========================================================
-    // 3) Current Projects grid (auto from GitHub + collaborations whitelist)
-    // =========================================================
-    async function loadReposToGrid() {
-      const user = "Nfoedy";
-      const grid = document.getElementById("repoGrid");
-      if (!grid) return;
 
-      const cacheKey = "repos_cache_v3";
-      const cacheHours = 6;
+  // MASTER PROJECTS (solo alcuni repo)
+  async function loadMasterProjects() {
 
-      // Collaborations: puoi mettere sia repo pubblici che privati.
-      // - Se pubblico: prende descrizione/linguaggio reali da GitHub API
-      // - Se privato: usa i dati qui sotto come fallback (mostra comunque la card)
-      const featuredExternal = [
-        {
-          full_name: "Lord-Platypus/mask_museum",
-          title: "mask_museum",
-          url: "https://github.com/Lord-Platypus/mask_museum",
-          description: "Collaboration project (private repo).",
-          language: "—"
-        },
-        {
-          full_name: "Bosang6/cpp-raylib-platformer",
-          title: "cpp-raylib-platformer",
-          url: "https://github.com/Bosang6/cpp-raylib-platformer",
-          description: "2D platformer built with C++ and raylib.",
-          language: "C++"
-        }
-      ];
+    const grid = document.getElementById("masterGrid");
 
-      const safe = (s) => (typeof s === "string" ? s : "");
+    if (!grid) return;
 
-      const badgeFromRepo = (repo) => {
-        if (repo.__is_external) return { text: "COLLAB", cls: "collab" };
+    const user = "Nfoedy";
 
-        const created = repo.created_at ? new Date(repo.created_at) : null;
-        const days = created ? (Date.now() - created.getTime()) / (1000*60*60*24) : 9999;
-        if (days < 21) return { text: "NEW", cls: "new" };
-        return { text: "WIP", cls: "wip" };
-      };
+    // REPO DEL MASTER
+    const masterRepos = [
+      "IronSpin",
+      "mask_museum",
+      "cpp-raylib-platformer"
+    ];
 
-      const render = (repos) => {
-        grid.innerHTML = "";
+    const collaborations = [
+      "Lord-Platypus/mask_museum",
+      "Bosang6/cpp-raylib-platformer"
+    ];
 
-        repos.forEach(repo => {
-          const name = safe(repo.name);
-          const fullName = safe(repo.full_name) || name;
-          const desc = safe(repo.description) || "No description yet.";
-          const lang = repo.language ? repo.language : "—";
-          const url = repo.html_url;
+    function createCard(repo, fullName = null) {
 
-          const badge = badgeFromRepo(repo);
+      const name = repo.name;
+      const desc = repo.description || "No description yet.";
+      const lang = repo.language || "—";
+      const url = repo.html_url;
 
-          const card = document.createElement("article");
-          card.className = "card";
-          card.innerHTML = `
-            <div class="card-badge ${badge.cls}">${badge.text}</div>
-            <div class="thumb t1"></div>
+      const card = document.createElement("article");
+      card.className = "card";
 
-            <h3>${name}</h3>
-            <p>${desc}</p>
+      card.innerHTML = `
+        <div class="card-badge wip">WIP</div>
+        <div class="thumb t1"></div>
 
-            <div class="card-row">
-              <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
-              <span class="muted">${lang}</span>
-            </div>
+        <h3>${name}</h3>
+        <p>${desc}</p>
 
-            ${repo.__is_external ? `<div class="muted2" style="margin-top:10px;">${fullName}</div>` : ``}
-          `;
-          grid.appendChild(card);
-        });
-      };
+        <div class="card-row">
+          <a class="btn small" href="${url}" target="_blank">Repo</a>
+          <span class="muted">${lang}</span>
+        </div>
 
-      // 1) cache
-      try {
-        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-        if (cached && cached.t && Array.isArray(cached.repos) &&
-            (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
-          render(cached.repos);
-          return;
-        }
-      } catch(_) {}
+        ${fullName ? `<div class="muted2" style="margin-top:10px;">${fullName}</div>` : ``}
+      `;
 
-      async function fetchRepoFull(fullName) {
-        const url = `https://api.github.com/repos/${fullName}`;
-        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+      grid.appendChild(card);
 
-        // Repo privato (o non accessibile) -> fallisce qui (404/403)
-        if (!res.ok) throw new Error(`Repo fetch failed ${res.status}: ${fullName}`);
-
-        const r = await res.json();
-        r.__is_external = true;
-        return r;
-      }
-
-      try {
-        // 2) fetch tuoi repo
-        const urlMine = `https://api.github.com/users/${user}/repos?per_page=100&sort=updated`;
-        const resMine = await fetch(urlMine, { headers: { "Accept": "application/vnd.github+json" } });
-        if (!resMine.ok) throw new Error("GitHub API error (mine)");
-        const mine = await resMine.json();
-
-        const mineFiltered = mine
-          .filter(r => !r.fork && !r.archived && !r.disabled)
-          .map(r => ({ ...r, __is_external: false }));
-
-        // 3) fetch esterni (pubblici) + fallback per privati
-        const externalsSettled = await Promise.allSettled(
-          featuredExternal.map(x => fetchRepoFull(x.full_name))
-        );
-
-        const extAll = externalsSettled.map((x, i) => {
-          if (x.status === "fulfilled") return x.value;
-
-          // fallback manuale (repo privato o non accessibile)
-          const meta = featuredExternal[i];
-          console.warn("External repo fallback:", meta.full_name, x.reason);
-
-          return {
-            name: meta.title,
-            full_name: meta.full_name,
-            description: meta.description || "Collaboration project.",
-            language: meta.language || "—",
-            html_url: meta.url,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            __is_external: true
-          };
-        });
-
-        // 4) merge + sort (recenti prima)
-        const all = [...mineFiltered, ...extAll].sort(
-          (a,b) => new Date(b.updated_at) - new Date(a.updated_at)
-        );
-
-        render(all);
-
-        // 5) cache slim
-        try {
-          const slim = all.map(r => ({
-            name: r.name,
-            full_name: r.full_name,
-            description: r.description,
-            language: r.language,
-            html_url: r.html_url,
-            created_at: r.created_at,
-            updated_at: r.updated_at,
-            __is_external: r.__is_external
-          }));
-          localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), repos: slim }));
-        } catch(_) {}
-
-      } catch (e) {
-        grid.innerHTML = `<p class="muted2">Could not load repositories right now.</p>`;
-        console.error(e);
-      }
     }
 
-    // importante: se stai testando spesso, svuota cache una volta:
-    // localStorage.removeItem("repos_cache_v3");
+    try {
 
-    loadReposToGrid();
+      // tuoi repo
+      const resMine = await fetch(`https://api.github.com/users/${user}/repos?per_page=100`);
+      const mine = await resMine.json();
+
+      mine.forEach(repo => {
+
+        if (masterRepos.includes(repo.name)) {
+          createCard(repo);
+        }
+
+      });
+
+      // collaborazioni
+      for (const full of collaborations) {
+
+        const res = await fetch(`https://api.github.com/repos/${full}`);
+
+        if (!res.ok) continue;
+
+        const repo = await res.json();
+
+        createCard(repo, full);
+
+      }
+
+    }
+    catch (err) {
+
+      grid.innerHTML = `<p class="muted2">Could not load projects.</p>`;
+      console.error(err);
+
+    }
+
+  }
+
+  loadMasterProjects();
+
   </script>
 
 </body>
