@@ -140,10 +140,49 @@
     <section class="section" id="master">
       <div class="section-head">
         <h2>Master Projects</h2>
-        <a class="link" href="https://github.com/Nfoedy?tab=repositories" target="_blank" rel="noreferrer">
-          All repositories →
-        </a>
+        <span class="muted2">University / Team</span>
       </div>
+
+      <div class="master-grid">
+
+        <!-- ESEMPIO 1 (con video, se ce l’hai) -->
+        <article class="p-card" data-yt="VIDEO_ID" data-title="Mask Museum">
+          <button class="p-media" type="button" aria-label="Play Mask Museum video">
+            <img class="p-poster" src="assets/posters/maskmuseum.jpg" alt="Mask Museum poster">
+            <span class="p-play" aria-hidden="true">▶</span>
+          </button>
+
+          <div class="p-body">
+            <h3 class="p-title">Mask Museum</h3>
+            <p class="p-desc">Short description come i current projects. (Unreal/Unity ecc.)</p>
+
+            <div class="p-row">
+              <a class="btn small" href="https://github.com/Lord-Platypus/mask_museum" target="_blank" rel="noreferrer">Repo</a>
+              <span class="muted">Master • Team</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ESEMPIO 2 (senza video: poster cliccabile ma puoi anche farlo link diretto) -->
+        <article class="p-card">
+          <a class="p-media" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer" aria-label="Open IronSpin repo">
+            <img class="p-poster" src="assets/posters/ironspin.jpg" alt="IronSpin poster">
+            <span class="p-play" aria-hidden="true">↗</span>
+          </a>
+
+          <div class="p-body">
+            <h3 class="p-title">IronSpin</h3>
+            <p class="p-desc">Pinball game in UE 5.7. Physics, scoring, UI flow.</p>
+
+            <div class="p-row">
+              <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
+              <span class="muted">UE5 • Blueprint</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
 
       <!-- JS riempie qui (solo master projects) -->
       <div class="grid" id="masterGrid" aria-label="Master projects list"></div>

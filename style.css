@@ -657,6 +657,18 @@ a{color:inherit}
   font-size:13px;
 }
 
+/* Master Projects: stesso layout di Personal Projects */
+.master-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* su schermi piccoli: 1 colonna */
+@media (max-width: 980px){
+  .master-grid{ grid-template-columns: 1fr; }
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
