@@ -412,6 +412,9 @@
 
         // external repos (collabs)
         const externals = await Promise.allSettled(featuredExternal.map(fetchRepoFull));
+        externals.forEach((x, i) => {
+          if (x.status === "rejected") console.warn("External repo failed:", featuredExternal[i], x.reason);
+        });
         const extOk = externals
           .filter(x => x.status === "fulfilled")
           .map(x => x.value);
