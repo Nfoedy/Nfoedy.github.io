@@ -328,13 +328,27 @@
       const grid = document.getElementById("repoGrid");
       if (!grid) return;
 
-      const cacheKey = "repos_cache_v2";
+      const cacheKey = "repos_cache_v3";
       const cacheHours = 6;
 
-      // Collaborations (repo esterni)
+      // Collaborations: puoi mettere sia repo pubblici che privati.
+      // - Se pubblico: prende descrizione/linguaggio reali da GitHub API
+      // - Se privato: usa i dati qui sotto come fallback (mostra comunque la card)
       const featuredExternal = [
-        "Lord-Platypus/mask_museum",
-        "Bosang6/cpp-raylib-platformer"
+        {
+          full_name: "Lord-Platypus/mask_museum",
+          title: "mask_museum",
+          url: "https://github.com/Lord-Platypus/mask_museum",
+          description: "Collaboration project (private repo).",
+          language: "—"
+        },
+        {
+          full_name: "Bosang6/cpp-raylib-platformer",
+          title: "cpp-raylib-platformer",
+          url: "https://github.com/Bosang6/cpp-raylib-platformer",
+          description: "2D platformer built with C++ and raylib.",
+          language: "C++"
+        }
       ];
 
       const safe = (s) => (typeof s === "string" ? s : "");
@@ -380,7 +394,7 @@
         });
       };
 
-      // cache
+      // 1) cache
       try {
         const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
         if (cached && cached.t && Array.isArray(cached.repos) &&
@@ -393,14 +407,17 @@
       async function fetchRepoFull(fullName) {
         const url = `https://api.github.com/repos/${fullName}`;
         const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-        if (!res.ok) throw new Error("Repo fetch error: " + fullName);
+
+        // Repo privato (o non accessibile) -> fallisce qui (404/403)
+        if (!res.ok) throw new Error(`Repo fetch failed ${res.status}: ${fullName}`);
+
         const r = await res.json();
         r.__is_external = true;
         return r;
       }
 
       try {
-        // your repos
+        // 2) fetch tuoi repo
         const urlMine = `https://api.github.com/users/${user}/repos?per_page=100&sort=updated`;
         const resMine = await fetch(urlMine, { headers: { "Accept": "application/vnd.github+json" } });
         if (!resMine.ok) throw new Error("GitHub API error (mine)");
@@ -410,22 +427,38 @@
           .filter(r => !r.fork && !r.archived && !r.disabled)
           .map(r => ({ ...r, __is_external: false }));
 
-        // external repos (collabs)
-        const externals = await Promise.allSettled(featuredExternal.map(fetchRepoFull));
-        externals.forEach((x, i) => {
-          if (x.status === "rejected") console.warn("External repo failed:", featuredExternal[i], x.reason);
-        });
-        const extOk = externals
-          .filter(x => x.status === "fulfilled")
-          .map(x => x.value);
+        // 3) fetch esterni (pubblici) + fallback per privati
+        const externalsSettled = await Promise.allSettled(
+          featuredExternal.map(x => fetchRepoFull(x.full_name))
+        );
 
-        const all = [...mineFiltered, ...extOk].sort(
+        const extAll = externalsSettled.map((x, i) => {
+          if (x.status === "fulfilled") return x.value;
+
+          // fallback manuale (repo privato o non accessibile)
+          const meta = featuredExternal[i];
+          console.warn("External repo fallback:", meta.full_name, x.reason);
+
+          return {
+            name: meta.title,
+            full_name: meta.full_name,
+            description: meta.description || "Collaboration project.",
+            language: meta.language || "—",
+            html_url: meta.url,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            __is_external: true
+          };
+        });
+
+        // 4) merge + sort (recenti prima)
+        const all = [...mineFiltered, ...extAll].sort(
           (a,b) => new Date(b.updated_at) - new Date(a.updated_at)
         );
 
         render(all);
 
-        // slim cache
+        // 5) cache slim
         try {
           const slim = all.map(r => ({
             name: r.name,
@@ -446,7 +479,11 @@
       }
     }
 
+    // importante: se stai testando spesso, svuota cache una volta:
+    // localStorage.removeItem("repos_cache_v3");
+
     loadReposToGrid();
   </script>
+
 </body>
 </html>
