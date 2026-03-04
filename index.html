@@ -466,8 +466,8 @@
       ];
 
       const chipRow = (tags) => `
-        <div class="chips" style="margin:10px 0 0;">
-          ${(tags || []).map(t => `<span class="chip">${t}</span>`).join("")}
+        <div class="muted" style="margin-top:8px;">
+          ${(tags || []).join(" • ")}
         </div>
       `;
 
