@@ -13,7 +13,7 @@
   <div class="bg-glow" aria-hidden="true"></div>
   <div class="bg-noise" aria-hidden="true"></div>
 
-  <!-- NAVBAR (1) -->
+  <!-- NAVBAR -->
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="brand" href="#">
@@ -35,7 +35,7 @@
 
   <main class="container">
 
-    <!-- HERO (2) -->
+    <!-- HERO -->
     <section class="hero" id="about">
       <div class="hero-left">
         <div class="avatar">
@@ -67,12 +67,9 @@
       <div class="glass-card">
         <div class="glass-title">Currently Working On</div>
 
-        <p class="glass-text" id="cwText">
-          Loading...
-        </p>
+        <p class="glass-text" id="cwText">Loading...</p>
 
         <div class="mini-stats">
-
           <div class="stat">
             <div class="stat-k">Repo</div>
             <div class="stat-v" id="cwRepo"></div>
@@ -82,19 +79,17 @@
             <div class="stat-k">Stack</div>
             <div class="stat-v" id="cwStack"></div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- TOOLS BANNER (3) -->
+    <!-- TOOLS -->
     <section class="section" id="tools">
       <div class="section-head">
         <h2>Tools</h2>
       </div>
 
       <div class="toolstrip-icons">
-
         <div class="tool-icon" title="Unreal Engine">
           <img src="assets/icons/unrealengine.svg" alt="Unreal Engine">
         </div>
@@ -114,11 +109,10 @@
         <div class="tool-icon" title="Git">
           <img src="assets/icons/git.svg" alt="Git">
         </div>
-
       </div>
     </section>
 
-    <!--PROJECTS -->
+    <!-- PROJECTS (Completed / Showcase) -->
     <section class="section" id="projects">
       <div class="section-head">
         <h2>Projects</h2>
@@ -126,10 +120,8 @@
       </div>
 
       <div class="projects-grid">
-
         <article class="p-card" data-yt="pcYNW_uPQRI" data-title="Obscura">
           <button class="p-media" type="button" aria-label="Play Obscura video">
-            <!-- Thumbnail automatica YouTube -->
             <img class="p-poster" src="https://i.ytimg.com/vi/pcYNW_uPQRI/hqdefault.jpg" alt="Obscura thumbnail">
             <span class="p-play" aria-hidden="true">▶</span>
           </button>
@@ -144,35 +136,10 @@
             </div>
           </div>
         </article>
-
       </div>
     </section>
 
-    <!-- YT MODAL -->
-    <div class="vmodal" id="vmodal" aria-hidden="true">
-      <div class="vmodal__backdrop" data-close="1"></div>
-
-      <div class="vmodal__panel" role="dialog" aria-modal="true" aria-label="Project video">
-        <div class="vmodal__top">
-          <div class="vmodal__title" id="vmodalTitle">Project</div>
-          <button class="vmodal__close" type="button" aria-label="Close" data-close="1">✕</button>
-        </div>
-
-        <div class="vmodal__frame-wrap">
-          <iframe
-            id="vmodalFrame"
-            class="vmodal__frame"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- CURRENT PROJECTS (5) -->
+    <!-- CURRENT PROJECTS (auto from GitHub) -->
     <section class="section" id="work">
       <div class="section-head">
         <h2>Current Projects</h2>
@@ -181,51 +148,7 @@
         </a>
       </div>
 
-      <div class="grid">
-        <article class="card">
-          <div class="card-badge wip">WIP</div>
-          <div class="thumb t1"></div>
-          <h3>IronSpin</h3>
-          <p>Pinball game in Unreal Engine 5.7. Physics, scoring system and UI flow.</p>
-          <div class="card-row">
-            <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
-            <span class="muted">UE5 • Blueprint</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-badge new">NEW</div>
-          <div class="thumb t2"></div>
-          <h3>Raylib Platformer</h3>
-          <p>2D C++ platformer with scenes, pickups, movement and physics iterations.</p>
-          <div class="card-row">
-            <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
-            <span class="muted">C++ • Raylib</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-badge wip">WIP</div>
-          <div class="thumb t3"></div>
-          <h3>Obscura</h3>
-          <p>Horror prototype in UE5. Stamina system, flashlight mechanics and AI.</p>
-          <div class="card-row">
-            <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
-            <span class="muted">UE5 • Gameplay</span>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-badge lab">LAB</div>
-          <div class="thumb t4"></div>
-          <h3>Gameplay Experiments</h3>
-          <p>Small prototypes: UI tests, interaction systems, and reusable components.</p>
-          <div class="card-row">
-            <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
-            <span class="muted">UE5 • C++</span>
-          </div>
-        </article>
-      </div>
+      <div class="grid" id="repoGrid" aria-label="Repository list"></div>
     </section>
 
     <!-- CONTACT -->
@@ -257,130 +180,37 @@
 
   </main>
 
+  <!-- YT MODAL (keep at end of body) -->
+  <div class="vmodal" id="vmodal" aria-hidden="true">
+    <div class="vmodal__backdrop" data-close="1"></div>
+
+    <div class="vmodal__panel" role="dialog" aria-modal="true" aria-label="Project video">
+      <div class="vmodal__top">
+        <div class="vmodal__title" id="vmodalTitle">Project</div>
+        <button class="vmodal__close" type="button" aria-label="Close" data-close="1">✕</button>
+      </div>
+
+      <div class="vmodal__frame-wrap">
+        <iframe
+          id="vmodalFrame"
+          class="vmodal__frame"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
   <script>
+    // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
 
-    <script>
-    const modal = document.getElementById("vmodal");
-    const frame = document.getElementById("vmodalFrame");
-    const titleEl = document.getElementById("vmodalTitle");
-
-    function ytUrl(id){
-      // autoplay + modestbranding + rel=0 per evitare suggerimenti “random”
-      return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
-        "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
-    }
-
-    function openModal({ id, title }){
-      titleEl.textContent = title || "Project";
-      frame.src = ytUrl(id);
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeModal(){
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-      frame.src = ""; // stop video
-      document.body.style.overflow = "";
-    }
-
-    document.querySelectorAll(".p-card").forEach(card => {
-      const btn = card.querySelector(".p-media");
-      btn.addEventListener("click", () => {
-        openModal({ id: card.dataset.yt, title: card.dataset.title });
-      });
-    });
-
-    modal.addEventListener("click", (e) => {
-      if (e.target?.dataset?.close) closeModal();
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
-    });
-  </script>
-
-
-  <script>
-    async function loadCurrentlyWorkingOn() {
-      const user = "Nfoedy";
-      const cacheKey = "cw_cache_v1";
-      const cacheHours = 6;
-
-      const cwText = document.getElementById("cwText");
-      const cwRepo = document.getElementById("cwRepo");
-      const cwStack = document.getElementById("cwStack");
-
-      // 1) prova cache
-      try {
-        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-        if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
-          cwText.innerHTML = cached.text;
-          cwRepo.textContent = cached.repo;
-          cwStack.textContent = cached.stack;
-          return;
-        }
-      } catch(_) {}
-
-      // 2) fetch GitHub
-      try {
-        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
-        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-        if (!res.ok) throw new Error("GitHub API error");
-
-        const repos = await res.json();
-
-        // Prendi il primo repo "sensato"
-        const repo = repos.find(r =>
-          !r.fork &&
-          !r.archived &&
-          !r.disabled &&
-          r.name.toLowerCase() !== "nfoedy.github.io"
-        );
-
-        if (!repo) throw new Error("No repo found");
-
-        const name = repo.name;
-        const desc = repo.description ? repo.description : "Recently updated project.";
-        const lang = repo.language ? repo.language : "—";
-        const pushed = repo.pushed_at ? new Date(repo.pushed_at) : null;
-
-        const pushedStr = pushed
-          ? pushed.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" })
-          : "";
-
-      const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
-        const stackText = lang === "—" ? "—" : lang;
-
-        cwText.innerHTML = textHtml;
-        cwRepo.innerHTML = `<a href="${repo.html_url}" target="_blank">${name}</a>`;
-        cwStack.textContent = stackText;
-
-        // 3) salva cache
-        try {
-          localStorage.setItem(cacheKey, JSON.stringify({
-            t: Date.now(),
-            text: textHtml,
-            repo: name,
-            stack: stackText
-          }));
-        } catch(_) {}
-
-      } catch (e) {
-        // fallback: lascia un testo statico o neutro
-        cwText.textContent = "Currently updating projects on GitHub.";
-        cwRepo.textContent = "—";
-        cwStack.textContent = "—";
-      }
-    }
-
-    loadCurrentlyWorkingOn();
-  </script>
-
-  <script>
+    // =========================================================
+    // 1) YouTube modal (Projects)
+    // =========================================================
     (function () {
       const modal = document.getElementById("vmodal");
       const frame = document.getElementById("vmodalFrame");
@@ -408,7 +238,7 @@
 
       document.querySelectorAll(".p-card").forEach(card => {
         const btn = card.querySelector(".p-media");
-        btn.addEventListener("click", () => {
+        btn?.addEventListener("click", () => {
           openModal({ id: card.dataset.yt, title: card.dataset.title });
         });
       });
@@ -421,6 +251,162 @@
         if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
       });
     })();
+
+    // =========================================================
+    // 2) Currently Working On (auto from GitHub)
+    // =========================================================
+    async function loadCurrentlyWorkingOn() {
+      const user = "Nfoedy";
+      const cacheKey = "cw_cache_v1";
+      const cacheHours = 6;
+
+      const cwText = document.getElementById("cwText");
+      const cwRepo = document.getElementById("cwRepo");
+      const cwStack = document.getElementById("cwStack");
+
+      // cache
+      try {
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+        if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
+          cwText.innerHTML = cached.text;
+          cwRepo.innerHTML = cached.repoHtml;
+          cwStack.textContent = cached.stack;
+          return;
+        }
+      } catch(_) {}
+
+      try {
+        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
+        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+        if (!res.ok) throw new Error("GitHub API error");
+        const repos = await res.json();
+
+        // exclude site repo from "Currently Working On"
+        const repo = repos.find(r =>
+          !r.fork &&
+          !r.archived &&
+          !r.disabled &&
+          (r.name || "").toLowerCase() !== "nfoedy.github.io"
+        );
+        if (!repo) throw new Error("No repo found");
+
+        const name = repo.name;
+        const desc = repo.description || "Active development.";
+        const lang = repo.language || "—";
+
+        const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
+        const repoHtml = `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
+
+        cwText.innerHTML = textHtml;
+        cwRepo.innerHTML = repoHtml;
+        cwStack.textContent = lang;
+
+        // save cache
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            t: Date.now(),
+            text: textHtml,
+            repoHtml,
+            stack: lang
+          }));
+        } catch(_) {}
+
+      } catch (e) {
+        cwText.textContent = "Currently updating projects on GitHub.";
+        cwRepo.textContent = "—";
+        cwStack.textContent = "—";
+      }
+    }
+
+    loadCurrentlyWorkingOn();
+
+    // =========================================================
+    // 3) Current Projects (auto grid from GitHub)
+    // =========================================================
+    async function loadReposToGrid() {
+      const user = "Nfoedy";
+      const grid = document.getElementById("repoGrid");
+      if (!grid) return;
+
+      const cacheKey = "repos_cache_v1";
+      const cacheHours = 6;
+
+      const safe = (s) => (typeof s === "string" ? s : "");
+
+      const badgeFromRepo = (repo) => {
+        const created = repo.created_at ? new Date(repo.created_at) : null;
+        const days = created ? (Date.now() - created.getTime()) / (1000*60*60*24) : 9999;
+        if (days < 21) return { text: "NEW", cls: "new" };
+        return { text: "WIP", cls: "wip" };
+      };
+
+      const render = (repos) => {
+        grid.innerHTML = "";
+
+        repos.forEach(repo => {
+          const name = safe(repo.name);
+          const desc = safe(repo.description) || "No description yet.";
+          const lang = repo.language ? repo.language : "—";
+          const url = repo.html_url;
+
+          const badge = badgeFromRepo(repo);
+
+          const card = document.createElement("article");
+          card.className = "card";
+          card.innerHTML = `
+            <div class="card-badge ${badge.cls}">${badge.text}</div>
+            <div class="thumb t1"></div>
+            <h3>${name}</h3>
+            <p>${desc}</p>
+            <div class="card-row">
+              <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
+              <span class="muted">${lang}</span>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      };
+
+      // cache
+      try {
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+        if (cached && cached.t && Array.isArray(cached.repos) &&
+            (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
+          render(cached.repos);
+          return;
+        }
+      } catch(_) {}
+
+      try {
+        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=updated`;
+        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+        if (!res.ok) throw new Error("GitHub API error");
+        const repos = await res.json();
+
+        const filtered = repos
+          .filter(r => !r.fork && !r.archived && !r.disabled)
+          .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+        render(filtered);
+
+        // slim cache
+        try {
+          const slim = filtered.map(r => ({
+            name: r.name,
+            description: r.description,
+            language: r.language,
+            html_url: r.html_url,
+            created_at: r.created_at
+          }));
+          localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), repos: slim }));
+        } catch(_) {}
+
+      } catch (e) {
+        grid.innerHTML = `<p class="muted2">Could not load repositories right now.</p>`;
+      }
+    }
+
+    loadReposToGrid();
   </script>
 
 </body>
