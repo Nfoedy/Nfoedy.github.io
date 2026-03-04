@@ -58,15 +58,15 @@
           </div>
 
           <div class="cta-row">
-            <a class="btn primary" href="#personal">View Projects</a>
+            <a class="btn primary" href="#current">View Projects</a>
             <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
       </div>
 
-      <!-- Currently Working On (auto via JS) -->
       <div class="glass-card">
         <div class="glass-title">Currently Working On</div>
+
         <p class="glass-text" id="cwText">Loading...</p>
 
         <div class="mini-stats">
@@ -93,29 +93,35 @@
         <div class="tool-icon" title="Unreal Engine">
           <img src="assets/icons/unrealengine.svg" alt="Unreal Engine">
         </div>
+
         <div class="tool-icon" title="Unity">
           <img src="assets/icons/unity.svg" alt="Unity">
         </div>
+
         <div class="tool-icon" title="C++">
           <img src="assets/icons/cplusplus.svg" alt="C++">
         </div>
+
         <div class="tool-icon" title="C#">
           <img src="assets/icons/csharp.svg" alt="C#">
         </div>
+
         <div class="tool-icon" title="Git">
           <img src="assets/icons/git.svg" alt="Git">
         </div>
       </div>
     </section>
 
-    <!-- PERSONAL PROJECT (solo Obscura) -->
+    <!-- PERSONAL PROJECTS (big cards) -->
     <section class="section" id="personal">
       <div class="section-head">
         <h2>Personal Project</h2>
-        <span class="muted2">Main showcase</span>
+        <span class="muted2">Showcase</span>
       </div>
 
-      <div class="projects-grid">
+      <div class="projects-grid" id="personalGrid">
+
+        <!-- Obscura -->
         <article class="p-card" data-yt="pcYNW_uPQRI" data-title="Obscura">
           <button class="p-media" type="button" aria-label="Play Obscura video">
             <img class="p-poster" src="https://i.ytimg.com/vi/pcYNW_uPQRI/hqdefault.jpg" alt="Obscura thumbnail">
@@ -124,7 +130,6 @@
 
           <div class="p-body">
             <h3 class="p-title">Obscura</h3>
-            <!-- Nota: qui puoi tenere la stessa descrizione che userai anche su GitHub -->
             <p class="p-desc">Survival horror prototype in Unreal Engine 5 with stamina, flashlight mechanics and AI enemy.</p>
 
             <div class="p-row">
@@ -133,53 +138,42 @@
             </div>
           </div>
         </article>
+
       </div>
     </section>
 
-
-    <!-- MASTER PROJECTS (auto from GitHub + collaborations whitelist) -->
+    <!-- MASTER PROJECTS (big cards, 2 per riga) -->
     <section class="section" id="master">
       <div class="section-head">
         <h2>Master Projects</h2>
         <span class="muted2">University / Team</span>
       </div>
 
-      <!-- JS riempie qui (2 per riga come Obscura) -->
+      <!-- JS riempie qui -->
       <div class="projects-grid" id="masterGrid" aria-label="Master projects list"></div>
     </section>
 
-
-    <!-- OTHER PROJECTS (lista compatta) -->
+    <!-- OTHER PROJECTS (compact list + tags/chips) -->
     <section class="section" id="other">
       <div class="section-head">
         <h2>Other Projects</h2>
+        <span class="muted2">Smaller / experiments</span>
       </div>
 
-      <div class="other-list" aria-label="Other projects">
-        <div class="other-item">
-          <div>
-            <h3>Fablora</h3>
-            <p>Pixel-art RPG prototype in C++ using SFML.</p>
-          </div>
-          <a class="repo-link" href="https://github.com/Nfoedy/Fablora" target="_blank" rel="noreferrer">Repo →</a>
-        </div>
+      <!-- JS riempie qui -->
+      <div class="other-list" id="otherList" aria-label="Other projects list"></div>
+    </section>
 
-        <div class="other-item">
-          <div>
-            <h3>Aquaflow</h3>
-            <p>Demo website built with HTML, CSS and JavaScript.</p>
-          </div>
-          <a class="repo-link" href="https://github.com/Nfoedy/aquaflow" target="_blank" rel="noreferrer">Repo →</a>
-        </div>
-
-        <div class="other-item">
-          <div>
-            <h3>Portfolio</h3>
-            <p>This portfolio website (GitHub Pages).</p>
-          </div>
-          <a class="repo-link" href="https://github.com/Nfoedy/nfoedy.github.io" target="_blank" rel="noreferrer">Repo →</a>
-        </div>
+    <!-- CURRENT PROJECTS (auto from GitHub + collaborations whitelist) -->
+    <section class="section" id="current">
+      <div class="section-head">
+        <h2>Current Projects</h2>
+        <a class="link" href="https://github.com/Nfoedy?tab=repositories" target="_blank" rel="noreferrer">
+          All repositories →
+        </a>
       </div>
+
+      <div class="grid" id="repoGrid" aria-label="Repository list"></div>
     </section>
 
     <!-- CONTACT -->
@@ -234,318 +228,400 @@
     </div>
   </div>
 
-  <!-- SCRIPTS  -->
+  <!-- SCRIPTS -->
   <script>
     // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // YouTube modal
-    (function () {
-      const modal = document.getElementById("vmodal");
-      const frame = document.getElementById("vmodalFrame");
-      const titleEl = document.getElementById("vmodalTitle");
+    // =========================================================
+    // 0) YouTube modal helpers (GLOBAL, così riutilizzabile anche in altre sezioni)
+    // =========================================================
+    const vmodal = document.getElementById("vmodal");
+    const vmodalFrame = document.getElementById("vmodalFrame");
+    const vmodalTitle = document.getElementById("vmodalTitle");
 
-      function ytUrl(id){
-        return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
-          "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+    function ytUrl(id){
+      return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
+        "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+    }
+
+    function openModal({ id, title }){
+      vmodalTitle.textContent = title || "Project";
+      vmodalFrame.src = ytUrl(id);
+      vmodal.classList.add("is-open");
+      vmodal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(){
+      vmodal.classList.remove("is-open");
+      vmodal.setAttribute("aria-hidden", "true");
+      vmodalFrame.src = "";
+      document.body.style.overflow = "";
+    }
+
+    // Close handlers
+    vmodal.addEventListener("click", (e) => {
+      if (e.target?.dataset?.close) closeModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && vmodal.classList.contains("is-open")) closeModal();
+    });
+
+    // Bind click for existing p-cards (Personal)
+    document.querySelectorAll(".p-card[data-yt]").forEach(card => {
+      const btn = card.querySelector(".p-media");
+      btn?.addEventListener("click", () => {
+        openModal({ id: card.dataset.yt, title: card.dataset.title });
+      });
+    });
+
+    // =========================================================
+    // 1) Currently Working On (auto from GitHub)
+    // =========================================================
+    async function loadCurrentlyWorkingOn() {
+      const user = "Nfoedy";
+      const cacheKey = "cw_cache_v2";
+      const cacheHours = 6;
+
+      const cwText = document.getElementById("cwText");
+      const cwRepo = document.getElementById("cwRepo");
+      const cwStack = document.getElementById("cwStack");
+
+      try {
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+        if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
+          cwText.innerHTML = cached.text;
+          cwRepo.innerHTML = cached.repoHtml;
+          cwStack.textContent = cached.stack;
+          return;
+        }
+      } catch(_) {}
+
+      try {
+        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
+        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+        if (!res.ok) throw new Error("GitHub API error");
+        const repos = await res.json();
+
+        const repo = repos.find(r =>
+          !r.fork &&
+          !r.archived &&
+          !r.disabled &&
+          (r.name || "").toLowerCase() !== "nfoedy.github.io"
+        );
+        if (!repo) throw new Error("No repo found");
+
+        const name = repo.name;
+        const desc = repo.description || "Active development.";
+        const lang = repo.language || "—";
+
+        const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
+        const repoHtml = `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
+
+        cwText.innerHTML = textHtml;
+        cwRepo.innerHTML = repoHtml;
+        cwStack.textContent = lang;
+
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            t: Date.now(),
+            text: textHtml,
+            repoHtml,
+            stack: lang
+          }));
+        } catch(_) {}
+
+      } catch (e) {
+        cwText.textContent = "Currently updating projects on GitHub.";
+        cwRepo.textContent = "—";
+        cwStack.textContent = "—";
+      }
+    }
+    loadCurrentlyWorkingOn();
+
+    // =========================================================
+    // 2) Master Projects (big cards) - auto from a list of repos
+    // =========================================================
+    async function loadMasterProjects() {
+      const grid = document.getElementById("masterGrid");
+      if (!grid) return;
+
+      const USER = "Nfoedy";
+      const MASTER_REPOS = [
+        "Lord-Platypus/mask_museum",
+        "Nfoedy/IronSpin",
+        "Bosang6/cpp-raylib-platformer"
+      ];
+
+      // poster locali (opzionali). Se non esiste, usa OpenGraph GitHub
+      const POSTERS = {
+        // "Lord-Platypus/mask_museum": "assets/posters/mask_museum.jpg",
+        // "Nfoedy/IronSpin": "assets/posters/ironspin.jpg",
+        // "Bosang6/cpp-raylib-platformer": "assets/posters/cpp-raylib-platformer.jpg"
+      };
+
+      // youtube opzionale per master projects
+      const YT = {
+        // "Lord-Platypus/mask_museum": "VIDEO_ID"
+      };
+
+      const headers = { "Accept": "application/vnd.github+json" };
+      const safe = (s) => (typeof s === "string" ? s : "");
+
+      async function fetchRepo(fullName) {
+        const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers });
+        if (!res.ok) throw new Error("Repo fetch failed: " + fullName);
+        return await res.json();
       }
 
-      function openModal({ id, title }){
-        titleEl.textContent = title || "Project";
-        frame.src = ytUrl(id);
-        modal.classList.add("is-open");
-        modal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
+      function badgeHtmlFor(repo){
+        const owner = (repo.owner?.login || "").toLowerCase();
+        const isCollab = owner !== USER.toLowerCase();
+        if (!isCollab) return "";
+        // badge top-right
+        return `<div class="card-badge collab" style="right:12px; left:auto;">COLLAB</div>`;
       }
 
-      function closeModal(){
-        modal.classList.remove("is-open");
-        modal.setAttribute("aria-hidden", "true");
-        frame.src = "";
-        document.body.style.overflow = "";
+      function cardHtml(repo){
+        const full = safe(repo.full_name);
+        const name = safe(repo.name);
+        const desc = safe(repo.description) || "No description yet.";
+        const lang = repo.language || "—";
+        const url = repo.html_url;
+
+        const poster = POSTERS[full] || `https://opengraph.githubassets.com/1/${full}`;
+        const ytId = YT[full];
+
+        const media = ytId
+          ? `
+            <button class="p-media" type="button" aria-label="Play ${name} video">
+              <img class="p-poster" src="${poster}" alt="${name} poster">
+              <span class="p-play" aria-hidden="true">▶</span>
+            </button>
+          `
+          : `
+            <a class="p-media" href="${url}" target="_blank" rel="noreferrer" aria-label="Open ${name} repo">
+              <img class="p-poster" src="${poster}" alt="${name} poster">
+              <span class="p-play" aria-hidden="true">↗</span>
+            </a>
+          `;
+
+        return `
+          <article class="p-card" ${ytId ? `data-yt="${ytId}" data-title="${name}"` : ""}>
+            ${badgeHtmlFor(repo)}
+            ${media}
+
+            <div class="p-body">
+              <h3 class="p-title">${name}</h3>
+              <p class="p-desc">${desc}</p>
+
+              <div class="p-row">
+                <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
+                <span class="muted">${lang}</span>
+              </div>
+            </div>
+          </article>
+        `;
       }
 
-      document.querySelectorAll(".p-card").forEach(card => {
-        const btn = card.querySelector(".p-media");
-        btn?.addEventListener("click", () => {
-          openModal({ id: card.dataset.yt, title: card.dataset.title });
+      try {
+        const results = await Promise.allSettled(MASTER_REPOS.map(fetchRepo));
+        const repos = results
+          .filter(r => r.status === "fulfilled")
+          .map(r => r.value);
+
+        repos.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+        grid.innerHTML = repos.map(cardHtml).join("");
+
+        // bind modal solo per quelli con data-yt
+        grid.querySelectorAll(".p-card[data-yt]").forEach(card => {
+          const btn = card.querySelector(".p-media");
+          btn?.addEventListener("click", () => {
+            openModal({ id: card.dataset.yt, title: card.dataset.title });
+          });
         });
-      });
 
-      modal.addEventListener("click", (e) => {
-        if (e.target?.dataset?.close) closeModal();
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
-      });
-    })();
-  </script>
-
-  <script>
-
-  // CURRENTLY WORKING ON (GitHub auto)
-
-  async function loadCurrentlyWorkingOn() {
-
-    const user = "Nfoedy";
-
-    const cwText = document.getElementById("cwText");
-    const cwRepo = document.getElementById("cwRepo");
-    const cwStack = document.getElementById("cwStack");
-
-    try {
-
-      const url = `https://api.github.com/users/${user}/repos?sort=pushed&per_page=100`;
-      const res = await fetch(url);
-
-      if (!res.ok) throw new Error("GitHub API error");
-
-      const repos = await res.json();
-
-      const repo = repos.find(r =>
-        !r.fork &&
-        !r.archived &&
-        r.name.toLowerCase() !== "nfoedy.github.io"
-      );
-
-      if (!repo) return;
-
-      const name = repo.name;
-      const desc = repo.description || "Active development.";
-      const lang = repo.language || "—";
-
-      cwText.innerHTML = `Currently working on <b>${name}</b> — ${desc}`;
-      cwRepo.innerHTML = `<a href="${repo.html_url}" target="_blank">${name}</a>`;
-      cwStack.textContent = lang;
-
+      } catch (e) {
+        console.error(e);
+        grid.innerHTML = `<p class="muted2">Could not load Master Projects right now.</p>`;
+      }
     }
-    catch (err) {
+    loadMasterProjects();
 
-      cwText.textContent = "Currently updating projects on GitHub.";
-      cwRepo.textContent = "—";
-      cwStack.textContent = "—";
+    // =========================================================
+    // 3) Other Projects (compact list + tags/chips)
+    // =========================================================
+    function renderOtherProjects(){
+      const root = document.getElementById("otherList");
+      if (!root) return;
 
-      console.error(err);
-    }
+      // Qui gestisci tu a mano (perché vuoi “selezione curata”)
+      // tags = chips come quelli dell'immagine (Unreal Engine 5 / Blueprint / C++ ecc.)
+      const OTHER = [
+        {
+          title: "Fablora",
+          desc: "RPG 2D top-down in stile Pixel Art. Implemented in C++ with SFML.",
+          repo: "https://github.com/Nfoedy/Fablora",
+          tags: ["C++", "SFML", "Game Systems"]
+        },
+        {
+          title: "Acquaflow",
+          desc: "Demo website for a fictional water company. Built with HTML, CSS and JavaScript.",
+          repo: "https://github.com/Nfoedy/aquaflow",
+          tags: ["HTML", "CSS", "JavaScript"]
+        },
+        {
+          title: "nfoedy.github.io",
+          desc: "Portfolio website (GitHub Pages). UI layout, components and animations.",
+          repo: "https://github.com/Nfoedy/nfoedy.github.io",
+          tags: ["HTML", "CSS", "GitHub Pages"]
+        }
+      ];
 
-  }
-  loadCurrentlyWorkingOn();
-
-
-  // MASTER PROJECTS (solo alcuni repo)
-  async function loadMasterProjects() {
-
-    const grid = document.getElementById("masterGrid");
-
-    if (!grid) return;
-
-    const user = "Nfoedy";
-
-    // REPO DEL MASTER
-    const masterRepos = [
-      "IronSpin",
-      "mask_museum",
-      "cpp-raylib-platformer"
-    ];
-
-    const collaborations = [
-      "Lord-Platypus/mask_museum",
-      "Bosang6/cpp-raylib-platformer"
-    ];
-
-    function createCard(repo, fullName = null) {
-
-      const name = repo.name;
-      const desc = repo.description || "No description yet.";
-      const lang = repo.language || "—";
-      const url = repo.html_url;
-
-      const card = document.createElement("article");
-      card.className = "card";
-
-      card.innerHTML = `
-        <div class="card-badge wip">WIP</div>
-        <div class="thumb t1"></div>
-
-        <h3>${name}</h3>
-        <p>${desc}</p>
-
-        <div class="card-row">
-          <a class="btn small" href="${url}" target="_blank">Repo</a>
-          <span class="muted">${lang}</span>
+      const chipRow = (tags) => `
+        <div class="chips" style="margin:10px 0 0;">
+          ${(tags || []).map(t => `<span class="chip">${t}</span>`).join("")}
         </div>
-
-        ${fullName ? `<div class="muted2" style="margin-top:10px;">${fullName}</div>` : ``}
       `;
 
-      grid.appendChild(card);
+      root.innerHTML = OTHER.map(p => `
+        <div class="other-item">
+          <div class="other-main">
+            <div class="other-title">${p.title}</div>
+            <div class="other-desc">${p.desc}</div>
+            ${chipRow(p.tags)}
+          </div>
 
+          <div class="other-action">
+            <a class="other-link" href="${p.repo}" target="_blank" rel="noreferrer">Repo →</a>
+          </div>
+        </div>
+      `).join("");
     }
+    renderOtherProjects();
 
-    try {
+    // =========================================================
+    // 4) Current Projects grid (auto from GitHub + collaborations whitelist)
+    // =========================================================
+    async function loadReposToGrid() {
+      const user = "Nfoedy";
+      const grid = document.getElementById("repoGrid");
+      if (!grid) return;
 
-      // tuoi repo
-      const resMine = await fetch(`https://api.github.com/users/${user}/repos?per_page=100`);
-      const mine = await resMine.json();
+      const cacheKey = "repos_cache_v2";
+      const cacheHours = 6;
 
-      mine.forEach(repo => {
+      const featuredExternal = [
+        "Lord-Platypus/mask_museum",
+        "Bosang6/cpp-raylib-platformer"
+      ];
 
-        if (masterRepos.includes(repo.name)) {
-          createCard(repo);
-        }
+      const safe = (s) => (typeof s === "string" ? s : "");
 
-      });
+      const badgeFromRepo = (repo) => {
+        if (repo.__is_external) return { text: "COLLAB", cls: "collab" };
 
-      // collaborazioni
-      for (const full of collaborations) {
+        const created = repo.created_at ? new Date(repo.created_at) : null;
+        const days = created ? (Date.now() - created.getTime()) / (1000*60*60*24) : 9999;
+        if (days < 21) return { text: "NEW", cls: "new" };
+        return { text: "WIP", cls: "wip" };
+      };
 
-        const res = await fetch(`https://api.github.com/repos/${full}`);
+      const render = (repos) => {
+        grid.innerHTML = "";
 
-        if (!res.ok) continue;
+        repos.forEach(repo => {
+          const name = safe(repo.name);
+          const fullName = safe(repo.full_name) || name;
+          const desc = safe(repo.description) || "No description yet.";
+          const lang = repo.language ? repo.language : "—";
+          const url = repo.html_url;
 
-        const repo = await res.json();
+          const badge = badgeFromRepo(repo);
 
-        createCard(repo, full);
+          const card = document.createElement("article");
+          card.className = "card";
+          card.innerHTML = `
+            <div class="card-badge ${badge.cls}">${badge.text}</div>
+            <div class="thumb t1"></div>
 
-      }
+            <h3>${name}</h3>
+            <p>${desc}</p>
 
-    }
-    catch (err) {
-
-      grid.innerHTML = `<p class="muted2">Could not load projects.</p>`;
-      console.error(err);
-
-    }
-
-  }
-
-  loadMasterProjects();
-
-  </script>
-
-
-<script>
-  async function loadMasterProjects() {
-    const grid = document.getElementById("masterGrid");
-    if (!grid) return;
-
-    // Qui metti i repo che vuoi mostrare nella sezione Master
-    // (possono essere tuoi o di altri). Formato: "owner/repo"
-    const MASTER_REPOS = [
-      "Lord-Platypus/mask_museum",
-      "Nfoedy/IronSpin",
-      "Bosang6/cpp-raylib-platformer"
-    ];
-
-    // (opzionale) poster locali per ogni progetto
-    // metti le immagini in: assets/posters/...
-    const POSTERS = {
-      "Lord-Platypus/mask_museum": "assets/posters/mask_museum.jpg",
-      "Nfoedy/IronSpin": "assets/posters/ironspin.jpg",
-      "Bosang6/cpp-raylib-platformer": "assets/posters/cpp-raylib-platformer.jpg"
-    };
-
-    // (opzionale) video youtube per alcuni master project (se non c'è, niente modal)
-    // inserisci SOLO l'ID video (non il link)
-    const YT = {
-      // "Lord-Platypus/mask_museum": "VIDEO_ID"
-    };
-
-    const headers = { "Accept": "application/vnd.github+json" };
-
-    const safe = (s) => (typeof s === "string" ? s : "");
-    const badge = (fullName) => {
-      // per master voglio un badge fisso
-      return { text: "MASTER", cls: "lab" };
-    };
-
-    function cardHtml(repo) {
-      const full = safe(repo.full_name);
-      const name = safe(repo.name);
-      const desc = safe(repo.description) || "No description yet.";
-      const lang = repo.language || "—";
-      const url = repo.html_url;
-
-      const b = badge(full);
-      const poster = POSTERS[full] || `https://opengraph.githubassets.com/1/${full}`;
-      const ytId = YT[full];
-
-      // se c'è youtube -> button (apre modal)
-      // se non c'è -> link al repo
-      const media = ytId
-        ? `
-          <button class="p-media" type="button" aria-label="Play ${name} video">
-            <img class="p-poster" src="${poster}" alt="${name} poster">
-            <span class="p-play" aria-hidden="true">▶</span>
-          </button>
-        `
-        : `
-          <a class="p-media" href="${url}" target="_blank" rel="noreferrer" aria-label="Open ${name} repo">
-            <img class="p-poster" src="${poster}" alt="${name} poster">
-            <span class="p-play" aria-hidden="true">↗</span>
-          </a>
-        `;
-
-      return `
-        <article class="p-card" ${ytId ? `data-yt="${ytId}" data-title="${name}"` : ""}>
-          ${media}
-
-          <div class="p-body">
-            <h3 class="p-title">${name}</h3>
-            <p class="p-desc">${desc}</p>
-
-            <div class="p-row">
+            <div class="card-row">
               <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
               <span class="muted">${lang}</span>
             </div>
-          </div>
-        </article>
-      `;
-    }
 
-    async function fetchRepo(fullName) {
-      const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers });
-      if (!res.ok) throw new Error("Repo fetch failed: " + fullName);
-      return await res.json();
-    }
-
-    try {
-      const results = await Promise.allSettled(MASTER_REPOS.map(fetchRepo));
-      const repos = results
-        .filter(r => r.status === "fulfilled")
-        .map(r => r.value);
-
-      // ordina per updated
-      repos.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
-
-      grid.innerHTML = repos.map(cardHtml).join("");
-
-      // collega il modal YT SOLO alle card che hanno data-yt
-      document.querySelectorAll("#masterGrid .p-card[data-yt]").forEach(card => {
-        const btn = card.querySelector(".p-media");
-        btn?.addEventListener("click", () => {
-          // usa le funzioni già presenti nel tuo script modal
-          // se non esistono, dimmelo e te le integro io in modo pulito
-          const id = card.dataset.yt;
-          const title = card.dataset.title;
-          if (typeof openModal === "function") {
-            openModal({ id, title });
-          } else {
-            // fallback: apri direttamente youtube
-            window.open("https://www.youtube.com/watch?v=" + encodeURIComponent(id), "_blank");
-          }
+            ${repo.__is_external ? `<div class="muted2" style="margin-top:10px;">${fullName}</div>` : ``}
+          `;
+          grid.appendChild(card);
         });
-      });
+      };
 
-    } catch (e) {
-      console.error(e);
-      grid.innerHTML = `<p class="muted2">Could not load Master Projects right now.</p>`;
+      // cache
+      try {
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+        if (cached && cached.t && Array.isArray(cached.repos) &&
+            (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
+          render(cached.repos);
+          return;
+        }
+      } catch(_) {}
+
+      async function fetchRepoFull(fullName) {
+        const url = `https://api.github.com/repos/${fullName}`;
+        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+        if (!res.ok) throw new Error("Repo fetch error: " + fullName);
+        const r = await res.json();
+        r.__is_external = true;
+        return r;
+      }
+
+      try {
+        const urlMine = `https://api.github.com/users/${user}/repos?per_page=100&sort=updated`;
+        const resMine = await fetch(urlMine, { headers: { "Accept": "application/vnd.github+json" } });
+        if (!resMine.ok) throw new Error("GitHub API error (mine)");
+        const mine = await resMine.json();
+
+        const mineFiltered = mine
+          .filter(r => !r.fork && !r.archived && !r.disabled)
+          .map(r => ({ ...r, __is_external: false }));
+
+        const externals = await Promise.allSettled(featuredExternal.map(fetchRepoFull));
+        const extOk = externals
+          .filter(x => x.status === "fulfilled")
+          .map(x => x.value);
+
+        const all = [...mineFiltered, ...extOk].sort(
+          (a,b) => new Date(b.updated_at) - new Date(a.updated_at)
+        );
+
+        render(all);
+
+        try {
+          const slim = all.map(r => ({
+            name: r.name,
+            full_name: r.full_name,
+            description: r.description,
+            language: r.language,
+            html_url: r.html_url,
+            created_at: r.created_at,
+            updated_at: r.updated_at,
+            __is_external: r.__is_external
+          }));
+          localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), repos: slim }));
+        } catch(_) {}
+
+      } catch (e) {
+        grid.innerHTML = `<p class="muted2">Could not load repositories right now.</p>`;
+        console.error(e);
+      }
     }
-  }
 
-  loadMasterProjects();
-</script>
+    loadReposToGrid();
+  </script>
 
 </body>
 </html>
