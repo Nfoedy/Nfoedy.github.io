@@ -344,6 +344,15 @@
       // "Nfoedy/IronSpin": "VIDEO_ID",
     };
 
+    const STACK = {
+      "Nfoedy/Obscura": ["Unreal Engine 5", "Blueprint", "C++"],
+      "Nfoedy/IronSpin": ["Unreal Engine 5", "Blueprint"],
+      "Bosang6/cpp-raylib-platformer": ["C++", "Raylib"],
+      "Lord-Platypus/mask_museum": ["Unity", "C#"],
+      "Nfoedy/Fablora": ["C++", "SFML"],
+      "Nfoedy/aquaflow": ["HTML", "CSS", "JavaScript"]
+    };
+
     async function loadCuratedProjects() {
       const personalGrid = document.getElementById("personalGrid");
       const masterGrid   = document.getElementById("masterGrid");
@@ -412,7 +421,7 @@
         const full = safe(repo.full_name);
         const name = safe(repo.name);
         const desc = safe(repo.description) || "No description yet.";
-        const lang = repo.language || "—";
+        const stack = STACK[repo.full_name] || [repo.language || "—"];
         const url  = repo.html_url;
 
         const ytId = YT[full];
@@ -428,7 +437,7 @@
 
               <div class="p-row">
                 <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
-                <span class="muted">${lang}</span>
+                <span class="muted">${stack.join(" • ")}</span>
               </div>
             </div>
           </article>
