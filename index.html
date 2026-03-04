@@ -67,21 +67,22 @@
       <div class="glass-card">
         <div class="glass-title">Currently Working On</div>
 
-          <p class="glass-text" id="cwText">
-            Loading…
-          </p>
+        <p class="glass-text" id="cwText">
+          Loading...
+        </p>
 
-          <div class="mini-stats">
-            <div class="stat">
-              <div class="stat-k">Repo</div>
-              <div class="stat-v" id="cwRepo">—</div>
-            </div>
+        <div class="mini-stats">
 
-            <div class="stat">
-              <div class="stat-k">Stack</div>
-              <div class="stat-v" id="cwStack">—</div>
-            </div>
+          <div class="stat">
+            <div class="stat-k">Repo</div>
+            <div class="stat-v" id="cwRepo"></div>
           </div>
+
+          <div class="stat">
+            <div class="stat-k">Stack</div>
+            <div class="stat-v" id="cwStack"></div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -362,8 +363,7 @@
         !r.fork &&
         !r.archived &&
         !r.disabled &&
-        r.name &&
-        r.html_url
+        r.name !== "nfoedy.github.io"
       );
 
       if (!repo) throw new Error("No repo found");
@@ -377,11 +377,11 @@
         ? pushed.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" })
         : "";
 
-      const textHtml = `Working on <b>${name}</b> — ${desc}${pushedStr ? ` <span style="opacity:.7">(${pushedStr})</span>` : ""}.`;
+     const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
       const stackText = lang === "—" ? "—" : lang;
 
       cwText.innerHTML = textHtml;
-      cwRepo.textContent = name;
+      cwRepo.innerHTML = `<a href="${repo.html_url}" target="_blank">${name}</a>`;
       cwStack.textContent = stackText;
 
       // 3) salva cache
