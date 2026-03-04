@@ -127,38 +127,20 @@
 
       <div class="projects-grid">
 
-        <article class="p-card"
-          data-yt="VIDEO_ID_IRONSPIN"
-          data-title="IronSpin">
-          <button class="p-media" type="button" aria-label="Play IronSpin video">
-            <img class="p-poster" src="assets/posters/ironspin.jpg" alt="IronSpin poster">
+        <article class="p-card" data-yt="pcYNW_uPQRI" data-title="Obscura">
+          <button class="p-media" type="button" aria-label="Play Obscura video">
+            <!-- Thumbnail automatica YouTube -->
+            <img class="p-poster" src="https://i.ytimg.com/vi/pcYNW_uPQRI/hqdefault.jpg" alt="Obscura thumbnail">
             <span class="p-play" aria-hidden="true">▶</span>
           </button>
 
           <div class="p-body">
-            <h3 class="p-title">IronSpin</h3>
-            <p class="p-desc">Pinball prototype with scoring, spawner and UI flow.</p>
-            <div class="p-row">
-              <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
-              <span class="muted">UE5 • Blueprint</span>
-            </div>
-          </div>
-        </article>
+            <h3 class="p-title">Obscura</h3>
+            <p class="p-desc">Horror prototype in Unreal Engine 5. Flashlight, stamina system and AI.</p>
 
-        <article class="p-card"
-          data-yt="VIDEO_ID_RAYLIB"
-          data-title="Raylib Platformer">
-          <button class="p-media" type="button" aria-label="Play Raylib Platformer video">
-            <img class="p-poster" src="assets/posters/raylib.jpg" alt="Raylib Platformer poster">
-            <span class="p-play" aria-hidden="true">▶</span>
-          </button>
-
-          <div class="p-body">
-            <h3 class="p-title">Raylib Platformer</h3>
-            <p class="p-desc">2D platformer with scenes, pickups and physics.</p>
             <div class="p-row">
               <a class="btn small" href="#" target="_blank" rel="noreferrer">Repo</a>
-              <span class="muted">C++ • Raylib</span>
+              <span class="muted">UE5 • Gameplay</span>
             </div>
           </div>
         </article>
@@ -188,13 +170,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-
-
 
 
     <!-- CURRENT PROJECTS (5) -->
@@ -286,124 +261,167 @@
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 
-  <script>
-  const modal = document.getElementById("vmodal");
-  const frame = document.getElementById("vmodalFrame");
-  const titleEl = document.getElementById("vmodalTitle");
+    <script>
+    const modal = document.getElementById("vmodal");
+    const frame = document.getElementById("vmodalFrame");
+    const titleEl = document.getElementById("vmodalTitle");
 
-  function ytUrl(id){
-    // autoplay + modestbranding + rel=0 per evitare suggerimenti “random”
-    return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
-      "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
-  }
+    function ytUrl(id){
+      // autoplay + modestbranding + rel=0 per evitare suggerimenti “random”
+      return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
+        "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+    }
 
-  function openModal({ id, title }){
-    titleEl.textContent = title || "Project";
-    frame.src = ytUrl(id);
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  }
+    function openModal({ id, title }){
+      titleEl.textContent = title || "Project";
+      frame.src = ytUrl(id);
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
 
-  function closeModal(){
-    modal.classList.remove("is-open");
-    modal.setAttribute("aria-hidden", "true");
-    frame.src = ""; // stop video
-    document.body.style.overflow = "";
-  }
+    function closeModal(){
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      frame.src = ""; // stop video
+      document.body.style.overflow = "";
+    }
 
-  document.querySelectorAll(".p-card").forEach(card => {
-    const btn = card.querySelector(".p-media");
-    btn.addEventListener("click", () => {
-      openModal({ id: card.dataset.yt, title: card.dataset.title });
+    document.querySelectorAll(".p-card").forEach(card => {
+      const btn = card.querySelector(".p-media");
+      btn.addEventListener("click", () => {
+        openModal({ id: card.dataset.yt, title: card.dataset.title });
+      });
     });
-  });
 
-  modal.addEventListener("click", (e) => {
-    if (e.target?.dataset?.close) closeModal();
-  });
+    modal.addEventListener("click", (e) => {
+      if (e.target?.dataset?.close) closeModal();
+    });
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
-  });
-</script>
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+    });
+  </script>
 
 
-<script>
-  async function loadCurrentlyWorkingOn() {
-    const user = "Nfoedy";
-    const cacheKey = "cw_cache_v1";
-    const cacheHours = 6;
+  <script>
+    async function loadCurrentlyWorkingOn() {
+      const user = "Nfoedy";
+      const cacheKey = "cw_cache_v1";
+      const cacheHours = 6;
 
-    const cwText = document.getElementById("cwText");
-    const cwRepo = document.getElementById("cwRepo");
-    const cwStack = document.getElementById("cwStack");
+      const cwText = document.getElementById("cwText");
+      const cwRepo = document.getElementById("cwRepo");
+      const cwStack = document.getElementById("cwStack");
 
-    // 1) prova cache
-    try {
-      const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-      if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
-        cwText.innerHTML = cached.text;
-        cwRepo.textContent = cached.repo;
-        cwStack.textContent = cached.stack;
-        return;
-      }
-    } catch(_) {}
-
-    // 2) fetch GitHub
-    try {
-      const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
-      const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-      if (!res.ok) throw new Error("GitHub API error");
-
-      const repos = await res.json();
-
-      // Prendi il primo repo "sensato"
-      const repo = repos.find(r =>
-        !r.fork &&
-        !r.archived &&
-        !r.disabled &&
-        r.name.toLowerCase() !== "nfoedy.github.io"
-      );
-
-      if (!repo) throw new Error("No repo found");
-
-      const name = repo.name;
-      const desc = repo.description ? repo.description : "Recently updated project.";
-      const lang = repo.language ? repo.language : "—";
-      const pushed = repo.pushed_at ? new Date(repo.pushed_at) : null;
-
-      const pushedStr = pushed
-        ? pushed.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" })
-        : "";
-
-     const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
-      const stackText = lang === "—" ? "—" : lang;
-
-      cwText.innerHTML = textHtml;
-      cwRepo.innerHTML = `<a href="${repo.html_url}" target="_blank">${name}</a>`;
-      cwStack.textContent = stackText;
-
-      // 3) salva cache
+      // 1) prova cache
       try {
-        localStorage.setItem(cacheKey, JSON.stringify({
-          t: Date.now(),
-          text: textHtml,
-          repo: name,
-          stack: stackText
-        }));
+        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+        if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
+          cwText.innerHTML = cached.text;
+          cwRepo.textContent = cached.repo;
+          cwStack.textContent = cached.stack;
+          return;
+        }
       } catch(_) {}
 
-    } catch (e) {
-      // fallback: lascia un testo statico o neutro
-      cwText.textContent = "Currently updating projects on GitHub.";
-      cwRepo.textContent = "—";
-      cwStack.textContent = "—";
-    }
-  }
+      // 2) fetch GitHub
+      try {
+        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
+        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+        if (!res.ok) throw new Error("GitHub API error");
 
-  loadCurrentlyWorkingOn();
-</script>
+        const repos = await res.json();
+
+        // Prendi il primo repo "sensato"
+        const repo = repos.find(r =>
+          !r.fork &&
+          !r.archived &&
+          !r.disabled &&
+          r.name.toLowerCase() !== "nfoedy.github.io"
+        );
+
+        if (!repo) throw new Error("No repo found");
+
+        const name = repo.name;
+        const desc = repo.description ? repo.description : "Recently updated project.";
+        const lang = repo.language ? repo.language : "—";
+        const pushed = repo.pushed_at ? new Date(repo.pushed_at) : null;
+
+        const pushedStr = pushed
+          ? pushed.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" })
+          : "";
+
+      const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
+        const stackText = lang === "—" ? "—" : lang;
+
+        cwText.innerHTML = textHtml;
+        cwRepo.innerHTML = `<a href="${repo.html_url}" target="_blank">${name}</a>`;
+        cwStack.textContent = stackText;
+
+        // 3) salva cache
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            t: Date.now(),
+            text: textHtml,
+            repo: name,
+            stack: stackText
+          }));
+        } catch(_) {}
+
+      } catch (e) {
+        // fallback: lascia un testo statico o neutro
+        cwText.textContent = "Currently updating projects on GitHub.";
+        cwRepo.textContent = "—";
+        cwStack.textContent = "—";
+      }
+    }
+
+    loadCurrentlyWorkingOn();
+  </script>
+
+  <script>
+    (function () {
+      const modal = document.getElementById("vmodal");
+      const frame = document.getElementById("vmodalFrame");
+      const titleEl = document.getElementById("vmodalTitle");
+
+      function ytUrl(id){
+        return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
+          "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+      }
+
+      function openModal({ id, title }){
+        titleEl.textContent = title || "Project";
+        frame.src = ytUrl(id);
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal(){
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        frame.src = ""; // stop video
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".p-card").forEach(card => {
+        const btn = card.querySelector(".p-media");
+        btn.addEventListener("click", () => {
+          openModal({ id: card.dataset.yt, title: card.dataset.title });
+        });
+      });
+
+      modal.addEventListener("click", (e) => {
+        if (e.target?.dataset?.close) closeModal();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal();
+      });
+    })();
+  </script>
 
 </body>
 </html>
