@@ -328,12 +328,15 @@
     //    - Data (name/desc/lang/url) is fetched from GitHub
     // =========================================================
     const CURATED = [
+      // Personal
       { repo: "Nfoedy/Obscura", section: "personal" },
 
+      // Master
       { repo: "Nfoedy/IronSpin", section: "master" },
       { repo: "Lord-Platypus/mask_museum", section: "master" },
       { repo: "Bosang6/cpp-raylib-platformer", section: "master" },
 
+      // Other
       { repo: "Nfoedy/Fablora", section: "other" },
       { repo: "Nfoedy/aquaflow", section: "other" },
     ];
@@ -351,6 +354,16 @@
       "Lord-Platypus/mask_museum": ["Unity", "C#"],
       "Nfoedy/Fablora": ["C++", "SFML"],
       "Nfoedy/aquaflow": ["HTML", "CSS", "JavaScript"]
+    };
+
+    const PRIVATE_FALLBACK = {
+      "Lord-Platypus/mask_museum": {
+        name: "mask_museum",
+        description: "Private university/team project (repo is private).",
+        language: "Unity • C#",
+        html_url: "https://github.com/Lord-Platypus/mask_museum", // ok anche se privato: la pagina chiederà accesso
+        owner_login: "Lord-Platypus"
+      }
     };
 
     async function loadCuratedProjects() {
@@ -383,8 +396,24 @@
 
       async function fetchRepo(fullName) {
         const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers: GH_HEADERS });
-        if (!res.ok) throw new Error(`Repo fetch failed (${res.status}): ${fullName}`);
-        return await res.json();
+
+        if (res.ok) return await res.json();
+
+        // fallback only for private repos you explicitly whitelist
+        const fb = PRIVATE_FALLBACK[fullName];
+        if (fb) {
+          return {
+            full_name: fullName,
+            name: fb.name,
+            description: fb.description,
+            language: fb.language, // string già pronta
+            html_url: fb.html_url,
+            owner: { login: fb.owner_login || "" },
+            updated_at: new Date().toISOString()
+          };
+        }
+
+        throw new Error(`Repo fetch failed (${res.status}): ${fullName}`);
       }
 
       function badgeHtmlFor(repo){
