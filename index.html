@@ -480,7 +480,7 @@
         const desc = safe(repo.description) || "No description yet.";
         const url  = repo.html_url;
 
-        const tags = [repo.language].filter(Boolean);
+        const tags = STACK[repo.full_name] || [repo.language].filter(Boolean);
         const tagLine = tags.length
           ? `<div class="muted" style="margin-top:8px;">${tags.join(" • ")}</div>`
           : ``;
