@@ -139,7 +139,7 @@
       </div>
     </section>
 
-    <!-- CURRENT PROJECTS (auto from GitHub) -->
+    <!-- CURRENT PROJECTS (auto from GitHub + collaborations whitelist) -->
     <section class="section" id="work">
       <div class="section-head">
         <h2>Current Projects</h2>
@@ -180,7 +180,7 @@
 
   </main>
 
-  <!-- YT MODAL (keep at end of body) -->
+  <!-- YT MODAL -->
   <div class="vmodal" id="vmodal" aria-hidden="true">
     <div class="vmodal__backdrop" data-close="1"></div>
 
@@ -257,7 +257,7 @@
     // =========================================================
     async function loadCurrentlyWorkingOn() {
       const user = "Nfoedy";
-      const cacheKey = "cw_cache_v1";
+      const cacheKey = "cw_cache_v2";
       const cacheHours = 6;
 
       const cwText = document.getElementById("cwText");
@@ -321,19 +321,27 @@
     loadCurrentlyWorkingOn();
 
     // =========================================================
-    // 3) Current Projects (auto grid from GitHub)
+    // 3) Current Projects grid (auto from GitHub + collaborations whitelist)
     // =========================================================
     async function loadReposToGrid() {
       const user = "Nfoedy";
       const grid = document.getElementById("repoGrid");
       if (!grid) return;
 
-      const cacheKey = "repos_cache_v1";
+      const cacheKey = "repos_cache_v2";
       const cacheHours = 6;
+
+      // Collaborations (repo esterni)
+      const featuredExternal = [
+        "Lord-Platypus/mask_museum",
+        "Bosang6/cpp-raylib-platformer"
+      ];
 
       const safe = (s) => (typeof s === "string" ? s : "");
 
       const badgeFromRepo = (repo) => {
+        if (repo.__is_external) return { text: "COLLAB", cls: "collab" };
+
         const created = repo.created_at ? new Date(repo.created_at) : null;
         const days = created ? (Date.now() - created.getTime()) / (1000*60*60*24) : 9999;
         if (days < 21) return { text: "NEW", cls: "new" };
@@ -345,6 +353,7 @@
 
         repos.forEach(repo => {
           const name = safe(repo.name);
+          const fullName = safe(repo.full_name) || name;
           const desc = safe(repo.description) || "No description yet.";
           const lang = repo.language ? repo.language : "—";
           const url = repo.html_url;
@@ -356,12 +365,16 @@
           card.innerHTML = `
             <div class="card-badge ${badge.cls}">${badge.text}</div>
             <div class="thumb t1"></div>
+
             <h3>${name}</h3>
             <p>${desc}</p>
+
             <div class="card-row">
               <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
               <span class="muted">${lang}</span>
             </div>
+
+            ${repo.__is_external ? `<div class="muted2" style="margin-top:10px;">${fullName}</div>` : ``}
           `;
           grid.appendChild(card);
         });
@@ -377,37 +390,60 @@
         }
       } catch(_) {}
 
-      try {
-        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=updated`;
+      async function fetchRepoFull(fullName) {
+        const url = `https://api.github.com/repos/${fullName}`;
         const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-        if (!res.ok) throw new Error("GitHub API error");
-        const repos = await res.json();
+        if (!res.ok) throw new Error("Repo fetch error: " + fullName);
+        const r = await res.json();
+        r.__is_external = true;
+        return r;
+      }
 
-        const filtered = repos
+      try {
+        // your repos
+        const urlMine = `https://api.github.com/users/${user}/repos?per_page=100&sort=updated`;
+        const resMine = await fetch(urlMine, { headers: { "Accept": "application/vnd.github+json" } });
+        if (!resMine.ok) throw new Error("GitHub API error (mine)");
+        const mine = await resMine.json();
+
+        const mineFiltered = mine
           .filter(r => !r.fork && !r.archived && !r.disabled)
-          .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+          .map(r => ({ ...r, __is_external: false }));
 
-        render(filtered);
+        // external repos (collabs)
+        const externals = await Promise.allSettled(featuredExternal.map(fetchRepoFull));
+        const extOk = externals
+          .filter(x => x.status === "fulfilled")
+          .map(x => x.value);
+
+        const all = [...mineFiltered, ...extOk].sort(
+          (a,b) => new Date(b.updated_at) - new Date(a.updated_at)
+        );
+
+        render(all);
 
         // slim cache
         try {
-          const slim = filtered.map(r => ({
+          const slim = all.map(r => ({
             name: r.name,
+            full_name: r.full_name,
             description: r.description,
             language: r.language,
             html_url: r.html_url,
-            created_at: r.created_at
+            created_at: r.created_at,
+            updated_at: r.updated_at,
+            __is_external: r.__is_external
           }));
           localStorage.setItem(cacheKey, JSON.stringify({ t: Date.now(), repos: slim }));
         } catch(_) {}
 
       } catch (e) {
         grid.innerHTML = `<p class="muted2">Could not load repositories right now.</p>`;
+        console.error(e);
       }
     }
 
     loadReposToGrid();
   </script>
-
 </body>
 </html>
