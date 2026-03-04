@@ -472,7 +472,7 @@ a:hover{ text-decoration:none; }
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: min(980px, calc(100% - 28px));
+  width: min(1100px, calc(100% - 24px));
   border-radius: 22px;
   background: rgba(20,20,26,0.72);
   border: 1px solid rgba(255,255,255,0.10);
@@ -646,4 +646,26 @@ a:hover{ text-decoration:none; }
   .toolstrip-icons{ gap: 14px; padding: 16px; }
   .tool-icon{ width: 58px; height: 58px; border-radius: 18px; }
   .tool-icon img{ width: 30px; height: 30px; }
+}
+
+
+/* Modal animation (zoom in) */
+.vmodal{
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.vmodal.is-open{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.vmodal__panel{
+  transform: translate(-50%, -50%) scale(0.92);
+  transition: transform 180ms ease;
+}
+
+.vmodal.is-open .vmodal__panel{
+  transform: translate(-50%, -50%) scale(1);
 }

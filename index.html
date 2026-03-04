@@ -387,15 +387,19 @@
         return "";
       }
 
-      function mediaHtml(name, ytId){
+      function mediaHtml(fullName, name, ytId){
+        // Se ho YT: uso thumbnail YouTube (non placeholder)
         if (ytId) {
+          const thumb = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
           return `
             <button class="p-media" type="button" aria-label="Play ${name} video">
-              <div class="p-poster p-poster--placeholder" aria-hidden="true"></div>
+              <img class="p-poster" src="${thumb}" alt="${name} thumbnail">
               <span class="p-play" aria-hidden="true">▶</span>
             </button>
           `;
         }
+
+        // Se NON ho YT: placeholder (video in arrivo)
         return `
           <button class="p-media is-disabled" type="button" aria-label="${name} video coming soon" disabled>
             <div class="p-poster p-poster--placeholder" aria-hidden="true"></div>
@@ -416,7 +420,7 @@
         return `
           <article class="p-card" ${ytId ? `data-yt="${ytId}" data-title="${name}"` : ""}>
             ${badgeHtmlFor(repo)}
-            ${mediaHtml(name, ytId)}
+            ${mediaHtml(full, name, ytId)}
 
             <div class="p-body">
               <h3 class="p-title">${name}</h3>
@@ -459,7 +463,6 @@
       function bindModalClicks(root){
         root.querySelectorAll(".p-card[data-yt]").forEach(card => {
           const btn = card.querySelector(".p-media");
-          if (btn?.disabled) return;
           btn?.addEventListener("click", () => {
             openModal({ id: card.dataset.yt, title: card.dataset.title });
           });
