@@ -136,6 +136,7 @@
       </div>
     </section>
 
+
     <!-- MASTER PROJECTS (auto from GitHub + collaborations whitelist) -->
     <section class="section" id="master">
       <div class="section-head">
@@ -143,50 +144,10 @@
         <span class="muted2">University / Team</span>
       </div>
 
-      <div class="master-grid">
-
-        <!-- ESEMPIO 1 (con video, se ce l’hai) -->
-        <article class="p-card" data-yt="VIDEO_ID" data-title="Mask Museum">
-          <button class="p-media" type="button" aria-label="Play Mask Museum video">
-            <img class="p-poster" src="assets/posters/maskmuseum.jpg" alt="Mask Museum poster">
-            <span class="p-play" aria-hidden="true">▶</span>
-          </button>
-
-          <div class="p-body">
-            <h3 class="p-title">Mask Museum</h3>
-            <p class="p-desc">Short description come i current projects. (Unreal/Unity ecc.)</p>
-
-            <div class="p-row">
-              <a class="btn small" href="https://github.com/Lord-Platypus/mask_museum" target="_blank" rel="noreferrer">Repo</a>
-              <span class="muted">Master • Team</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- ESEMPIO 2 (senza video: poster cliccabile ma puoi anche farlo link diretto) -->
-        <article class="p-card">
-          <a class="p-media" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer" aria-label="Open IronSpin repo">
-            <img class="p-poster" src="assets/posters/ironspin.jpg" alt="IronSpin poster">
-            <span class="p-play" aria-hidden="true">↗</span>
-          </a>
-
-          <div class="p-body">
-            <h3 class="p-title">IronSpin</h3>
-            <p class="p-desc">Pinball game in UE 5.7. Physics, scoring, UI flow.</p>
-
-            <div class="p-row">
-              <a class="btn small" href="https://github.com/Nfoedy/IronSpin" target="_blank" rel="noreferrer">Repo</a>
-              <span class="muted">UE5 • Blueprint</span>
-            </div>
-          </div>
-        </article>
-
-      </div>
+      <!-- JS riempie qui (2 per riga come Obscura) -->
+      <div class="projects-grid" id="masterGrid" aria-label="Master projects list"></div>
     </section>
 
-      <!-- JS riempie qui (solo master projects) -->
-      <div class="grid" id="masterGrid" aria-label="Master projects list"></div>
-    </section>
 
     <!-- OTHER PROJECTS (lista compatta) -->
     <section class="section" id="other">
@@ -462,6 +423,129 @@
   loadMasterProjects();
 
   </script>
+
+
+<script>
+  async function loadMasterProjects() {
+    const grid = document.getElementById("masterGrid");
+    if (!grid) return;
+
+    // Qui metti i repo che vuoi mostrare nella sezione Master
+    // (possono essere tuoi o di altri). Formato: "owner/repo"
+    const MASTER_REPOS = [
+      "Lord-Platypus/mask_museum",
+      "Nfoedy/IronSpin",
+      "Bosang6/cpp-raylib-platformer"
+    ];
+
+    // (opzionale) poster locali per ogni progetto
+    // metti le immagini in: assets/posters/...
+    const POSTERS = {
+      "Lord-Platypus/mask_museum": "assets/posters/mask_museum.jpg",
+      "Nfoedy/IronSpin": "assets/posters/ironspin.jpg",
+      "Bosang6/cpp-raylib-platformer": "assets/posters/cpp-raylib-platformer.jpg"
+    };
+
+    // (opzionale) video youtube per alcuni master project (se non c'è, niente modal)
+    // inserisci SOLO l'ID video (non il link)
+    const YT = {
+      // "Lord-Platypus/mask_museum": "VIDEO_ID"
+    };
+
+    const headers = { "Accept": "application/vnd.github+json" };
+
+    const safe = (s) => (typeof s === "string" ? s : "");
+    const badge = (fullName) => {
+      // per master voglio un badge fisso
+      return { text: "MASTER", cls: "lab" };
+    };
+
+    function cardHtml(repo) {
+      const full = safe(repo.full_name);
+      const name = safe(repo.name);
+      const desc = safe(repo.description) || "No description yet.";
+      const lang = repo.language || "—";
+      const url = repo.html_url;
+
+      const b = badge(full);
+      const poster = POSTERS[full] || `https://opengraph.githubassets.com/1/${full}`;
+      const ytId = YT[full];
+
+      // se c'è youtube -> button (apre modal)
+      // se non c'è -> link al repo
+      const media = ytId
+        ? `
+          <button class="p-media" type="button" aria-label="Play ${name} video">
+            <img class="p-poster" src="${poster}" alt="${name} poster">
+            <span class="p-play" aria-hidden="true">▶</span>
+          </button>
+        `
+        : `
+          <a class="p-media" href="${url}" target="_blank" rel="noreferrer" aria-label="Open ${name} repo">
+            <img class="p-poster" src="${poster}" alt="${name} poster">
+            <span class="p-play" aria-hidden="true">↗</span>
+          </a>
+        `;
+
+      return `
+        <article class="p-card" ${ytId ? `data-yt="${ytId}" data-title="${name}"` : ""}>
+          ${media}
+
+          <div class="p-body">
+            <h3 class="p-title">${name}</h3>
+            <p class="p-desc">${desc}</p>
+
+            <div class="p-row">
+              <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
+              <span class="muted">${lang}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    async function fetchRepo(fullName) {
+      const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers });
+      if (!res.ok) throw new Error("Repo fetch failed: " + fullName);
+      return await res.json();
+    }
+
+    try {
+      const results = await Promise.allSettled(MASTER_REPOS.map(fetchRepo));
+      const repos = results
+        .filter(r => r.status === "fulfilled")
+        .map(r => r.value);
+
+      // ordina per updated
+      repos.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+      grid.innerHTML = repos.map(cardHtml).join("");
+
+      // collega il modal YT SOLO alle card che hanno data-yt
+      document.querySelectorAll("#masterGrid .p-card[data-yt]").forEach(card => {
+        const btn = card.querySelector(".p-media");
+        btn?.addEventListener("click", () => {
+          // usa le funzioni già presenti nel tuo script modal
+          // se non esistono, dimmelo e te le integro io in modo pulito
+          const id = card.dataset.yt;
+          const title = card.dataset.title;
+          if (typeof openModal === "function") {
+            openModal({ id, title });
+          } else {
+            // fallback: apri direttamente youtube
+            window.open("https://www.youtube.com/watch?v=" + encodeURIComponent(id), "_blank");
+          }
+        });
+      });
+
+    } catch (e) {
+      console.error(e);
+      grid.innerHTML = `<p class="muted2">Could not load Master Projects right now.</p>`;
+    }
+  }
+
+  loadMasterProjects();
+</script>
 
 </body>
 </html>
