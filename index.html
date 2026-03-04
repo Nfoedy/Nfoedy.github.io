@@ -237,64 +237,83 @@
     // 1) Currently Working On (auto from GitHub)
     // =========================================================
     async function loadCurrentlyWorkingOn() {
-      const user = "Nfoedy";
-      const cacheKey = "cw_cache_v2";
-      const cacheHours = 6;
+    const user = "Nfoedy";
+    const cacheKey = "cw_cache_v3";
+    const cacheHours = 6;
 
-      const cwText = document.getElementById("cwText");
-      const cwRepo = document.getElementById("cwRepo");
-      const cwStack = document.getElementById("cwStack");
+    const cwText = document.getElementById("cwText");
+    const cwRepo = document.getElementById("cwRepo");
+    const cwStack = document.getElementById("cwStack");
+
+    const formatDateIT = (iso) => {
+      try {
+        const d = new Date(iso);
+        const fmt = new Intl.DateTimeFormat("it-IT", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        });
+        return fmt.format(d).replace(".", "");
+      } catch {
+        return "";
+      }
+    };
+
+    try {
+      const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+      if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
+        cwText.innerHTML = cached.text;
+        cwRepo.innerHTML = cached.repoHtml;
+        cwStack.textContent = cached.stack;
+        return;
+      }
+    } catch(_) {}
+
+    try {
+      const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
+      const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+      if (!res.ok) throw new Error("GitHub API error");
+      const repos = await res.json();
+
+      const repo = repos.find(r =>
+        !r.fork &&
+        !r.archived &&
+        !r.disabled &&
+        (r.name || "").toLowerCase() !== "nfoedy.github.io"
+      );
+
+      if (!repo) throw new Error("No repo found");
+
+      const name = repo.name;
+      const desc = repo.description || "Recently updated project.";
+      const lang = repo.language || "—";
+      const date = formatDateIT(repo.pushed_at || repo.updated_at);
+
+      const textHtml =
+        `Working on <b>${name}</b> — ${desc}${date ? ` <span style="opacity:.8">(${date}).</span>` : ""}`;
+
+      const repoHtml =
+        `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
+
+      cwText.innerHTML = textHtml;
+      cwRepo.innerHTML = repoHtml;
+      cwStack.textContent = lang;
 
       try {
-        const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
-        if (cached && cached.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
-          cwText.innerHTML = cached.text;
-          cwRepo.innerHTML = cached.repoHtml;
-          cwStack.textContent = cached.stack;
-          return;
-        }
+        localStorage.setItem(cacheKey, JSON.stringify({
+          t: Date.now(),
+          text: textHtml,
+          repoHtml,
+          stack: lang
+        }));
       } catch(_) {}
 
-      try {
-        const url = `https://api.github.com/users/${user}/repos?per_page=100&sort=pushed`;
-        const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-        if (!res.ok) throw new Error("GitHub API error");
-        const repos = await res.json();
-
-        const repo = repos.find(r =>
-          !r.fork &&
-          !r.archived &&
-          !r.disabled &&
-          (r.name || "").toLowerCase() !== "nfoedy.github.io"
-        );
-        if (!repo) throw new Error("No repo found");
-
-        const name = repo.name;
-        const desc = repo.description || "Active development.";
-        const lang = repo.language || "—";
-
-        const textHtml = `Currently working on <b>${name}</b> — ${desc}`;
-        const repoHtml = `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
-
-        cwText.innerHTML = textHtml;
-        cwRepo.innerHTML = repoHtml;
-        cwStack.textContent = lang;
-
-        try {
-          localStorage.setItem(cacheKey, JSON.stringify({
-            t: Date.now(),
-            text: textHtml,
-            repoHtml,
-            stack: lang
-          }));
-        } catch(_) {}
-
-      } catch (e) {
-        cwText.textContent = "Currently updating projects on GitHub.";
-        cwRepo.textContent = "—";
-        cwStack.textContent = "—";
-      }
+    } catch (e) {
+      cwText.textContent = "Currently updating projects on GitHub.";
+      cwRepo.textContent = "—";
+      cwStack.textContent = "—";
     }
+  }
     loadCurrentlyWorkingOn();
 
     // =========================================================
