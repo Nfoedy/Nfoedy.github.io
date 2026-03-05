@@ -156,28 +156,63 @@
     <!-- CONTACT -->
     <section class="section" id="contact">
       <div class="sayhi">
-        <div>
+        <!-- LEFT: CONTACT -->
+        <div class="contact-left">
           <h2>Contact</h2>
           <p>Interested in collaboration or just want to connect?</p>
 
-         <div class="contact">
-          <a class="contact-item" href="mailto:riccardoconforti96@gmail.com">
-            riccardoconforti96@gmail.com
-          </a>
-          <a class="contact-item" href="mailto:riccardo.conforti@studenti.univr.it">
-            riccardo.conforti@studenti.univr.it
-          </a>
+          <div class="contact">
+            <a class="contact-item" href="mailto:riccardoconforti96@gmail.com" aria-label="Email privata">
+              <span class="contact-ico" aria-hidden="true">✉</span>
+              riccardoconforti96@gmail.com
+            </a>
+
+            <a class="contact-item" href="mailto:riccardo.conforti@studenti.univr.it" aria-label="Email universitaria">
+              <span class="contact-ico" aria-hidden="true">✉</span>
+              riccardo.conforti@studenti.univr.it
+            </a>
           </div>
         </div>
 
-        <div class="bubbles" aria-hidden="true">
-          <div class="bubble b1"></div>
-          <div class="bubble b2"></div>
-          <div class="bubble b3"></div>
-        </div>
+        <!-- RIGHT: SOCIAL -->
+        <aside class="contact-right" aria-label="Social links">
+          <div class="social-title">Social</div>
+
+          <div class="social-icons">
+            <a class="social-ico" href="https://www.instagram.com/TUOUSERNAME" target="_blank" rel="noreferrer"
+              aria-label="Instagram">
+              <!-- Instagram (official-style SVG) -->
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9A3.5 3.5 0 0 0 20 16.5v-9A3.5 3.5 0 0 0 16.5 4h-9Z"/>
+                <path d="M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/>
+                <path d="M17.6 6.1a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0Z"/>
+              </svg>
+            </a>
+
+            <a class="social-ico" href="https://www.linkedin.com/in/TUOUSERNAME" target="_blank" rel="noreferrer"
+              aria-label="LinkedIn">
+              <!-- LinkedIn (official-style SVG) -->
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M4.98 3.5A2.5 2.5 0 1 1 5 8.5a2.5 2.5 0 0 1-.02-5ZM3.5 9H6.5v12H3.5V9Zm6 0h2.9v1.6h.04c.4-.75 1.4-1.6 2.9-1.6 3.1 0 3.7 2 3.7 4.7V21h-3V14.5c0-1.6 0-3.6-2.2-3.6s-2.5 1.7-2.5 3.5V21h-3V9Z"/>
+              </svg>
+            </a>
+
+            <a class="social-ico" href="https://www.youtube.com/@TUOUSERNAME" target="_blank" rel="noreferrer"
+              aria-label="YouTube">
+              <!-- YouTube (official-style SVG) -->
+              <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.8 4.6 12 4.6 12 4.6s-5.8 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.7.5 7.5.5 7.5.5s5.8 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/>
+              </svg>
+            </a>
+          </div>
+
+          <!-- opzionale: glow dietro le icone -->
+          <div class="social-glow" aria-hidden="true"></div>
+        </aside>
       </div>
     </section>
 
+    
     <footer class="footer">
       <span>© <span id="year"></span> Riccardo Conforti</span>
       <span>Built with GitHub Pages</span>

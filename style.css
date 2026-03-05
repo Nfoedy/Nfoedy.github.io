@@ -619,10 +619,10 @@ a:hover{ text-decoration:none; }
    ========================================================= */
 .sayhi{
   display:grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 12px;
+  grid-template-columns: 1fr 1fr; /* prima era 1.2fr 1fr */
+  gap: 14px;
   border-radius: 26px;
-  padding: 14px;
+  padding: 18px;
   border: 1px solid rgba(255,255,255,0.08);
   background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(34,211,238,0.10), rgba(251,113,133,0.10));
   box-shadow: var(--shadow);
@@ -767,4 +767,88 @@ a:hover{ text-decoration:none; }
 
 .social-icon{
   font-size:16px;
+}
+
+/* =========================================================
+   CONTACT split + SOCIAL icons
+   ========================================================= */
+.contact-left h2{ margin: 0 0 8px; font-size: 20px; }
+.contact-left p{ margin: 0 0 14px; color: rgba(255,255,255,0.78); }
+
+.contact-ico{
+  width: 18px;
+  display: inline-grid;
+  place-items: center;
+  opacity: .9;
+}
+
+/* Right side */
+.contact-right{
+  position: relative;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.18);
+  padding: 14px;
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.social-title{
+  font-weight: 900;
+  letter-spacing: .2px;
+  opacity: .92;
+}
+
+.social-icons{
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Icon buttons */
+.social-ico{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.social-ico:hover{
+  transform: translateY(-2px) scale(1.04);
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.16);
+}
+
+/* Make SVGs look like “official” monochrome */
+.social-ico svg{
+  width: 22px;
+  height: 22px;
+  fill: rgba(255,255,255,0.92);
+}
+
+/* subtle glow behind icons */
+.social-glow{
+  position:absolute;
+  inset: -30%;
+  background:
+    radial-gradient(240px 180px at 30% 25%, rgba(124,58,237,0.25), transparent 60%),
+    radial-gradient(240px 180px at 70% 60%, rgba(34,211,238,0.18), transparent 60%);
+  filter: blur(14px);
+  opacity: .9;
+  pointer-events: none;
+}
+
+/* Responsive: stack contact + social */
+@media (max-width: 980px){
+  .sayhi{ grid-template-columns: 1fr; }
 }
