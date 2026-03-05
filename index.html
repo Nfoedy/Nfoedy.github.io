@@ -51,7 +51,6 @@
             I build interactive mechanics, UI flows and solid game architecture.
           </p>
 
-
           <div class="cta-row">
             <a class="btn primary" href="#personal">View Projects</a>
             <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">GitHub</a>
@@ -59,9 +58,9 @@
         </div>
       </div>
 
+      <!-- Currently Working On -->
       <div class="glass-card">
         <div class="glass-title">Currently Working On</div>
-
         <p class="glass-text" id="cwText">Loading...</p>
 
         <div class="mini-stats">
@@ -88,19 +87,15 @@
         <div class="tool-icon" title="Unreal Engine">
           <img src="assets/icons/unrealengine.svg" alt="Unreal Engine">
         </div>
-
         <div class="tool-icon" title="Unity">
           <img src="assets/icons/unity.svg" alt="Unity">
         </div>
-
         <div class="tool-icon" title="C++">
           <img src="assets/icons/cplusplus.svg" alt="C++">
         </div>
-
         <div class="tool-icon" title="C#">
           <img src="assets/icons/csharp.svg" alt="C#">
         </div>
-
         <div class="tool-icon" title="Git">
           <img src="assets/icons/git.svg" alt="Git">
         </div>
@@ -113,7 +108,6 @@
         <h2>Personal Projects</h2>
         <span class="muted2">Showcase</span>
       </div>
-
       <div class="projects-grid" id="personalGrid" aria-label="Personal projects list"></div>
     </section>
 
@@ -123,7 +117,6 @@
         <h2>Master Projects</h2>
         <span class="muted2">University / Team</span>
       </div>
-
       <div class="projects-grid" id="masterGrid" aria-label="Master projects list"></div>
     </section>
 
@@ -133,7 +126,6 @@
         <h2>Other Projects</h2>
         <span class="muted2">Smaller / experiments</span>
       </div>
-
       <div class="other-list" id="otherList" aria-label="Other projects list"></div>
     </section>
 
@@ -192,29 +184,100 @@
 
   <script>
     // =========================================================
-    // Setup
+    // Config
     // =========================================================
-    document.getElementById("year").textContent = new Date().getFullYear();
-
     const USER = "Nfoedy";
     const GH_HEADERS = { "Accept": "application/vnd.github+json" };
 
-    const safe = (s) => (typeof s === "string" ? s : "");
+    // YOU decide placement here
+    const CURATED = [
+      // Personal
+      { repo: "Nfoedy/Obscura", section: "personal" },
+
+      // Master
+      { repo: "Nfoedy/IronSpin", section: "master" },
+      { repo: "Nfoedy/Bentegoal", section: "master" },
+      { repo: "Lord-Platypus/mask_museum", section: "master" }, // private -> fallback below
+      { repo: "Bosang6/cpp-raylib-platformer", section: "master" },
+
+      // Other
+      { repo: "Nfoedy/Fablora", section: "other" },
+      { repo: "Nfoedy/aquaflow", section: "other" },
+    ];
+
+    // Optional YouTube trailers (video id only)
+    const YT = {
+      "Nfoedy/Obscura": "pcYNW_uPQRI",
+    };
+
+    // Stack shown bottom-right (more accurate than GitHub "language")
+    const STACK = {
+      "Nfoedy/Obscura": ["Unreal Engine 5", "Blueprint", "C++"],
+      "Nfoedy/IronSpin": ["Unreal Engine 5", "Blueprint"],
+      "Nfoedy/Bentegoal": ["Unity", "C#"],
+      "Bosang6/cpp-raylib-platformer": ["C++", "Raylib"],
+      "Lord-Platypus/mask_museum": ["Unity", "C#"],
+      "Nfoedy/Fablora": ["C++", "SFML"],
+      "Nfoedy/aquaflow": ["HTML", "CSS", "JavaScript"]
+    };
+
+    // Private repos: GitHub API can't read them -> manual fallback
+    const PRIVATE_FALLBACK = {
+      "Lord-Platypus/mask_museum": {
+        name: "mask_museum",
+        description: "Private university/team project (repo is private).",
+        html_url: "https://github.com/Lord-Platypus/mask_museum",
+        owner_login: "Lord-Platypus"
+      }
+    };
 
     // =========================================================
-    // YouTube modal helpers
+    // Helpers
+    // =========================================================
+    const safe = (s) => (typeof s === "string" ? s : "");
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+    function ytEmbedUrl(id){
+      return "https://www.youtube.com/embed/" + encodeURIComponent(id) +
+        "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+    }
+
+    function ytThumbUrl(id){
+      return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    }
+
+    function formatDateIT(iso){
+      try {
+        const d = new Date(iso);
+        const fmt = new Intl.DateTimeFormat("it-IT", { day: "2-digit", month: "short", year: "numeric" });
+        return fmt.format(d).replace(".", "");
+      } catch {
+        return "";
+      }
+    }
+
+    function dedupeCurated(list){
+      const seen = new Set();
+      const out = [];
+      for (const item of list) {
+        const key = (item?.repo || "").toLowerCase().trim();
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+        out.push({ repo: item.repo.trim(), section: item.section });
+      }
+      return out;
+    }
+
+    // =========================================================
+    // YouTube Modal
     // =========================================================
     const vmodal = document.getElementById("vmodal");
     const vmodalFrame = document.getElementById("vmodalFrame");
     const vmodalTitle = document.getElementById("vmodalTitle");
 
-    const ytUrl = (id) =>
-      "https://www.youtube.com/embed/" + encodeURIComponent(id) +
-      "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
-
     function openModal({ id, title }){
       vmodalTitle.textContent = title || "Project";
-      vmodalFrame.src = ytUrl(id);
+      vmodalFrame.src = ytEmbedUrl(id);
       vmodal.classList.add("is-open");
       vmodal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
@@ -235,10 +298,122 @@
       if (e.key === "Escape" && vmodal.classList.contains("is-open")) closeModal();
     });
 
+    function bindModalClicks(root){
+      root.querySelectorAll(".p-card[data-yt]").forEach(card => {
+        const btn = card.querySelector(".p-media");
+        btn?.addEventListener("click", () => {
+          openModal({ id: card.dataset.yt, title: card.dataset.title });
+        });
+      });
+    }
+
     // =========================================================
-    // 1) Currently Working On (auto from GitHub) - excludes nfoedy.github.io
+    // GitHub fetch with private fallback
     // =========================================================
-    async function loadCurrentlyWorkingOn() {
+    async function fetchRepo(fullName){
+      const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers: GH_HEADERS });
+      if (res.ok) return await res.json();
+
+      const fb = PRIVATE_FALLBACK[fullName];
+      if (fb) {
+        return {
+          full_name: fullName,
+          name: fb.name,
+          description: fb.description,
+          html_url: fb.html_url,
+          owner: { login: fb.owner_login || "" },
+          updated_at: new Date().toISOString(),
+          language: "" // not used (STACK handles it)
+        };
+      }
+
+      throw new Error(`Repo fetch failed (${res.status}): ${fullName}`);
+    }
+
+    // =========================================================
+    // Renderers
+    // =========================================================
+    function badgeHtmlFor(repo){
+      const owner = (repo.owner?.login || "").toLowerCase();
+      if (owner && owner !== USER.toLowerCase()) {
+        return `<div class="card-badge collab card-badge--right">COLLAB</div>`;
+      }
+      return "";
+    }
+
+    function mediaHtml(fullName, name){
+      const ytId = YT[fullName];
+      if (ytId) {
+        return `
+          <button class="p-media" type="button" aria-label="Play ${name} video">
+            <img class="p-poster" src="${ytThumbUrl(ytId)}" alt="${name} thumbnail">
+            <span class="p-play" aria-hidden="true">▶</span>
+          </button>
+        `;
+      }
+
+      return `
+        <button class="p-media is-disabled" type="button" aria-label="${name} video coming soon" disabled>
+          <div class="p-poster p-poster--placeholder" aria-hidden="true"></div>
+          <span class="p-play" aria-hidden="true">⧗</span>
+        </button>
+      `;
+    }
+
+    function projectCardHtml(repo){
+      const full = safe(repo.full_name);
+      const name = safe(repo.name);
+      const desc = safe(repo.description) || "No description yet.";
+      const stack = STACK[full] || [repo.language || "—"];
+      const url = repo.html_url;
+      const ytId = YT[full];
+
+      return `
+        <article class="p-card" ${ytId ? `data-yt="${ytId}" data-title="${name}"` : ""}>
+          ${badgeHtmlFor(repo)}
+          ${mediaHtml(full, name)}
+
+          <div class="p-body">
+            <h3 class="p-title">${name}</h3>
+            <p class="p-desc">${desc}</p>
+
+            <div class="p-row">
+              <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
+              <span class="muted">${stack.join(" • ")}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function otherBannerHtml(repo){
+      const full = safe(repo.full_name);
+      const name = safe(repo.name);
+      const desc = safe(repo.description) || "No description yet.";
+      const url = repo.html_url;
+
+      const tags = STACK[full] || [repo.language].filter(Boolean);
+      const tagLine = tags.length ? `<div class="muted other-tags">${tags.join(" • ")}</div>` : "";
+
+      return `
+        <div class="other-item">
+          <div class="other-main">
+            <div class="other-title">${name}</div>
+            <div class="other-desc">${desc}</div>
+            ${tagLine}
+          </div>
+
+          <div class="other-action">
+            <a class="other-link" href="${url}" target="_blank" rel="noreferrer">Repo →</a>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================
+    // Currently Working On (with cache) - excludes nfoedy.github.io
+    // =========================================================
+    async function loadCurrentlyWorkingOn(){
       const cacheKey = "cw_cache_v4";
       const cacheHours = 6;
 
@@ -246,21 +421,7 @@
       const cwRepo = document.getElementById("cwRepo");
       const cwStack = document.getElementById("cwStack");
 
-      const formatDateIT = (iso) => {
-        try {
-          const d = new Date(iso);
-          const fmt = new Intl.DateTimeFormat("it-IT", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-          });
-          return fmt.format(d).replace(".", "");
-        } catch {
-          return "";
-        }
-      };
-
-      // cache
+      // try cache
       try {
         const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
         if (cached?.t && (Date.now() - cached.t) < cacheHours * 3600 * 1000) {
@@ -283,29 +444,32 @@
           !r.disabled &&
           (r.name || "").toLowerCase() !== "nfoedy.github.io"
         );
-
         if (!repo) throw new Error("No repo found for CW");
 
+        const full = `${repo.owner?.login || USER}/${repo.name}`;
         const name = repo.name;
         const desc = repo.description || "Recently updated project.";
-        const lang = repo.language || "—";
         const date = formatDateIT(repo.pushed_at || repo.updated_at);
 
+        const stackText = (STACK[full] && STACK[full].length)
+          ? STACK[full].join(" • ")
+          : (repo.language || "—");
+
         const textHtml =
-          `Working on <b>${name}</b> — ${desc}${date ? ` <span style="opacity:.8">(${date}).</span>` : ""}`;
+          `Working on <b>${name}</b> — ${desc}${date ? ` <span class="cw-date">(${date}).</span>` : ""}`;
         const repoHtml =
           `<a href="${repo.html_url}" target="_blank" rel="noreferrer">${name}</a>`;
 
         cwText.innerHTML = textHtml;
         cwRepo.innerHTML = repoHtml;
-        cwStack.textContent = lang;
+        cwStack.textContent = stackText;
 
         try {
           localStorage.setItem(cacheKey, JSON.stringify({
             t: Date.now(),
             text: textHtml,
             repoHtml,
-            stack: lang
+            stack: stackText
           }));
         } catch(_) {}
 
@@ -318,245 +482,102 @@
     }
 
     // =========================================================
-    // 2) Curated Projects (YOU decide placement)
-    //    - section = "personal" | "master" | "other"
-    //    - Data (name/desc/lang/url) is fetched from GitHub
+    // Curated Projects (cache + gentle fetch)
     // =========================================================
-    const CURATED = [
-      // Personal
-      { repo: "Nfoedy/Obscura", section: "personal" },
+    const curatedCacheKey = "curated_cache_v1";
+    const curatedCacheHours = 24;
 
-      // Master
-      { repo: "Nfoedy/IronSpin", section: "master" },
-      { repo: "Nfoedy/Bentegoal", section: "master" },
-      { repo: "Lord-Platypus/mask_museum", section: "master" },
-      { repo: "Bosang6/cpp-raylib-platformer", section: "master" },
-
-      // Other
-      { repo: "Nfoedy/Fablora", section: "other" },
-      { repo: "Nfoedy/aquaflow", section: "other" },
-    ];
-
-    // Optional: YouTube trailers (when you have them)
-    const YT = {
-      "Nfoedy/Obscura": "pcYNW_uPQRI",
-      // "Nfoedy/IronSpin": "VIDEO_ID",
-    };
-
-    const STACK = {
-      "Nfoedy/Obscura": ["Unreal Engine 5", "Blueprint"],
-      "Nfoedy/IronSpin": ["Unreal Engine 5", "Blueprint"],
-      "Nfoedy/Bentegoal": ["Unity","C#"],
-      "Bosang6/cpp-raylib-platformer": ["C++"],
-      "Lord-Platypus/mask_museum": ["Unity", "C#"],
-      "Nfoedy/Fablora": ["C++", "SFML"],
-      "Nfoedy/aquaflow": ["HTML", "CSS", "JavaScript"]
-    };
-
-    const PRIVATE_FALLBACK = {
-      "Lord-Platypus/mask_museum": {
-        name: "mask_museum",
-        description: "Private university/team project (repo is private).",
-        language: "Unity • C#",
-        html_url: "https://github.com/Lord-Platypus/mask_museum", // ok anche se privato: la pagina chiederà accesso
-        owner_login: "Lord-Platypus"
+    function getCuratedCache(){
+      try {
+        const c = JSON.parse(localStorage.getItem(curatedCacheKey) || "null");
+        if (!c?.t || !Array.isArray(c?.items)) return null;
+        const fresh = (Date.now() - c.t) < curatedCacheHours * 3600 * 1000;
+        return { fresh, items: c.items };
+      } catch {
+        return null;
       }
-    };
+    }
 
-    async function loadCuratedProjects() {
+    function setCuratedCache(items){
+      try {
+        localStorage.setItem(curatedCacheKey, JSON.stringify({ t: Date.now(), items }));
+      } catch {}
+    }
+
+    function renderCurated(items){
+      const personalGrid = document.getElementById("personalGrid");
+      const masterGrid   = document.getElementById("masterGrid");
+      const otherList    = document.getElementById("otherList");
+
+      const personal = items.filter(x => x.section === "personal").map(x => x.repo)
+        .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+      const master = items.filter(x => x.section === "master").map(x => x.repo)
+        .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+      const other = items.filter(x => x.section === "other").map(x => x.repo)
+        .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+      personalGrid.innerHTML = personal.length
+        ? personal.map(projectCardHtml).join("")
+        : `<p class="muted2">No personal projects yet.</p>`;
+
+      masterGrid.innerHTML = master.length
+        ? master.map(projectCardHtml).join("")
+        : `<p class="muted2">No master projects yet.</p>`;
+
+      otherList.innerHTML = other.length
+        ? other.map(otherBannerHtml).join("")
+        : `<p class="muted2">No other projects yet.</p>`;
+
+      bindModalClicks(personalGrid);
+      bindModalClicks(masterGrid);
+    }
+
+    async function loadCuratedProjects(){
       const personalGrid = document.getElementById("personalGrid");
       const masterGrid   = document.getElementById("masterGrid");
       const otherList    = document.getElementById("otherList");
       if (!personalGrid || !masterGrid || !otherList) return;
 
-      // reset content (avoid stale state)
-      personalGrid.innerHTML = "";
-      masterGrid.innerHTML = "";
-      otherList.innerHTML = "";
+      // render cached immediately (if present)
+      const cached = getCuratedCache();
+      if (cached?.items?.length) renderCurated(cached.items);
 
-      // de-duplicate by repo (first occurrence wins)
-      const seen = new Set();
-      const curatedUnique = [];
-      for (const item of CURATED) {
-        const key = (item?.repo || "").toLowerCase().trim();
-        if (!key || seen.has(key)) continue;
-        seen.add(key);
-        curatedUnique.push({ repo: item.repo.trim(), section: item.section });
-      }
-
-      if (curatedUnique.length === 0) {
+      const curatedUnique = dedupeCurated(CURATED);
+      if (!curatedUnique.length) {
         personalGrid.innerHTML = `<p class="muted2">Add repos in the CURATED array.</p>`;
         masterGrid.innerHTML   = `<p class="muted2">Add repos in the CURATED array.</p>`;
         otherList.innerHTML    = `<p class="muted2">Add repos in the CURATED array.</p>`;
         return;
       }
 
-      async function fetchRepo(fullName) {
-        const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers: GH_HEADERS });
-
-        if (res.ok) return await res.json();
-
-        // fallback only for private repos you explicitly whitelist
-        const fb = PRIVATE_FALLBACK[fullName];
-        if (fb) {
-          return {
-            full_name: fullName,
-            name: fb.name,
-            description: fb.description,
-            language: fb.language, // string già pronta
-            html_url: fb.html_url,
-            owner: { login: fb.owner_login || "" },
-            updated_at: new Date().toISOString()
-          };
+      // fetch gently (avoids sudden "everything disappears")
+      const fetched = [];
+      for (const item of curatedUnique) {
+        try {
+          const repo = await fetchRepo(item.repo);
+          fetched.push({ section: item.section, repo });
+        } catch (err) {
+          // keep going; partial render is fine
+          console.warn(err?.message || err);
         }
-
-        throw new Error(`Repo fetch failed (${res.status}): ${fullName}`);
+        await sleep(140);
       }
 
-      function badgeHtmlFor(repo){
-        // Badge COLLAB if owner != USER
-        const owner = (repo.owner?.login || "").toLowerCase();
-        if (owner && owner !== USER.toLowerCase()) {
-          return `<div class="card-badge collab" style="right:12px; left:auto;">COLLAB</div>`;
-        }
-        return "";
-      }
+      // if fetch got nothing, keep cached (no wipe)
+      if (!fetched.length) return;
 
-      function mediaHtml(fullName, name, ytId){
-        // Se ho YT: uso thumbnail YouTube (non placeholder)
-        if (ytId) {
-          const thumb = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
-          return `
-            <button class="p-media" type="button" aria-label="Play ${name} video">
-              <img class="p-poster" src="${thumb}" alt="${name} thumbnail">
-              <span class="p-play" aria-hidden="true">▶</span>
-            </button>
-          `;
-        }
-
-        // Se NON ho YT: placeholder (video in arrivo)
-        return `
-          <button class="p-media is-disabled" type="button" aria-label="${name} video coming soon" disabled>
-            <div class="p-poster p-poster--placeholder" aria-hidden="true"></div>
-            <span class="p-play" aria-hidden="true">⧗</span>
-          </button>
-        `;
-      }
-
-      function cardHtml(repo){
-        const full = safe(repo.full_name);
-        const name = safe(repo.name);
-        const desc = safe(repo.description) || "No description yet.";
-        const stack = STACK[repo.full_name] || [repo.language || "—"];
-        const url  = repo.html_url;
-
-        const ytId = YT[full];
-
-        return `
-          <article class="p-card" ${ytId ? `data-yt="${ytId}" data-title="${name}"` : ""}>
-            ${badgeHtmlFor(repo)}
-            ${mediaHtml(full, name, ytId)}
-
-            <div class="p-body">
-              <h3 class="p-title">${name}</h3>
-              <p class="p-desc">${desc}</p>
-
-              <div class="p-row">
-                <a class="btn small" href="${url}" target="_blank" rel="noreferrer">Repo</a>
-                <span class="muted">${stack.join(" • ")}</span>
-              </div>
-            </div>
-          </article>
-        `;
-      }
-
-      function otherBannerHtml(repo){
-        const name = safe(repo.name);
-        const desc = safe(repo.description) || "No description yet.";
-        const url  = repo.html_url;
-
-        const tags = STACK[repo.full_name] || [repo.language].filter(Boolean);
-        const tagLine = tags.length
-          ? `<div class="muted" style="margin-top:8px;">${tags.join(" • ")}</div>`
-          : ``;
-
-        return `
-          <div class="other-item">
-            <div class="other-main">
-              <div class="other-title">${name}</div>
-              <div class="other-desc">${desc}</div>
-              ${tagLine}
-            </div>
-
-            <div class="other-action">
-              <a class="other-link" href="${url}" target="_blank" rel="noreferrer">Repo →</a>
-            </div>
-          </div>
-        `;
-      }
-
-      function bindModalClicks(root){
-        root.querySelectorAll(".p-card[data-yt]").forEach(card => {
-          const btn = card.querySelector(".p-media");
-          btn?.addEventListener("click", () => {
-            openModal({ id: card.dataset.yt, title: card.dataset.title });
-          });
-        });
-      }
-
-      try {
-        const results = await Promise.allSettled(
-          curatedUnique.map(async (item) => ({
-            section: item.section,
-            repo: await fetchRepo(item.repo)
-          }))
-        );
-
-        const ok = results
-          .filter(r => r.status === "fulfilled")
-          .map(r => r.value);
-
-        // If some repos fail, you still get partial render
-        const personal = ok.filter(x => x.section === "personal").map(x => x.repo);
-        const master   = ok.filter(x => x.section === "master").map(x => x.repo);
-        const other    = ok.filter(x => x.section === "other").map(x => x.repo);
-
-        // sort by last update (newest first)
-        personal.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
-        master.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
-        other.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
-
-        personalGrid.innerHTML = personal.length
-          ? personal.map(cardHtml).join("")
-          : `<p class="muted2">No personal projects yet.</p>`;
-
-        masterGrid.innerHTML = master.length
-          ? master.map(cardHtml).join("")
-          : `<p class="muted2">No master projects yet.</p>`;
-
-        otherList.innerHTML = other.length
-          ? other.map(otherBannerHtml).join("")
-          : `<p class="muted2">No other projects yet.</p>`;
-
-        bindModalClicks(personalGrid);
-        bindModalClicks(masterGrid);
-
-        // Helpful console logs while you tune
-        const failed = results.filter(r => r.status === "rejected").map(r => r.reason?.message || "unknown");
-        if (failed.length) console.warn("Some repos failed to load:", failed);
-
-      } catch (e) {
-        console.error(e);
-        personalGrid.innerHTML = `<p class="muted2">Could not load Personal Projects right now.</p>`;
-        masterGrid.innerHTML   = `<p class="muted2">Could not load Master Projects right now.</p>`;
-        otherList.innerHTML    = `<p class="muted2">Could not load Other Projects right now.</p>`;
-      }
+      setCuratedCache(fetched);
+      renderCurated(fetched);
     }
 
-    // Run
+    // =========================================================
+    // Init
+    // =========================================================
+    document.getElementById("year").textContent = new Date().getFullYear();
     loadCurrentlyWorkingOn();
     loadCuratedProjects();
   </script>
-
 </body>
 </html>
