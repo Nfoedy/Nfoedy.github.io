@@ -770,85 +770,64 @@ a:hover{ text-decoration:none; }
 }
 
 /* =========================================================
-   CONTACT split + SOCIAL icons
+   CONTACT + SOCIAL split
    ========================================================= */
-.contact-left h2{ margin: 0 0 8px; font-size: 20px; }
-.contact-left p{ margin: 0 0 14px; color: rgba(255,255,255,0.78); }
-
-.contact-ico{
-  width: 18px;
-  display: inline-grid;
-  place-items: center;
-  opacity: .9;
-}
-
-/* Right side */
-.contact-right{
-  position: relative;
-  border-radius: 22px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: rgba(0,0,0,0.18);
-  padding: 14px;
-  overflow: hidden;
+.sayhi-split{
   display: grid;
-  align-content: start;
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
 }
 
-.social-title{
-  font-weight: 900;
-  letter-spacing: .2px;
-  opacity: .92;
+/* Social column */
+.social-right h2{
+  margin: 0 0 8px;
+  font-size: 20px; /* uguale a Contact, ma se il tuo h2 è già globale puoi anche rimuoverlo */
 }
 
-.social-icons{
+.social-btns{
   display: flex;
-  gap: 12px;
   flex-wrap: wrap;
-  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
 }
 
-/* Icon buttons */
-.social-ico{
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
+/* Buttons “pill” */
+.social-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 999px;
 
   border: 1px solid rgba(255,255,255,0.10);
   background: rgba(255,255,255,0.04);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+
+  font-weight: 800;
+  font-size: 14px;
+  color: rgba(255,255,255,0.92);
 
   transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 
-.social-ico:hover{
-  transform: translateY(-2px) scale(1.04);
-  background: rgba(255,255,255,0.08);
+.social-btn:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.07);
   border-color: rgba(255,255,255,0.16);
 }
 
-/* Make SVGs look like “official” monochrome */
-.social-ico svg{
-  width: 22px;
-  height: 22px;
-  fill: rgba(255,255,255,0.92);
+/* Icon style like your tools icons */
+.social-btn img{
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
 }
 
-/* subtle glow behind icons */
-.social-glow{
-  position:absolute;
-  inset: -30%;
-  background:
-    radial-gradient(240px 180px at 30% 25%, rgba(124,58,237,0.25), transparent 60%),
-    radial-gradient(240px 180px at 70% 60%, rgba(34,211,238,0.18), transparent 60%);
-  filter: blur(14px);
-  opacity: .9;
-  pointer-events: none;
-}
-
-/* Responsive: stack contact + social */
+/* Responsive */
 @media (max-width: 980px){
-  .sayhi{ grid-template-columns: 1fr; }
+  .sayhi-split{
+    grid-template-columns: 1fr;
+  }
 }
