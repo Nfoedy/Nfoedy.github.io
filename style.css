@@ -730,3 +730,41 @@ a:hover{ text-decoration:none; }
   .tool-icon{ width: 58px; height: 58px; border-radius: 18px; }
   .tool-icon img{ width: 30px; height: 30px; }
 }
+
+
+/* =========================================================
+   SOCIAL
+   ========================================================= */
+
+.social-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.social-btn{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:12px 16px;
+
+  border-radius:16px;
+
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.10);
+
+  font-weight:800;
+  font-size:14px;
+
+  transition: all 0.18s ease;
+}
+
+.social-btn:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.08);
+}
+
+.social-icon{
+  font-size:16px;
+}
