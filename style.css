@@ -655,22 +655,42 @@ a:hover{ text-decoration:none; }
 .bubbles{
   position: relative;
   width: 100%;
-  min-height: 120px;
+  min-height: 160px;        /* <-- aumenta un filo: garantisce che si vedano */
+  align-self: stretch;
 }
 
+/* Bolle: sempre rotonde */
 .bubble{
   position: absolute;
   width: var(--s);
   height: var(--s);
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  opacity: .9;
+  opacity: 0.9;
+  pointer-events: none;
 }
 
-/* più dentro e più piccole */
-.bubble.b1{ --s: 95px; right: 20px; top: 18px; }
-.bubble.b2{ --s: 145px; right: 110px; bottom: -10px; }
-.bubble.b3{ --s: 80px; left: 60px; bottom: 12px; }
+/* Posizioni “dentro” la card (niente bottom troppo negativo) */
+.bubble.b1{
+  --s: 120px;
+  right: 22px;
+  top: 18px;
+  background: radial-gradient(circle at 30% 30%, rgba(34,211,238,0.95), rgba(124,58,237,0.25));
+}
+
+.bubble.b2{
+  --s: 170px;
+  right: 110px;
+  bottom: -18px;            /* poco negativo, così non sparisce */
+  background: radial-gradient(circle at 30% 30%, rgba(251,113,133,0.95), rgba(124,58,237,0.25));
+}
+
+.bubble.b3{
+  --s: 90px;
+  left: 40px;
+  bottom: 18px;
+  background: radial-gradient(circle at 30% 30%, rgba(167,139,250,0.95), rgba(34,211,238,0.20));
+}
 
 /* =========================================================
    FOOTER
