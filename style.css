@@ -1,5 +1,5 @@
 :root{
-  --bg: #2c51a8;
+  --bg: #0f172a;
   --text: rgba(255,255,255,0.92);
   --muted: rgba(255,255,255,0.65);
   --muted2: rgba(255,255,255,0.45);
@@ -47,9 +47,9 @@ a:hover{ text-decoration:none; }
   position: fixed;
   inset: -20%;
   background:
-    radial-gradient(800px 600px at 25% 20%, rgba(124,58,237,0.35), transparent 55%),
-    radial-gradient(700px 520px at 75% 35%, rgba(34,211,238,0.22), transparent 55%),
-    radial-gradient(900px 700px at 55% 90%, rgba(251,113,133,0.18), transparent 60%);
+    radial-gradient(800px 600px at 25% 20%, rgba(124,58,237,0.25), transparent 55%),
+    radial-gradient(700px 520px at 75% 35%, rgba(56,189,248,0.35), transparent 55%), 
+    radial-gradient(900px 700px at 55% 90%, rgba(251,113,133,0.12), transparent 60%);
   filter: blur(16px);
   z-index: -2;
 }
