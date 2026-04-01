@@ -253,6 +253,10 @@
       }
     };
 
+    const DISPLAY_NAMES = {
+      "Bosang6/cpp-raylib-platformer": "Breakline"
+    };
+
     // =========================================================
     // Helpers
     // =========================================================
@@ -384,7 +388,7 @@
 
     function projectCardHtml(repo){
       const full = safe(repo.full_name);
-      const name = safe(repo.name);
+      const name = DISPLAY_NAMES[full] || safe(repo.name);
       const desc = safe(repo.description) || "No description yet.";
       const stack = STACK[full] || [repo.language || "—"];
       const url = repo.html_url;
