@@ -593,7 +593,7 @@ a:hover{ text-decoration:none; }
 .other-desc{
   color: var(--muted);
   font-size: 14px;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .other-tags{
