@@ -441,7 +441,7 @@ a:hover{ text-decoration:none; }
 }
 
 .p-body{ padding: 14px; }
-.p-title{ margin: 0 0 6px; font-size: 18px; font-weight: 800; }
+.p-title{ margin: 0 0 6px; font-size: 18px; }
 .p-desc{ margin: 0 0 12px; color: var(--muted); font-size: 14px;}
 .p-row{ display:flex; align-items:center; justify-content: space-between; gap: 10px; }
 
