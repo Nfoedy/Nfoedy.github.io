@@ -364,7 +364,9 @@
     // Renderers
     // =========================================================
     function badgeHtmlFor(repo){
-      const owner = (repo.owner?.login || "").toLowerCase();
+      const apiOwner = (repo.owner?.login || "").toLowerCase();
+      const fullNameOwner = (repo.full_name || "").split("/")[0].toLowerCase();
+      const owner = apiOwner || fullNameOwner;
       if (owner && owner !== USER.toLowerCase()) {
         return `<div class="card-badge collab card-badge--right">COLLAB</div>`;
       }
@@ -514,7 +516,7 @@
     // =========================================================
     // Curated Projects (cache + gentle fetch)
     // =========================================================
-    const curatedCacheKey = "curated_cache_v1";
+    const curatedCacheKey = "curated_cache_v2";
     const curatedCacheHours = 24;
 
     function getCuratedCache(){
