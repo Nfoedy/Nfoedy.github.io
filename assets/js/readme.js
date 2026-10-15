@@ -54,6 +54,6 @@
       return result;
     }
     target.replaceChildren(...[...documentSource.body.childNodes].map(copy));
-    if (!target.textContent.trim() && !target.querySelector('img')) target.textContent = 'This README is empty.';
+    if (!target.textContent.trim() && !target.querySelector('img')) target.textContent = window.portfolioI18n.t('This README is empty.');
   };
 })();

@@ -3,6 +3,9 @@
   'use strict';
 
   const USER = 'Nfoedy';
+  const { t } = window.portfolioI18n;
+  let currentRepo = null;
+  let currentFailed = false;
   const projects = window.PORTFOLIO_PROJECTS;
 
   if (!Array.isArray(projects)) {
@@ -134,7 +137,7 @@
   );
 
   const modalSummary = element('p', 'vmodal__summary');
-  const videoNotice = element('p', 'vmodal__video-notice', 'Video not available yet.');
+  const videoNotice = element('p', 'vmodal__video-notice', t('Video not available yet.'));
   frameWrap.after(videoNotice);
 
   const readmeTitle = element(
@@ -173,7 +176,7 @@
 
     if (project.private) {
       readmeContent.textContent =
-        'The README is not publicly available for this project.';
+        t('The README is not publicly available for this project.');
       return;
     }
 
@@ -182,7 +185,7 @@
       return;
     }
 
-    readmeContent.textContent = 'Loading README...';
+    readmeContent.textContent = t('Loading README...');
 
     try {
       const content = await github('repos/' + repoPath(project.repo) + '/readme', true);
@@ -208,8 +211,8 @@
       }
 
       readmeContent.textContent = error.status === 404
-        ? 'No public README is available for this project.'
-        : 'The README could not be loaded. Please try again or open the repository below.';
+        ? t('No public README is available for this project.')
+        : t('The README could not be loaded. Please try again or open the repository below.');
     }
   }
 
@@ -222,7 +225,7 @@
     oldOverflow = document.body.style.overflow;
 
     byId('vmodalTitle').textContent = project.name;
-    modalSummary.textContent = project.description + (project.role ? ' My contribution: ' + project.role : '');
+    modalSummary.textContent = t(project.description) + (project.role ? t(' My contribution: ') + project.role : '');
     videoNotice.hidden = Boolean(project.youtube);
 
     // Show the video only when available.
@@ -243,19 +246,19 @@
 
     if (project.private) {
       modalRepository.append(
-        element('span', 'muted', 'Source code not public')
+        element('span', 'muted', t('Source code not public'))
       );
     } else {
       modalRepository.append(
         link(
-          'View Repository on GitHub ↗',
+          t('View Repository on GitHub ↗'),
           repoUrl(project.repo),
           'btn small'
         )
       );
     }
 
-    readmeContent.textContent = 'Loading README...';
+    readmeContent.textContent = t('Loading README...');
 
     // Prevent interaction with page content
     // while the modal is open.
@@ -379,7 +382,7 @@
 
     button.setAttribute(
       'aria-label',
-      'View details for ' + project.name
+      t('View details for ') + project.name
     );
 
     button.addEventListener('click', () => {
@@ -401,22 +404,22 @@
       preview.append(image);
     } else {
       preview.classList.add('project-preview--placeholder');
-      preview.append(element('span', '', project.stack[0] || 'Project'));
+      preview.append(element('span', '', project.stack[0] || t('Project')));
     }
     preview.setAttribute('aria-hidden', 'true');
     const body = element('div', 'project-copy');
     const title = element('h3', 'project-title');
     title.append(detailsButton(project, 'project-open'));
-    body.append(title, element('p', 'project-description', project.description));
+    body.append(title, element('p', 'project-description', t(project.description)));
     const tags = element('div', 'project-tags');
-    for (const item of project.stack) tags.append(element('span', 'project-tag', item));
-    if (project.collaboration) tags.append(element('span', 'project-tag project-tag--collab', 'Team project'));
-    if (project.status) tags.append(element('span', 'project-tag', project.status));
+    for (const item of project.stack) tags.append(element('span', 'project-tag', t(item)));
+    if (project.collaboration) tags.append(element('span', 'project-tag project-tag--collab', t('Team project')));
+    if (project.status) tags.append(element('span', 'project-tag', t(project.status)));
     body.append(tags);
     if (!other) card.append(preview);
     card.append(body);
     if (other) {
-      const cue = element('span', 'project-details-cue', 'View details →');
+      const cue = element('span', 'project-details-cue', t('View details →'));
       cue.setAttribute('aria-hidden', 'true');
       card.append(cue);
     }
@@ -450,7 +453,7 @@
           element(
             'p',
             'muted2',
-            'No projects in this section yet.'
+            t('No projects in this section yet.')
           )
         );
       }
@@ -462,6 +465,7 @@
   // =========================================================
 
   function showCurrent(repo) {
+    currentRepo = repo;
     const configured = projects.find(
       project =>
         project.repo.toLowerCase() ===
@@ -472,7 +476,7 @@
     const text = byId('cwText');
 
     text.replaceChildren(
-      document.createTextNode('Recent work: '),
+      document.createTextNode(t('Recent work: ')),
       element('b', '', name)
     );
 
@@ -482,7 +486,7 @@
 
     if (!Number.isNaN(date.getTime())) {
       const formatted = new Intl.DateTimeFormat(
-        'en-GB',
+        window.portfolioI18n.language === 'it' ? 'it-IT' : 'en-GB',
         {
           day: '2-digit',
           month: 'short',
@@ -556,8 +560,9 @@
       });
     } catch {
       if (!cached?.repo?.full_name) {
+        currentFailed = true;
         byId('cwText').textContent =
-          'Explore my projects below. Recent GitHub activity is currently unavailable.';
+          t('Explore my projects below. Recent GitHub activity is currently unavailable.');
 
         byId('cwRepo').textContent = '—';
         byId('cwStack').textContent = '—';
@@ -571,6 +576,12 @@
 
   byId('year').textContent = new Date().getFullYear();
 
+  document.addEventListener('portfolio:languagechange', () => {
+    renderProjects();
+    videoNotice.textContent = t('Video not available yet.');
+    if (currentRepo) showCurrent(currentRepo);
+    else if (currentFailed) byId('cwText').textContent = t('Explore my projects below. Recent GitHub activity is currently unavailable.');
+  });
   renderProjects();
   loadCurrent();
 

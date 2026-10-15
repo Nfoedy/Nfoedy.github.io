@@ -764,3 +764,5 @@ section[id]{
 
 .activity-tools .current-work-panel,
 .activity-tools .toolstrip-icons{ flex: 1; }
+
+.language-toggle{ color: var(--text); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; flex-shrink: 0; }

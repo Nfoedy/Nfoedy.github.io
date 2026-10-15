@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Riccardo Conforti — Portfolio</title>
   <meta name="description" content="Riccardo Conforti — Game &amp; Network Programmer portfolio. Unreal Engine, C++, gameplay systems, multiplayer and networking." />
-  <link rel="stylesheet" href="style.css?v=20261015-layout-3" />
+  <link rel="stylesheet" href="style.css?v=20261015-language-1" />
 </head>
 
 <body>
@@ -18,13 +18,14 @@
         <span class="brand-text">Riccardo Conforti</span>
       </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
-        <a href="#contact">Contact</a>
+      <nav class="nav" aria-label="Primary" data-i18n-aria-label="Primary">
+        <a href="#about" data-i18n="About">About</a>
+        <a href="#work" data-i18n="Work">Work</a>
+        <a href="#contact" data-i18n="Contact">Contact</a>
       </nav>
 
       <div class="top-actions">
+        <button class="icon-btn language-toggle" id="languageToggle" type="button" aria-label="Passa all’italiano" title="Passa all’italiano">IT</button>
         <a class="icon-btn" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer" aria-label="GitHub">⌁</a>
       </div>
     </div>
@@ -40,17 +41,17 @@
         </div>
 
         <div class="hero-meta">
-          <p class="eyebrow">GAME &amp; NETWORK PROGRAMMER</p>
+          <p class="eyebrow" data-i18n="GAME &amp; NETWORK PROGRAMMER">GAME &amp; NETWORK PROGRAMMER</p>
           <h1>Riccardo Conforti</h1>
           <p class="handle">@Nfoedy</p>
 
-          <p class="bio">
+          <p class="bio" data-i18n="Game programmer focused on Unreal Engine 5, C++, multiplayer and networking. I build gameplay systems and explore how to make them work reliably across connected players.">
             Game programmer focused on Unreal Engine 5, C++, multiplayer and networking.
             I build gameplay systems and explore how to make them work reliably across connected players.
           </p>
 
           <div class="cta-row">
-            <a class="btn primary" href="#work">View Projects</a>
+            <a class="btn primary" href="#work" data-i18n="View Projects">View Projects</a>
             <a class="btn ghost" href="https://github.com/Nfoedy" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
@@ -62,19 +63,19 @@
       <!-- Currently Working On -->
       <section class="section current-work" aria-labelledby="currentWorkTitle">
         <div class="section-head">
-          <h2 id="currentWorkTitle">Currently Working On</h2>
+          <h2 id="currentWorkTitle" data-i18n="Currently Working On">Currently Working On</h2>
         </div>
         <div class="current-work-panel">
-        <p class="glass-text" id="cwText">Loading...</p>
+        <p class="glass-text" id="cwText" data-i18n="Loading...">Loading...</p>
 
         <div class="mini-stats">
           <div class="stat">
-            <div class="stat-k">Repo</div>
+            <div class="stat-k" data-i18n="Repo">Repo</div>
             <div class="stat-v" id="cwRepo">—</div>
           </div>
 
           <div class="stat">
-            <div class="stat-k">Stack</div>
+            <div class="stat-k" data-i18n="Stack">Stack</div>
             <div class="stat-v" id="cwStack">—</div>
           </div>
         </div>
@@ -84,7 +85,7 @@
     <!-- TOOLS -->
     <section class="section" id="tools">
       <div class="section-head">
-        <h2>Tools</h2>
+        <h2 data-i18n="Tools">Tools</h2>
       </div>
 
       <div class="toolstrip-icons">
@@ -119,48 +120,48 @@
     <!-- PROJECT CATEGORIES -->
     <!-- Separate categories; two project columns on desktop -->
     <section id="work" class="work-section" aria-labelledby="workTitle">
-    <h2 id="workTitle">Projects</h2>
-    <div class="projects-sections" aria-label="Project categories">
+    <h2 id="workTitle" data-i18n="Projects">Projects</h2>
+    <div class="projects-sections" aria-label="Project categories" data-i18n-aria-label="Project categories">
 
       <!-- PERSONAL PROJECTS -->
       <section class="section" id="personal">
         <div class="section-head">
-          <h2>Personal Projects</h2>
-          <span class="muted2">Showcase</span>
+          <h2 data-i18n="Personal Projects">Personal Projects</h2>
+          <span class="muted2" data-i18n="Showcase">Showcase</span>
         </div>
 
         <div
           class="projects-grid"
           id="personalGrid"
-          aria-label="Personal projects list">
+          aria-label="Personal projects list" data-i18n-aria-label="Personal projects list">
         </div>
       </section>
 
       <!-- MASTER PROJECTS -->
       <section class="section" id="master">
         <div class="section-head">
-          <h2>Master Projects</h2>
-          <span class="muted2">University / Team</span>
+          <h2 data-i18n="Master Projects">Master Projects</h2>
+          <span class="muted2" data-i18n="University / Team">University / Team</span>
         </div>
 
         <div
           class="projects-grid"
           id="masterGrid"
-          aria-label="Master projects list">
+          aria-label="Master projects list" data-i18n-aria-label="Master projects list">
         </div>
       </section>
 
       <!-- OTHER PROJECTS -->
       <section class="section" id="other">
         <div class="section-head">
-          <h2>Other Projects</h2>
-          <span class="muted2">Smaller / experiments</span>
+          <h2 data-i18n="Other Projects">Other Projects</h2>
+          <span class="muted2" data-i18n="Smaller / experiments">Smaller / experiments</span>
         </div>
 
         <div
           class="other-list"
           id="otherList"
-          aria-label="Other projects list">
+          aria-label="Other projects list" data-i18n-aria-label="Other projects list">
         </div>
       </section>
 
@@ -174,8 +175,8 @@
 
         <!-- LEFT: CONTACT -->
         <div class="contact-left">
-          <h2>Contact</h2>
-          <p>Interested in collaboration or just want to connect?</p>
+          <h2 data-i18n="Contact">Contact</h2>
+          <p data-i18n="Interested in collaboration or just want to connect?">Interested in collaboration or just want to connect?</p>
 
           <div class="contact">
             <a
@@ -234,7 +235,7 @@
     <!-- FOOTER -->
     <footer class="footer">
       <span>© <span id="year"></span> Riccardo Conforti</span>
-      <span>Built with GitHub Pages</span>
+      <span data-i18n="Built with GitHub Pages">Built with GitHub Pages</span>
     </footer>
 
   </main>
@@ -251,14 +252,14 @@
       tabindex="-1">
 
       <div class="vmodal__top">
-        <div class="vmodal__title" id="vmodalTitle">
+        <div class="vmodal__title" id="vmodalTitle" data-i18n="Project">
           Project
         </div>
 
         <button
           class="vmodal__close"
           type="button"
-          aria-label="Close"
+          aria-label="Close" data-i18n-aria-label="Close"
           data-close="1">
           ✕
         </button>
@@ -268,7 +269,7 @@
         <iframe
           id="vmodalFrame"
           class="vmodal__frame"
-          title="YouTube video player"
+          title="YouTube video player" data-i18n-title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen>
@@ -279,9 +280,10 @@
   </div>
 
   <!-- JAVASCRIPT -->
+  <script src="assets/js/i18n.js?v=1" defer></script>
   <script src="assets/js/projects.js" defer></script>
-  <script src="assets/js/readme.js" defer></script>
-  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/readme.js?v=language-1" defer></script>
+  <script src="assets/js/main.js?v=language-1" defer></script>
 
 </body>
 </html>
