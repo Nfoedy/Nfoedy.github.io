@@ -480,29 +480,6 @@
       element('b', '', name)
     );
 
-    const date = new Date(
-      repo.pushed_at || repo.updated_at
-    );
-
-    if (!Number.isNaN(date.getTime())) {
-      const formatted = new Intl.DateTimeFormat(
-        window.portfolioI18n.language === 'it' ? 'it-IT' : 'en-GB',
-        {
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric'
-        }
-      ).format(date);
-
-      text.append(
-        element(
-          'span',
-          'cw-date',
-          ' (' + formatted + ')'
-        )
-      );
-    }
-
     byId('cwRepo').replaceChildren(
       link(name, repoUrl(repo.full_name))
     );
