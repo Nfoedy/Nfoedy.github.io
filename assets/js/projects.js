@@ -28,6 +28,8 @@ window.PORTFOLIO_PROJECTS = [
       "Blueprint"
     ],
     "youtube": null,
+    "image": "assets/images/shooting-system-work-in-progress-v2.png",
+    "imageAlt": "ShootingSystem — Work in progress",
     "collaboration": false,
     "private": false,
     "status": "",
