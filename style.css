@@ -746,7 +746,7 @@ section[id]{
 }
 
 /* Current activity and tools share a row below the introduction. */
-.activity-tools{ display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 24px; align-items: start; padding: 18px 0; }
+.activity-tools{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; padding: 18px 0; }
 .activity-tools > *{ min-width: 0; }
 .activity-tools > .section{ padding: 0; }
 .activity-tools .section-head{ margin-top: 0; }
