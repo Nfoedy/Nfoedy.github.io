@@ -36,22 +36,18 @@ window.PORTFOLIO_PROJECTS = [
     "pushedAt": "2026-06-12T07:00:30Z"
   },
   {
-    "repo": "Nfoedy/Goodbye",
+    "repo": "MasterGameDev-VR/BuildFailed",
     "section": "master",
-    "name": "Goodbye",
-    "description": "Unreal Engine game developed during the Master, featuring physics-based object interaction, a Chaos vehicle and runtime reflection.",
-    "stack": [
-      "Unreal Engine 5",
-      "C++",
-      "Chaos Vehicles"
-    ],
-    "youtube": "DE4YPLTzUfA",
-    "collaboration": false,
+    "name": "BuildFailed",
+    "description": "Final group project for the Master, currently in development.",
+    "stack": [],
+    "youtube": null,
+    "collaboration": true,
     "private": false,
-    "status": "",
+    "status": "In development",
     "role": "",
-    "updatedAt": "2026-08-24T07:35:33Z",
-    "pushedAt": "2026-08-24T07:35:03Z"
+    "updatedAt": null,
+    "pushedAt": null
   },
   {
     "repo": "Nfoedy/Sandborn",
@@ -71,6 +67,42 @@ window.PORTFOLIO_PROJECTS = [
     "pushedAt": "2026-10-01T13:28:50Z"
   },
   {
+    "repo": "Bosang6/PaoPao",
+    "section": "master",
+    "name": "PaoPao",
+    "description": "Team project developed with Unity, C# and FMOD.",
+    "stack": [
+      "Unity",
+      "C#",
+      "FMOD"
+    ],
+    "youtube": null,
+    "collaboration": true,
+    "private": false,
+    "status": "",
+    "role": "",
+    "updatedAt": "2026-10-06T21:26:45Z",
+    "pushedAt": "2026-10-06T21:31:24Z"
+  },
+  {
+    "repo": "Nfoedy/Goodbye",
+    "section": "master",
+    "name": "Goodbye",
+    "description": "Unreal Engine game developed during the Master, featuring physics-based object interaction, a Chaos vehicle and runtime reflection.",
+    "stack": [
+      "Unreal Engine 5",
+      "C++",
+      "Chaos Vehicles"
+    ],
+    "youtube": "DE4YPLTzUfA",
+    "collaboration": false,
+    "private": false,
+    "status": "",
+    "role": "",
+    "updatedAt": "2026-08-24T07:35:33Z",
+    "pushedAt": "2026-08-24T07:35:03Z"
+  },
+  {
     "repo": "Nfoedy/IronSpin",
     "section": "master",
     "name": "IronSpin",
@@ -86,6 +118,23 @@ window.PORTFOLIO_PROJECTS = [
     "role": "",
     "updatedAt": "2026-05-11T13:37:10Z",
     "pushedAt": "2026-05-11T09:22:46Z"
+  },
+  {
+    "repo": "Nfoedy/ArkanoidDX",
+    "section": "master",
+    "name": "ArkanoidDX",
+    "description": "Arkanoid-style game developed in C++ using Win32, DirectX 11, Direct2D and DirectWrite.",
+    "stack": [
+      "C++",
+      "DirectX 11"
+    ],
+    "youtube": "1z2ApO88u-4",
+    "collaboration": false,
+    "private": false,
+    "status": "",
+    "role": "",
+    "updatedAt": "2026-06-02T08:56:16Z",
+    "pushedAt": "2026-06-02T09:22:05Z"
   },
   {
     "repo": "Nfoedy/Bentegoal",
@@ -139,43 +188,8 @@ window.PORTFOLIO_PROJECTS = [
     "pushedAt": "2026-02-19T09:33:00Z"
   },
   {
-    "repo": "Bosang6/PaoPao",
-    "section": "master",
-    "name": "PaoPao",
-    "description": "Team project developed with Unity, C# and FMOD.",
-    "stack": [
-      "Unity",
-      "C#",
-      "FMOD"
-    ],
-    "youtube": null,
-    "collaboration": true,
-    "private": false,
-    "status": "",
-    "role": "",
-    "updatedAt": "2026-10-06T21:26:45Z",
-    "pushedAt": "2026-10-06T21:31:24Z"
-  },
-  {
-    "repo": "Nfoedy/ArkanoidDX",
-    "section": "master",
-    "name": "ArkanoidDX",
-    "description": "Arkanoid-style game developed in C++ using Win32, DirectX 11, Direct2D and DirectWrite.",
-    "stack": [
-      "C++",
-      "DirectX 11"
-    ],
-    "youtube": "1z2ApO88u-4",
-    "collaboration": false,
-    "private": false,
-    "status": "",
-    "role": "",
-    "updatedAt": "2026-06-02T08:56:16Z",
-    "pushedAt": "2026-06-02T09:22:05Z"
-  },
-  {
     "repo": "Nfoedy/MemoryManagerSystem",
-    "section": "other",
+    "section": "master",
     "name": "MemoryManagerSystem",
     "description": "Custom C++ memory management with small-object allocation, allocation tracking and memory leak reporting.",
     "stack": [
