@@ -5,9 +5,9 @@
   const allowed = new Set('p div span h1 h2 h3 h4 h5 h6 ul ol li blockquote pre code strong em b i del s br hr a img table thead tbody tfoot tr th td details summary kbd sup sub'.split(' '));
   const blocked = new Set('script style iframe object embed form input button textarea select link meta svg math template'.split(' '));
 
-  window.renderPortfolioReadme = (target, html, repo) => {
+  window.renderPortfolioReadme = (target, html, repo, ref) => {
     const path = repo.split('/').map(encodeURIComponent).join('/');
-    const base = 'https://github.com/' + path + '/blob/HEAD/';
+    const base = 'https://github.com/' + path + '/blob/' + encodeURIComponent(ref || 'HEAD') + '/';
     const documentSource = new DOMParser().parseFromString(html, 'text/html');
 
     function safeUrl(value, image) {

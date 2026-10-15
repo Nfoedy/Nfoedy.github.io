@@ -76,13 +76,25 @@ window.PORTFOLIO_PROJECTS = [
       "C#",
       "FMOD"
     ],
-    "youtube": null,
+    "youtube": "7MZSeV5ZUPU",
     "collaboration": true,
     "private": false,
     "status": "",
     "role": "",
     "updatedAt": "2026-10-06T21:26:45Z",
-    "pushedAt": "2026-10-06T21:31:24Z"
+    "pushedAt": "2026-10-06T21:31:24Z",
+    "variants": [
+      {
+        "label": "Single player",
+        "ref": "release/v1.0.0",
+        "youtube": "7MZSeV5ZUPU"
+      },
+      {
+        "label": "Multiplayer",
+        "ref": "release/v2.0.0",
+        "youtube": "vvPt_-8rNBo"
+      }
+    ]
   },
   {
     "repo": "Nfoedy/Goodbye",

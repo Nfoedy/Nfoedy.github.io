@@ -766,3 +766,14 @@ section[id]{
 .activity-tools .toolstrip-icons{ flex: 1; }
 
 .language-toggle{ color: var(--text); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; flex-shrink: 0; }
+
+.vmodal__versions{ display: flex; flex-wrap: wrap; gap: 8px; }
+.vmodal__versions[hidden]{ display: none; }
+.vmodal__top{ flex-wrap: wrap; gap: 10px; }
+.vmodal__close{ margin-left: auto; }
+.vmodal__version{ padding: 8px 12px; border: 1px solid #29465e; border-radius: 10px; color: #bed6ed; background: #0c1928; font: inherit; cursor: pointer; }
+.vmodal__version[aria-pressed="true"]{ background: #174b71; border-color: #62d2ff; color: #fff; }
+.vmodal__version:focus-visible{ outline: 2px solid #62d2ff; outline-offset: 2px; }
+@media (max-width: 560px){
+  .vmodal__versions{ order: 3; flex-basis: 100%; }
+}

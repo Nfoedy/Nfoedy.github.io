@@ -107,7 +107,20 @@
         throw error;
       }
 
-      return html ? await response.text() : await response.json();
+      if (!html) return await response.json();
+      const body = await response.text();
+      // Some responses contain the JSON file envelope instead of rendered HTML.
+      // Display decoded Markdown as safe text rather than leaking the envelope.
+      if (body.trimStart().startsWith('{')) {
+        const file = JSON.parse(body);
+        if (file.encoding !== 'base64' || typeof file.content !== 'string') {
+          throw new Error('Unexpected README response');
+        }
+        const bytes = Uint8Array.from(atob(file.content.replace(/\s/g, '')), c => c.charCodeAt(0));
+        const markdown = new TextDecoder().decode(bytes);
+        return '<pre>' + markdown.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+      }
+      return body;
     } finally {
       clearTimeout(timer);
     }
@@ -173,6 +186,7 @@
 
   async function loadReadme(project) {
     const requestId = ++readmeLoadId;
+    const cacheKey = JSON.stringify([project.repo, project.ref || '']);
 
     if (project.private) {
       readmeContent.textContent =
@@ -180,17 +194,17 @@
       return;
     }
 
-    if (readmeCache.has(project.repo)) {
-      window.renderPortfolioReadme(readmeContent, readmeCache.get(project.repo), project.repo);
+    if (readmeCache.has(cacheKey)) {
+      window.renderPortfolioReadme(readmeContent, readmeCache.get(cacheKey), project.repo, project.ref);
       return;
     }
 
     readmeContent.textContent = t('Loading README...');
 
     try {
-      const content = await github('repos/' + repoPath(project.repo) + '/readme', true);
+      const content = await github('repos/' + repoPath(project.repo) + '/readme' + (project.ref ? '?ref=' + encodeURIComponent(project.ref) : ''), true);
 
-      readmeCache.set(project.repo, content);
+      readmeCache.set(cacheKey, content);
 
       // Avoid displaying another project's README
       // if the user closes or changes the modal.
@@ -201,7 +215,7 @@
         return;
       }
 
-      window.renderPortfolioReadme(readmeContent, content, project.repo);
+      window.renderPortfolioReadme(readmeContent, content, project.repo, project.ref);
     } catch (error) {
       if (
         requestId !== readmeLoadId ||
@@ -220,11 +234,30 @@
   // OPEN MODAL
   // =========================================================
 
-  function openModal(project, trigger) {
-    opener = trigger;
-    oldOverflow = document.body.style.overflow;
+  const versionButtons = element('div', 'vmodal__versions');
+  versionButtons.setAttribute('role', 'group');
+  versionButtons.hidden = true;
+  byId('vmodalTitle').after(versionButtons);
 
+  function configureVersions(project) {
     byId('vmodalTitle').textContent = project.name;
+    versionButtons.replaceChildren();
+    versionButtons.hidden = !project.variants?.length;
+    versionButtons.setAttribute('aria-label', project.name);
+    for (const [index, variant] of (project.variants || []).entries()) {
+      const button = element('button', 'vmodal__version', variant.label);
+      button.type = 'button';
+      button.setAttribute('aria-pressed', String(index === 0));
+      button.addEventListener('click', () => {
+        if (button.getAttribute('aria-pressed') === 'true') return;
+        for (const item of versionButtons.children) item.setAttribute('aria-pressed', String(item === button));
+        showProjectVersion({ ...project, ...variant });
+      });
+      versionButtons.append(button);
+    }
+  }
+
+  function showProjectVersion(project) {
     modalSummary.textContent = t(project.description) + (project.role ? t(' My contribution: ') + project.role : '');
     videoNotice.hidden = Boolean(project.youtube);
 
@@ -252,13 +285,22 @@
       modalRepository.append(
         link(
           t('View Repository on GitHub ↗'),
-          repoUrl(project.repo),
+          repoUrl(project.repo) + (project.ref ? '/tree/' + repoPath(project.ref) : ''),
           'btn small'
         )
       );
     }
 
     readmeContent.textContent = t('Loading README...');
+
+    loadReadme(project);
+  }
+
+  function openModal(project, trigger) {
+    opener = trigger;
+    oldOverflow = document.body.style.overflow;
+
+    configureVersions(project);
 
     // Prevent interaction with page content
     // while the modal is open.
@@ -279,7 +321,7 @@
 
     closeButton.focus();
 
-    loadReadme(project);
+    showProjectVersion(project.variants?.length ? { ...project, ...project.variants[0] } : project);
   }
 
   // =========================================================
