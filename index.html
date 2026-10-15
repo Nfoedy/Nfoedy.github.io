@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -99,76 +100,128 @@
     </section>
 
     <p id="projectsStatus" class="muted2" role="status" aria-live="polite"></p>
-    <noscript><p>Enable JavaScript to browse the project cards, or <a href="https://github.com/Nfoedy?tab=repositories">view the repositories on GitHub</a>.</p></noscript>
-    <!-- PERSONAL PROJECTS -->
-    <section class="section" id="personal">
-      <div class="section-head">
-        <h2>Personal Projects</h2>
-        <span class="muted2">Showcase</span>
-      </div>
-      <div class="projects-grid" id="personalGrid" aria-label="Personal projects list"></div>
-    </section>
 
-    <!-- MASTER PROJECTS -->
-    <section class="section" id="master">
-      <div class="section-head">
-        <h2>Master Projects</h2>
-        <span class="muted2">University / Team</span>
-      </div>
-      <div class="projects-grid" id="masterGrid" aria-label="Master projects list"></div>
-    </section>
+    <noscript>
+      <p>
+        Enable JavaScript to browse the project cards, or
+        <a href="https://github.com/Nfoedy?tab=repositories">
+          view the repositories on GitHub
+        </a>.
+      </p>
+    </noscript>
 
-    <!-- OTHER PROJECTS -->
-    <section class="section" id="other">
-      <div class="section-head">
-        <h2>Other Projects</h2>
-        <span class="muted2">Smaller / experiments</span>
-      </div>
-      <div class="other-list" id="otherList" aria-label="Other projects list"></div>
-    </section>
+    <!-- PROJECT CATEGORIES -->
+    <!-- Three columns on desktop, stacked on mobile -->
+    <div class="projects-columns" aria-label="Project categories">
 
+      <!-- PERSONAL PROJECTS -->
+      <section class="section" id="personal">
+        <div class="section-head">
+          <h2>Personal Projects</h2>
+          <span class="muted2">Showcase</span>
+        </div>
+
+        <div
+          class="projects-grid"
+          id="personalGrid"
+          aria-label="Personal projects list">
+        </div>
+      </section>
+
+      <!-- MASTER PROJECTS -->
+      <section class="section" id="master">
+        <div class="section-head">
+          <h2>Master Projects</h2>
+          <span class="muted2">University / Team</span>
+        </div>
+
+        <div
+          class="projects-grid"
+          id="masterGrid"
+          aria-label="Master projects list">
+        </div>
+      </section>
+
+      <!-- OTHER PROJECTS -->
+      <section class="section" id="other">
+        <div class="section-head">
+          <h2>Other Projects</h2>
+          <span class="muted2">Smaller / experiments</span>
+        </div>
+
+        <div
+          class="other-list"
+          id="otherList"
+          aria-label="Other projects list">
+        </div>
+      </section>
+
+    </div>
 
     <!-- CONTACT -->
     <section class="section" id="contact">
       <div class="sayhi sayhi-split">
+
         <!-- LEFT: CONTACT -->
         <div class="contact-left">
           <h2>Contact</h2>
           <p>Interested in collaboration or just want to connect?</p>
 
           <div class="contact">
-            <a class="contact-item" href="mailto:riccardoconforti96@gmail.com">
+            <a
+              class="contact-item"
+              href="mailto:riccardoconforti96@gmail.com">
               riccardoconforti96@gmail.com
             </a>
 
-            <a class="contact-item" href="mailto:riccardo.conforti@studenti.univr.it">
+            <a
+              class="contact-item"
+              href="mailto:riccardo.conforti@studenti.univr.it">
               riccardo.conforti@studenti.univr.it
             </a>
           </div>
         </div>
-        <!-- RIGHT: SOCIAL (buttons) -->
+
+        <!-- RIGHT: SOCIAL -->
         <div class="social-right">
           <h2>Social</h2>
 
           <div class="social-btns">
-            <a class="social-btn" href="https://www.instagram.com/nfoedy/" target="_blank" rel="noreferrer" aria-label="Instagram">
+
+            <a
+              class="social-btn"
+              href="https://www.instagram.com/nfoedy/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Instagram">
               <img src="assets/icons/instagram.svg" alt="">
             </a>
 
-            <a class="social-btn" href="https://www.linkedin.com/in/riccardo-conforti-a9b09b261/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <a
+              class="social-btn"
+              href="https://www.linkedin.com/in/riccardo-conforti-a9b09b261/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn">
               <img src="assets/icons/linkedin.svg" alt="">
             </a>
 
-            <a class="social-btn" href="https://www.youtube.com/@Akulassn/featured" target="_blank" rel="noreferrer" aria-label="YouTube">
+            <a
+              class="social-btn"
+              href="https://www.youtube.com/@Akulassn/featured"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="YouTube">
               <img src="assets/icons/youtube.svg" alt="">
             </a>
+
           </div>
         </div>
 
       </div>
     </section>
 
-
+    <!-- FOOTER -->
     <footer class="footer">
       <span>© <span id="year"></span> Riccardo Conforti</span>
       <span>Built with GitHub Pages</span>
@@ -176,14 +229,29 @@
 
   </main>
 
-  <!-- YT MODAL -->
+  <!-- YOUTUBE MODAL -->
   <div class="vmodal" id="vmodal" aria-hidden="true" hidden>
     <div class="vmodal__backdrop" data-close="1"></div>
 
-    <div class="vmodal__panel" role="dialog" aria-modal="true" aria-labelledby="vmodalTitle" tabindex="-1">
+    <div
+      class="vmodal__panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="vmodalTitle"
+      tabindex="-1">
+
       <div class="vmodal__top">
-        <div class="vmodal__title" id="vmodalTitle">Project</div>
-        <button class="vmodal__close" type="button" aria-label="Close" data-close="1">✕</button>
+        <div class="vmodal__title" id="vmodalTitle">
+          Project
+        </div>
+
+        <button
+          class="vmodal__close"
+          type="button"
+          aria-label="Close"
+          data-close="1">
+          ✕
+        </button>
       </div>
 
       <div class="vmodal__frame-wrap">
@@ -196,10 +264,13 @@
           allowfullscreen>
         </iframe>
       </div>
+
     </div>
   </div>
 
+  <!-- JAVASCRIPT -->
   <script src="assets/js/projects.js" defer></script>
   <script src="assets/js/main.js" defer></script>
+
 </body>
 </html>
