@@ -7,7 +7,8 @@ Sito statico per GitHub Pages: HTML, CSS e JavaScript nativo. Nessuna dipendenza
 - `index.html`: struttura, navigazione, contatti e modale video.
 - `style.css`: stile esistente, adattamenti responsive e accessibilità.
 - `assets/js/projects.js`: unica fonte editoriale dei progetti.
-- `assets/js/main.js`: rendering, modale, API e cache.
+- `assets/js/main.js`: schede, dettaglio progetto, API e cache.
+- `assets/js/readme.js`: visualizzazione sicura del README formattato da GitHub.
 - `assets/`: avatar e icone originali.
 
 ## Aggiungere o aggiornare un progetto
@@ -43,8 +44,9 @@ pubbliche vanno aggiunte esplicitamente qui per scegliere categoria e presentazi
 
 Le schede vengono mostrate immediatamente dai dati locali anche se GitHub non risponde.
 Le descrizioni editoriali non vengono sovrascritte dalle API: aggiornarle qui.
-I metadati GitHub hanno una cache locale di 24 ore; gli aggiornamenti parziali
-conservano i dati precedenti. La modifica dell'elenco invalida la cache.
+I README vengono caricati solo aprendo un progetto e conservati in memoria per la sessione.
+GitHub formatta il Markdown; il client ricostruisce solo gli elementi HTML consentiti.
+In caso di README assente o errore resta disponibile il link alla repository.
 Le repository dichiarate private non vengono richieste all'API né collegate con
 un pulsante pubblico. La scheda video rimane disponibile.
 
@@ -59,7 +61,7 @@ Servire questa cartella con un server statico già disponibile, per esempio:
 `python -m http.server 8000`, quindi aprire `http://localhost:8000`.
 
 Per GitHub Pages mantenere index.html alla radice della sorgente pubblicata, insieme
-a style.css e assets. Questa copia locale non è stata pubblicata e non contiene commit.
+a style.css e assets, incluso il nuovo assets/js/readme.js.
 Non cambiare la configurazione Pages esistente per applicare questi file.
 
 ## Controlli manuali

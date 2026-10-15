@@ -11,7 +11,6 @@
   }
 
   const signature = JSON.stringify(projects);
-  const CACHE = 'portfolio_projects_v3';
   const CW_CACHE = 'portfolio_current_v5';
   const HOUR = 3600000;
 
@@ -80,7 +79,7 @@
       age < hours * HOUR;
   }
 
-  async function github(path) {
+  async function github(path, html = false) {
     const controller = new AbortController();
 
     const timer = setTimeout(
@@ -93,19 +92,19 @@
         'https://api.github.com/' + path,
         {
           headers: {
-            Accept: 'application/vnd.github+json'
+            Accept: html ? 'application/vnd.github.html+json' : 'application/vnd.github+json'
           },
           signal: controller.signal
         }
       );
 
       if (!response.ok) {
-        throw new Error(
-          'GitHub HTTP ' + response.status
-        );
+        const error = new Error('GitHub HTTP ' + response.status);
+        error.status = response.status;
+        throw error;
       }
 
-      return await response.json();
+      return html ? await response.text() : await response.json();
     } finally {
       clearTimeout(timer);
     }
@@ -134,6 +133,10 @@
     'vmodal__details'
   );
 
+  const modalSummary = element('p', 'vmodal__summary');
+  const videoNotice = element('p', 'vmodal__video-notice', 'Video not available yet.');
+  frameWrap.after(videoNotice);
+
   const readmeTitle = element(
     'h3',
     'vmodal__heading',
@@ -141,9 +144,11 @@
   );
 
   const readmeContent = element(
-    'pre',
+    'div',
     'vmodal__readme'
   );
+
+  readmeContent.setAttribute('aria-live', 'polite');
 
   const modalRepository = element(
     'div',
@@ -151,6 +156,7 @@
   );
 
   modalDetails.append(
+    modalSummary,
     readmeTitle,
     readmeContent,
     modalRepository
@@ -172,37 +178,14 @@
     }
 
     if (readmeCache.has(project.repo)) {
-      readmeContent.textContent =
-        readmeCache.get(project.repo);
+      window.renderPortfolioReadme(readmeContent, readmeCache.get(project.repo), project.repo);
       return;
     }
 
     readmeContent.textContent = 'Loading README...';
 
     try {
-      const data = await github(
-        'repos/' + repoPath(project.repo) + '/readme'
-      );
-
-      if (
-        data.encoding !== 'base64' ||
-        typeof data.content !== 'string'
-      ) {
-        throw new Error('Unsupported README format');
-      }
-
-      // Decode GitHub's Base64 UTF-8 content.
-      const binary = atob(
-        data.content.replace(/\s/g, '')
-      );
-
-      const bytes = Uint8Array.from(
-        binary,
-        character => character.charCodeAt(0)
-      );
-
-      const content = new TextDecoder('utf-8')
-        .decode(bytes);
+      const content = await github('repos/' + repoPath(project.repo) + '/readme', true);
 
       readmeCache.set(project.repo, content);
 
@@ -215,8 +198,8 @@
         return;
       }
 
-      readmeContent.textContent = content;
-    } catch {
+      window.renderPortfolioReadme(readmeContent, content, project.repo);
+    } catch (error) {
       if (
         requestId !== readmeLoadId ||
         modal.hidden
@@ -224,8 +207,9 @@
         return;
       }
 
-      readmeContent.textContent =
-        'README unavailable. You can check the repository on GitHub.';
+      readmeContent.textContent = error.status === 404
+        ? 'No public README is available for this project.'
+        : 'The README could not be loaded. Please try again or open the repository below.';
     }
   }
 
@@ -238,6 +222,8 @@
     oldOverflow = document.body.style.overflow;
 
     byId('vmodalTitle').textContent = project.name;
+    modalSummary.textContent = project.description + (project.role ? ' My contribution: ' + project.role : '');
+    videoNotice.hidden = Boolean(project.youtube);
 
     // Show the video only when available.
     if (project.youtube) {
@@ -385,10 +371,11 @@
     const button = element(
       'button',
       className,
-      'View Details →'
+      project.name
     );
 
     button.type = 'button';
+    button.setAttribute('aria-haspopup', 'dialog');
 
     button.setAttribute(
       'aria-label',
@@ -403,144 +390,29 @@
   }
 
   function renderProject(project) {
-    const other = project.section === 'other';
-
-    const card = element(
-      'article',
-      other ? 'other-item' : 'p-card'
-    );
-
-    // Image / video preview for Personal
-    // and Master projects.
-    if (!other) {
-      if (project.collaboration) {
-        card.append(
-          element(
-            'div',
-            'card-badge collab card-badge--right',
-            'COLLAB'
-          )
-        );
-      }
-
-      const media = element('button', 'p-media');
-
-      media.type = 'button';
-
-      media.setAttribute(
-        'aria-label',
-        'View details for ' + project.name
-      );
-
-      if (project.youtube) {
-        const poster = element('img', 'p-poster');
-
-        poster.src =
-          'https://i.ytimg.com/vi/' +
-          encodeURIComponent(project.youtube) +
-          '/hqdefault.jpg';
-
-        poster.alt = project.name + ' thumbnail';
-        poster.loading = 'lazy';
-
-        media.append(poster);
-      } else {
-        media.append(
-          element(
-            'div',
-            'p-poster p-poster--placeholder'
-          )
-        );
-      }
-
-      const play = element(
-        'span',
-        'p-play',
-        project.youtube ? '▶' : '+'
-      );
-
-      play.setAttribute('aria-hidden', 'true');
-
-      media.append(play);
-
-      media.addEventListener('click', () => {
-        openModal(project, media);
-      });
-
-      card.append(media);
-    }
-
-    // Project information.
-    const body = element(
-      'div',
-      other ? 'other-main' : 'p-body'
-    );
-
-    body.append(
-      element(
-        'h3',
-        other ? 'other-title' : 'p-title',
-        project.name
-      )
-    );
-
-    body.append(
-      element(
-        'p',
-        other ? 'other-desc' : 'p-desc',
-        project.description
-      )
-    );
-
-    if (project.status) {
-      body.append(
-        element('p', 'project-status', project.status)
-      );
-    }
-
-    if (project.role) {
-      body.append(
-        element(
-          'p',
-          'project-role',
-          'My contribution: ' + project.role
-        )
-      );
-    }
-
-    const stack = element(
-      'span',
-      'muted',
-      project.stack.join(' • ')
-    );
-
-    // Other Projects.
-    if (other) {
-      body.append(stack);
-
-      const action = element(
-        'div',
-        'other-action'
-      );
-
-      action.append(
-        detailsButton(project, 'other-link')
-      );
-
-      card.append(body, action);
+    const card = element('article', 'project-card');
+    const preview = element('div', 'project-preview');
+    if (project.youtube) {
+      const image = element('img');
+      image.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(project.youtube) + '/hqdefault.jpg';
+      image.alt = '';
+      image.loading = 'lazy';
+      preview.append(image);
     } else {
-      // Personal and Master Projects.
-      const row = element('div', 'p-row');
-
-      row.append(
-        detailsButton(project, 'btn small'),
-        stack
-      );
-
-      body.append(row);
-      card.append(body);
+      preview.classList.add('project-preview--placeholder');
+      preview.append(element('span', '', project.stack[0] || 'Project'));
     }
-
+    preview.setAttribute('aria-hidden', 'true');
+    const body = element('div', 'project-copy');
+    const title = element('h3', 'project-title');
+    title.append(detailsButton(project, 'project-open'));
+    body.append(title, element('p', 'project-description', project.description));
+    const tags = element('div', 'project-tags');
+    for (const item of project.stack) tags.append(element('span', 'project-tag', item));
+    if (project.collaboration) tags.append(element('span', 'project-tag project-tag--collab', 'Team project'));
+    if (project.status) tags.append(element('span', 'project-tag', project.status));
+    body.append(tags);
+    card.append(preview, body);
     return card;
   }
 
@@ -576,68 +448,6 @@
         );
       }
     }
-  }
-
-  // =========================================================
-  // GITHUB PROJECT METADATA
-  // =========================================================
-
-  async function loadProjectMetadata() {
-    const cached = readCache(CACHE);
-
-    const items =
-      cached?.items &&
-      typeof cached.items === 'object'
-        ? { ...cached.items }
-        : {};
-
-    if (
-      fresh(cached, 24) &&
-      projects.every(p => p.private || items[p.repo])
-    ) {
-      return items;
-    }
-
-    const status = byId('projectsStatus');
-
-    status.textContent =
-      'Projects are available. Checking recent GitHub activity…';
-
-    let failed = false;
-
-    await Promise.all(
-      projects
-        .filter(p => !p.private)
-        .map(async project => {
-          try {
-            const repo = await github(
-              'repos/' + repoPath(project.repo)
-            );
-
-            if (typeof repo.full_name !== 'string') {
-              throw new Error('Invalid repository data');
-            }
-
-            items[project.repo] = {
-              updatedAt: repo.updated_at,
-              pushedAt: repo.pushed_at
-            };
-          } catch {
-            failed = true;
-          }
-        })
-    );
-
-    writeCache(CACHE, {
-      t: failed ? (cached?.t || 0) : Date.now(),
-      items
-    });
-
-    status.textContent = failed
-      ? 'Some GitHub activity could not be refreshed. All projects remain available.'
-      : '';
-
-    return items;
   }
 
   // =========================================================
@@ -764,7 +574,6 @@
   byId('year').textContent = new Date().getFullYear();
 
   renderProjects();
-  loadProjectMetadata();
   loadCurrent();
 
 })();
