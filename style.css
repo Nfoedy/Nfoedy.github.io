@@ -314,7 +314,8 @@ a:hover{ text-decoration:none; }
    PROJECT COLUMNS
    ========================================================= */
 
-.projects-grid{
+.projects-grid,
+.activity-tools{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
@@ -746,9 +747,9 @@ section[id]{
 }
 
 /* Current activity and tools share a row below the introduction. */
-.activity-tools{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; padding: 18px 0; }
+.activity-tools{ align-items: stretch; padding: 18px 0; }
 .activity-tools > *{ min-width: 0; }
-.activity-tools > .section{ padding: 0; }
+.activity-tools > .section{ display: flex; flex-direction: column; padding: 0; }
 .activity-tools .section-head{ margin-top: 0; }
 @media (max-width: 760px){
   .activity-tools{ grid-template-columns: minmax(0, 1fr); }
@@ -760,3 +761,6 @@ section[id]{
 @media (max-width: 560px){
   .current-work-panel{ padding: 16px; }
 }
+
+.activity-tools .current-work-panel,
+.activity-tools .toolstrip-icons{ flex: 1; }
