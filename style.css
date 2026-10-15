@@ -783,3 +783,6 @@ section[id]{
 .vmodal__readme > :first-child{ margin-top: 0; }
 .vmodal__readme > :last-child{ margin-bottom: 0; }
 @media (max-width: 560px){ .vmodal__readme-panel{ padding: 14px; } }
+
+.vmodal__image{ display: block; width: 100%; height: auto; }
+.vmodal__image[hidden]{ display: none; }

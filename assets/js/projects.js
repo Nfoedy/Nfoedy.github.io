@@ -64,7 +64,9 @@ window.PORTFOLIO_PROJECTS = [
     "status": "",
     "role": "",
     "updatedAt": "2026-10-14T13:04:24Z",
-    "pushedAt": "2026-10-01T13:28:50Z"
+    "pushedAt": "2026-10-01T13:28:50Z",
+    "image": "assets/images/sandborn-work-in-progress.png",
+    "imageAlt": "Sandborn — Work in progress"
   },
   {
     "repo": "Bosang6/PaoPao",

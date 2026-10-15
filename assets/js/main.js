@@ -155,6 +155,9 @@
   const modalSummary = element('p', 'vmodal__summary');
   const videoNotice = element('p', 'vmodal__video-notice', t('Video not available yet.'));
   frameWrap.after(videoNotice);
+  const projectImage = element('img', 'vmodal__image');
+  projectImage.hidden = true;
+  frameWrap.after(projectImage);
 
   const readmeTitle = element(
     'h3',
@@ -261,7 +264,15 @@
 
   function showProjectVersion(project) {
     modalSummary.textContent = t(project.description) + (project.role ? t(' My contribution: ') + project.role : '');
-    videoNotice.hidden = Boolean(project.youtube);
+    videoNotice.hidden = Boolean(project.youtube || project.image);
+    projectImage.hidden = Boolean(project.youtube || !project.image);
+    if (!projectImage.hidden) {
+      projectImage.src = project.image;
+      projectImage.alt = project.imageAlt || project.name;
+    } else {
+      projectImage.removeAttribute('src');
+      projectImage.alt = '';
+    }
 
     // Show the video only when available.
     if (project.youtube) {
@@ -440,9 +451,11 @@
     const other = project.section === 'other';
     const card = element('article', 'project-card' + (other ? ' project-card--other' : ''));
     const preview = element('div', 'project-preview');
-    if (project.youtube) {
+    if (project.youtube || project.image) {
       const image = element('img');
-      image.src = 'https://i.ytimg.com/vi/' + encodeURIComponent(project.youtube) + '/hqdefault.jpg';
+      image.src = project.youtube
+        ? 'https://i.ytimg.com/vi/' + encodeURIComponent(project.youtube) + '/hqdefault.jpg'
+        : project.image;
       image.alt = '';
       image.loading = 'lazy';
       preview.append(image);
