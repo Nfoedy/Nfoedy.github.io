@@ -476,15 +476,6 @@
       element('b', '', name)
     );
 
-    const description =
-      configured?.description || repo.description;
-
-    if (description) {
-      text.append(
-        document.createTextNode(' — ' + description)
-      );
-    }
-
     const date = new Date(
       repo.pushed_at || repo.updated_at
     );
