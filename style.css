@@ -709,7 +709,7 @@ section[id]{
 .vmodal__readme blockquote{ margin-inline: 0; border-left: 3px solid #3d84b3; padding-left: 16px; }
 .vmodal__readme a{ color: #66cfff; text-decoration: underline; }
 .vmodal__readme hr{ border: 0; border-top: 1px solid #24394e; margin: 24px 0; }
-.vmodal__repository{ margin-top: 28px; padding-top: 20px; border-top: 1px solid #24394e; }
+.vmodal__repository{ margin: 0 0 18px; }
 
 @media (max-width: 560px){
   .hero{ padding-top: 20px; gap: 16px; }
@@ -777,3 +777,9 @@ section[id]{
 @media (max-width: 560px){
   .vmodal__versions{ order: 3; flex-basis: 100%; }
 }
+
+.vmodal__readme-panel{ min-width: 0; padding: 22px; border: 1px solid #24394e; border-radius: 16px; background: #091321; }
+.vmodal__readme-panel > .vmodal__heading{ margin-top: 0; }
+.vmodal__readme > :first-child{ margin-top: 0; }
+.vmodal__readme > :last-child{ margin-bottom: 0; }
+@media (max-width: 560px){ .vmodal__readme-panel{ padding: 14px; } }

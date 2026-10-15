@@ -82,7 +82,7 @@
       age < hours * HOUR;
   }
 
-  async function github(path, html = false) {
+  async function github(path, html = false, payload = null) {
     const controller = new AbortController();
 
     const timer = setTimeout(
@@ -95,8 +95,11 @@
         'https://api.github.com/' + path,
         {
           headers: {
-            Accept: html ? 'application/vnd.github.html+json' : 'application/vnd.github+json'
+            Accept: payload ? 'text/html' : (html ? 'application/vnd.github.html+json' : 'application/vnd.github+json'),
+            ...(payload ? { 'Content-Type': 'application/json' } : {})
           },
+          method: payload ? 'POST' : 'GET',
+          body: payload ? JSON.stringify(payload) : undefined,
           signal: controller.signal
         }
       );
@@ -110,15 +113,15 @@
       if (!html) return await response.json();
       const body = await response.text();
       // Some responses contain the JSON file envelope instead of rendered HTML.
-      // Display decoded Markdown as safe text rather than leaking the envelope.
-      if (body.trimStart().startsWith('{')) {
+      // Render the decoded Markdown through the same GitHub HTML pipeline.
+      if (!payload && body.trimStart().startsWith('{')) {
         const file = JSON.parse(body);
         if (file.encoding !== 'base64' || typeof file.content !== 'string') {
           throw new Error('Unexpected README response');
         }
         const bytes = Uint8Array.from(atob(file.content.replace(/\s/g, '')), c => c.charCodeAt(0));
         const markdown = new TextDecoder().decode(bytes);
-        return '<pre>' + markdown.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+        return await github('markdown', true, { text: markdown, mode: 'gfm' });
       }
       return body;
     } finally {
@@ -171,12 +174,11 @@
     'vmodal__repository'
   );
 
-  modalDetails.append(
-    modalSummary,
-    readmeTitle,
-    readmeContent,
-    modalRepository
-  );
+  const readmePanel = element('section', 'vmodal__readme-panel');
+  readmeTitle.id = 'projectReadmeTitle';
+  readmePanel.setAttribute('aria-labelledby', readmeTitle.id);
+  readmePanel.append(readmeTitle, readmeContent);
+  modalDetails.append(modalRepository, modalSummary, readmePanel);
 
   panel.append(modalDetails);
 
