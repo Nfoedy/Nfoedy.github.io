@@ -390,7 +390,8 @@
   }
 
   function renderProject(project) {
-    const card = element('article', 'project-card');
+    const other = project.section === 'other';
+    const card = element('article', 'project-card' + (other ? ' project-card--other' : ''));
     const preview = element('div', 'project-preview');
     if (project.youtube) {
       const image = element('img');
@@ -412,7 +413,13 @@
     if (project.collaboration) tags.append(element('span', 'project-tag project-tag--collab', 'Team project'));
     if (project.status) tags.append(element('span', 'project-tag', project.status));
     body.append(tags);
-    card.append(preview, body);
+    if (!other) card.append(preview);
+    card.append(body);
+    if (other) {
+      const cue = element('span', 'project-details-cue', 'View details →');
+      cue.setAttribute('aria-hidden', 'true');
+      card.append(cue);
+    }
     return card;
   }
 
