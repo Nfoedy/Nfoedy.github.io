@@ -155,7 +155,7 @@ a:hover{ text-decoration:none; }
   display:block;
 }
 
-.hero-meta{ min-width: 0; }
+.hero-meta{ flex: 1; min-width: 0; }
 
 .hero-meta h1{
   margin: 2px 0 2px;
@@ -173,7 +173,7 @@ a:hover{ text-decoration:none; }
 .bio{
   margin: 0 0 14px;
   color: var(--muted);
-  max-width: 58ch;
+  max-width: none;
 }
 
 /* CTA buttons */
@@ -752,4 +752,11 @@ section[id]{
 .activity-tools .section-head{ margin-top: 0; }
 @media (max-width: 760px){
   .activity-tools{ grid-template-columns: minmax(0, 1fr); }
+}
+
+.current-work-panel{ padding: 18px 24px; border-radius: 26px; border: 1px solid rgba(255,255,255,.08); background: linear-gradient(135deg, rgba(42,112,232,.14), rgba(34,211,238,.08)); box-shadow: var(--shadow); }
+.current-work-panel .glass-text{ margin-bottom: 8px; }
+.current-work-panel .stat{ padding: 0; background: none; border: 0; box-shadow: none; }
+@media (max-width: 560px){
+  .current-work-panel{ padding: 16px; }
 }
