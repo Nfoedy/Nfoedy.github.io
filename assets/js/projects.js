@@ -142,8 +142,12 @@ window.PORTFOLIO_PROJECTS = [
           },
           "highlights": [
             {
-              "it": "Gestione della connessione a Photon, creazione e accesso alle Room, elenco delle partite e lobby con selezione sincronizzata di personaggi e mappa.",
-              "en": "Implemented Photon connection, Room creation and joining, the match browser, and a lobby with synchronized character and map selection."
+              "it": "Realizzazione della UI delle stanze multiplayer, con menu dedicati alla creazione delle stanze, all’accesso alle partite disponibili e alla gestione della lobby. Integrazione con la connessione a Photon e la selezione sincronizzata di personaggi e mappa.",
+              "en": "Built the multiplayer room UI, with dedicated menus for room creation, joining available matches and lobby management. Integrated it with Photon connectivity and synchronized character and map selection."
+            },
+            {
+              "it": "Creazione delle schermate di vittoria e sconfitta per il multiplayer, con un sistema di conferma dello stato “pronto” dei giocatori per coordinare l’avvio di una nuova partita.",
+              "en": "Created multiplayer victory and defeat screens, with a player readiness confirmation system to coordinate the start of a new match."
             },
             {
               "it": "Adattamento dei player al multiplayer: distinzione tra giocatori locali, remoti e AI, controllo dell’ownership tramite PhotonView e sincronizzazione del movimento.",
