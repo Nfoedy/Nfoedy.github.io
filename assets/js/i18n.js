@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const italian = {
+  "View private repository on GitHub ↗": "Apri repository privata su GitHub ↗",
   "My contribution": "Il mio contributo",
   "Content coming soon.": "Contenuti in preparazione.",
   "Role": "Ruolo",

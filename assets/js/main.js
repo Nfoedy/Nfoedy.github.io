@@ -323,14 +323,14 @@
     // Repository link.
     modalRepository.replaceChildren();
 
-    if (project.private) {
+    if (project.private && !project.showPrivateRepo) {
       modalRepository.append(
         element('span', 'muted', t('Source code not public'))
       );
     } else {
       modalRepository.append(
         link(
-          t('View Repository on GitHub ↗'),
+          t(project.private ? 'View private repository on GitHub ↗' : 'View Repository on GitHub ↗'),
           repoUrl(project.repo) + (project.ref ? '/tree/' + repoPath(project.ref) : ''),
           'btn small'
         )

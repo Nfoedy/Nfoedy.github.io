@@ -300,7 +300,8 @@ window.PORTFOLIO_PROJECTS = [
       "role": {},
       "highlights": [],
       "challenge": {}
-    }
+    },
+    "showPrivateRepo": true
   },
   {
     "repo": "Bosang6/cpp-raylib-platformer",
