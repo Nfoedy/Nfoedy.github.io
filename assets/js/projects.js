@@ -52,8 +52,44 @@ window.PORTFOLIO_PROJECTS = [
     "updatedAt": null,
     "pushedAt": null,
     "contribution": {
-      "role": {},
-      "highlights": [],
+      "role": {
+        "it": "Sviluppo dei sistemi multiplayer e networking in C++",
+        "en": "Multiplayer systems and networking development in C++"
+      },
+      "highlights": [
+        {
+          "it": "Movimento multiplayer e Network Prediction — Implementazione della Client-Side Prediction per il movimento multiplayer. Sincronizzazione di Dash, Roll, Sprint e Jump tramite C++, RPC e Network Prediction.",
+          "en": "Multiplayer Character Movement & Network Prediction — Implemented client-side prediction for multiplayer movement. Synchronized Dash, Roll, Sprint and Jump using C++, RPCs and Network Prediction."
+        },
+        {
+          "it": "Sistema di pausa multiplayer — Sviluppo di un sistema di pausa cooperativa gestito dal server. Sincronizzazione degli stati dei giocatori e ripresa del gameplay tramite sistema Ready.",
+          "en": "Multiplayer Pause System — Developed a server-managed cooperative pause system. Synchronized player states and resumed gameplay through a Ready system."
+        },
+        {
+          "it": "Disconnessione e riconnessione dei giocatori — Gestione delle disconnessioni e riconnessioni multiplayer. Riconoscimento dei giocatori tramite UniqueNetId, ripristino degli stati e timeout di riconnessione.",
+          "en": "Player Disconnection & Reconnection — Handled multiplayer disconnections and reconnections. Identified players through UniqueNetId, restored their states and managed reconnection timeouts."
+        },
+        {
+          "it": "Completamento dei livelli e Seamless Travel — Implementazione del completamento cooperativo dei livelli. Gestione del cambio mappa tramite Seamless Travel, preservando l’identità dei giocatori.",
+          "en": "Level Completion & Seamless Travel — Implemented cooperative level completion. Managed map transitions through Seamless Travel while preserving player identity."
+        },
+        {
+          "it": "Sistema di respawn multiplayer — Sviluppo di un sistema di respawn autoritativo con punti dedicati ai giocatori. Gestione del riposizionamento e blocco temporaneo degli input.",
+          "en": "Multiplayer Respawn System — Developed an authoritative respawn system with dedicated player spawn points. Handled repositioning and temporary input blocking."
+        },
+        {
+          "it": "Dialoghi locali e condivisi — Integrazione del networking nel sistema di dialoghi Inkpot. Gestione di dialoghi locali e condivisi, avanzamento indipendente e sincronizzazione degli stati Ready.",
+          "en": "Local & Shared Dialogue System — Integrated networking into the Inkpot dialogue system. Handled local and shared dialogues, independent progression and synchronized Ready states."
+        },
+        {
+          "it": "Architettura multiplayer e organizzazione del codice — Organizzazione delle responsabilità tra GameMode, GameState, PlayerController e PlayerState. Utilizzo di interfacce C++, RPC, RepNotify e refactoring del codice multiplayer.",
+          "en": "Multiplayer Architecture & Code Organization — Organized responsibilities across GameMode, GameState, PlayerController and PlayerState. Used C++ interfaces, RPCs and RepNotify, and refactored multiplayer code."
+        },
+        {
+          "it": "Test e debug multiplayer — Test in configurazione Listen Server, anche su due PC. Debug della replicazione, della sincronizzazione e dei principali sistemi multiplayer.",
+          "en": "Multiplayer Testing & Debugging — Tested Listen Server configurations, including sessions across two PCs. Debugged replication, synchronization and core multiplayer systems."
+        }
+      ],
       "challenge": {}
     }
   },
