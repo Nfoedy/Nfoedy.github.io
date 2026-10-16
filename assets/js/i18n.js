@@ -6,7 +6,7 @@
   "Contact": "Contatti",
   "Primary": "Navigazione principale",
   "GAME & NETWORK PROGRAMMER": "PROGRAMMATORE GAMEPLAY E NETWORKING",
-  "Game programmer focused on Unreal Engine 5, C++, multiplayer and networking. I build gameplay systems and explore how to make them work reliably across connected players.": "Programmatore specializzato in Unreal Engine 5, C++, multiplayer e networking. Sviluppo sistemi di gameplay e studio come farli funzionare in modo affidabile tra giocatori connessi.",
+  "My learning path focuses on game development with Unreal Engine 5 and C++, with a particular interest in Multiplayer and Networking. I have also gained experience developing projects with Unity and C#. My goal is to grow professionally as a Multiplayer/Networking Programmer, contributing to multiplayer experiences across different genres.": "Il mio percorso è orientato allo sviluppo di videogiochi con Unreal Engine 5 e C++, con particolare interesse per il Multiplayer e il Networking. Ho inoltre maturato esperienza nello sviluppo di progetti con Unity e C#. Il mio obiettivo è crescere professionalmente come Multiplayer/Networking Programmer, contribuendo alla realizzazione di esperienze multiplayer di generi differenti.",
   "View Projects": "Esplora i progetti",
   "Currently Working On": "Attualmente al lavoro su",
   "Loading...": "Caricamento…",
