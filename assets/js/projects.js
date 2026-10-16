@@ -5,7 +5,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/Obscura",
     "section": "personal",
     "name": "Obscura",
-    "description": "Survival horror developed in Unreal Engine 5, featuring flashlight gameplay, stamina management, enemy AI and atmospheric exploration.",
+    "description": "Survival Horror developed in Unreal Engine 5, featuring flashlight gameplay, stamina management, enemy AI and atmospheric exploration.",
     "stack": [
       "Unreal Engine 5",
       "Blueprint",
@@ -23,7 +23,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/ShootingSystem",
     "section": "personal",
     "name": "ShootingSystem",
-    "description": "Modular shooting system in Unreal Engine 5 using Blueprint, focused on weapons, aiming, firing logic and reusable gameplay components.",
+    "description": "Modular Shooting System in Unreal Engine 5.4 using Blueprint, focused on weapons, aiming, firing logic and reusable gameplay components.",
     "stack": [
       "Unreal Engine 5",
       "Blueprint"
@@ -42,7 +42,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "MasterGameDev-VR/BuildFailed",
     "section": "master",
     "name": "BuildFailed",
-    "description": "Final group project for the Master, currently in development.",
+    "description": "A 3D cooperative multiplayer platformer developed in Unreal Engine 5.8 using C++ and Blueprints, designed around teamwork and collaborative gameplay.",
     "stack": [],
     "youtube": null,
     "collaboration": true,
@@ -97,7 +97,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/Sandborn",
     "section": "master",
     "name": "Sandborn",
-    "description": "3D platformer developed in Unreal Engine 5.8 for the Game Engine Programming module.",
+    "description": "A single-player 3D platformer developed in Unreal Engine 5.8 using C++ and Blueprints, featuring environmental puzzles, collectibles, interactive platforms, and enemy AI, for the Game Engine Programming module.",
     "stack": [
       "Unreal Engine 5",
       "C++"
@@ -116,7 +116,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Bosang6/PaoPao",
     "section": "master",
     "name": "PaoPao",
-    "description": "Team project developed with Unity, C# and FMOD.",
+    "description": "A Bomberman-inspired mobile game developed in Unity 6000.3.6f1 using C# and Photon PUN, featuring single-player gameplay with enemy AI and online multiplayer with synchronized bomb mechanics.",
     "stack": [
       "Unity",
       "C#",
@@ -215,7 +215,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/Goodbye",
     "section": "master",
     "name": "Goodbye",
-    "description": "Unreal Engine game developed during the Master, featuring physics-based object interaction, a Chaos vehicle and runtime reflection.",
+    "description": "A Physics-based Single-Player moving game developed in Unreal Engine 5.8 using C++ and Blueprints, featuring object interactions and Chaos Vehicles.",
     "stack": [
       "Unreal Engine 5",
       "C++",
@@ -233,7 +233,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/IronSpin",
     "section": "master",
     "name": "IronSpin",
-    "description": "A physics-based pinball game built in Unreal Engine 5",
+    "description": "An arcade pinball game developed in Unreal Engine 5.7 using Blueprints, featuring physics-based gameplay, interactive bumpers, and score tracking.",
     "stack": [
       "Unreal Engine 5",
       "Blueprint"
@@ -267,7 +267,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/Bentegoal",
     "section": "master",
     "name": "Bentegoal",
-    "description": "Unity mixed reality mini-game combining photogrammetry, Physical Camera calibration, and interactive football gameplay in a reconstructed real-world scene.",
+    "description": "A football mini-game developed in Unity 2022.3.62f3 using C#, combining photogrammetry, Physical Camera calibration, and interactive gameplay in a reconstructed real-world environment.",
     "stack": [
       "Unity",
       "C#"
@@ -284,7 +284,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Lord-Platypus/mask_museum",
     "section": "master",
     "name": "Mask Museum",
-    "description": "A team project developed with Unity and C# during the Global Game Jam. As the guard of a haunted museum, use a mask to reveal hidden dangers and find your way out.",
+    "description": "A horror game developed in Unity using C# for the Global Game Jam, featuring exploration and a mask mechanic that reveals hidden enemies and environmental elements.",
     "stack": [
       "Unity",
       "C#"
@@ -331,7 +331,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Bosang6/cpp-raylib-platformer",
     "section": "master",
     "name": "Breakline",
-    "description": "A cross-platform 2D platform-jumping game built with C++ and raylib.",
+    "description": "A 2D platformer developed in C++ using raylib, featuring obstacles, collectibles, and a modular pickup system with temporary gameplay effects.",
     "stack": [
       "C++",
       "Raylib"
@@ -380,7 +380,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/MemoryManagerSystem",
     "section": "master",
     "name": "MemoryManagerSystem",
-    "description": "Custom C++ memory management with small-object allocation, allocation tracking and memory leak reporting.",
+    "description": "Custom C++ Memory Manager System.",
     "stack": [
       "C++"
     ],
@@ -396,7 +396,7 @@ window.PORTFOLIO_PROJECTS = [
     "repo": "Nfoedy/Fablora",
     "section": "other",
     "name": "Fablora",
-    "description": "Top-down 2D pixel-art RPG developed in C++ with SFML.",
+    "description": "A 2D top-down pixel-art RPG developed in C++ using SFML, focused on character progression, exploration, and combat.",
     "stack": [
       "C++",
       "SFML"
