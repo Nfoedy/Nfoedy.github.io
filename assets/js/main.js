@@ -180,7 +180,10 @@
   readmeTitle.id = 'projectReadmeTitle';
   readmePanel.setAttribute('aria-labelledby', readmeTitle.id);
   readmePanel.append(readmeTitle, readmeContent);
-  modalDetails.append(modalRepository, readmePanel);
+  const contributionPanel = element('section', 'vmodal__readme-panel vmodal__contribution');
+  contributionPanel.hidden = true;
+  contributionPanel.setAttribute('aria-labelledby', 'projectContributionTitle');
+  modalDetails.append(modalRepository, contributionPanel, readmePanel);
 
   panel.append(modalDetails);
 
@@ -261,7 +264,39 @@
     }
   }
 
+  // Contributions are supplied per project, or overridden by a selected variant.
+  function renderContribution(project) {
+    contributionPanel.replaceChildren();
+    contributionPanel.hidden = !project.collaboration;
+    if (!project.collaboration) return;
+    const heading = element('h3', 'vmodal__heading', t('My contribution'));
+    heading.id = 'projectContributionTitle';
+    contributionPanel.append(heading);
+    const contribution = project.contribution || {};
+    const localized = value => typeof value === 'string' ? t(value) :
+      (value?.[window.portfolioI18n.language] || value?.en || value?.it || '');
+    const role = localized(contribution.role);
+    const highlights = (contribution.highlights || []).map(localized).filter(Boolean);
+    const challenge = localized(contribution.challenge);
+    if (!role && !highlights.length && !challenge) {
+      contributionPanel.append(element('p', 'muted', t('Content coming soon.')));
+      return;
+    }
+    if (role) {
+      contributionPanel.append(element('h4', '', t('Role')), element('p', '', role));
+    }
+    if (highlights.length) {
+      const list = element('ul');
+      highlights.forEach(text => list.append(element('li', '', text)));
+      contributionPanel.append(element('h4', '', t('Main contributions')), list);
+    }
+    if (challenge) {
+      contributionPanel.append(element('h4', '', t('Technical challenge')), element('p', '', challenge));
+    }
+  }
+
   function showProjectVersion(project) {
+    renderContribution(project);
     videoNotice.hidden = Boolean(project.youtube || project.image);
     projectImage.hidden = Boolean(project.youtube || !project.image);
     if (!projectImage.hidden) {

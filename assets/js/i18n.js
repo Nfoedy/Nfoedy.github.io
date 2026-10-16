@@ -1,6 +1,11 @@
 (() => {
   'use strict';
   const italian = {
+  "My contribution": "Il mio contributo",
+  "Content coming soon.": "Contenuti in preparazione.",
+  "Role": "Ruolo",
+  "Main contributions": "Contributi principali",
+  "Technical challenge": "Sfida tecnica",
   "About": "Chi sono",
   "Work": "Progetti",
   "Contact": "Contatti",

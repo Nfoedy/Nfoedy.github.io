@@ -1,4 +1,5 @@
 // One entry per project. Order within each section is intentional.
+// contribution: role/challenge use { en, it }; highlights is an array of { en, it }.
 window.PORTFOLIO_PROJECTS = [
   {
     "repo": "Nfoedy/Obscura",
@@ -49,7 +50,12 @@ window.PORTFOLIO_PROJECTS = [
     "status": "In development",
     "role": "",
     "updatedAt": null,
-    "pushedAt": null
+    "pushedAt": null,
+    "contribution": {
+      "role": {},
+      "highlights": [],
+      "challenge": {}
+    }
   },
   {
     "repo": "Nfoedy/Sandborn",
@@ -91,14 +97,29 @@ window.PORTFOLIO_PROJECTS = [
       {
         "label": "Single player",
         "ref": "release/v1.0.0",
-        "youtube": "7MZSeV5ZUPU"
+        "youtube": "7MZSeV5ZUPU",
+        "contribution": {
+          "role": {},
+          "highlights": [],
+          "challenge": {}
+        }
       },
       {
         "label": "Multiplayer",
         "ref": "release/v2.0.0",
-        "youtube": "vvPt_-8rNBo"
+        "youtube": "vvPt_-8rNBo",
+        "contribution": {
+          "role": {},
+          "highlights": [],
+          "challenge": {}
+        }
       }
-    ]
+    ],
+    "contribution": {
+      "role": {},
+      "highlights": [],
+      "challenge": {}
+    }
   },
   {
     "repo": "Nfoedy/Goodbye",
@@ -184,7 +205,12 @@ window.PORTFOLIO_PROJECTS = [
     "status": "",
     "role": "",
     "updatedAt": null,
-    "pushedAt": null
+    "pushedAt": null,
+    "contribution": {
+      "role": {},
+      "highlights": [],
+      "challenge": {}
+    }
   },
   {
     "repo": "Bosang6/cpp-raylib-platformer",
@@ -201,7 +227,12 @@ window.PORTFOLIO_PROJECTS = [
     "status": "",
     "role": "",
     "updatedAt": "2025-12-22T14:05:38Z",
-    "pushedAt": "2026-02-19T09:33:00Z"
+    "pushedAt": "2026-02-19T09:33:00Z",
+    "contribution": {
+      "role": {},
+      "highlights": [],
+      "challenge": {}
+    }
   },
   {
     "repo": "Nfoedy/MemoryManagerSystem",

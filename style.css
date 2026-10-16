@@ -786,3 +786,10 @@ section[id]{
 
 .vmodal__image{ display: block; width: 100%; height: auto; }
 .vmodal__image[hidden]{ display: none; }
+
+.vmodal__contribution{ margin-bottom: 20px; color: #b5c9e0; line-height: 1.7; overflow-wrap: anywhere; }
+.vmodal__contribution[hidden]{ display: none; }
+.vmodal__contribution h4{ margin: 16px 0 6px; color: #eef5ff; }
+.vmodal__contribution p{ margin: 0; }
+.vmodal__contribution ul{ padding-left: 22px; margin: 0; }
+.vmodal__contribution li + li{ margin-top: 6px; }
