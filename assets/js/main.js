@@ -139,6 +139,57 @@
   const frameWrap = modal.querySelector('.vmodal__frame-wrap');
   const closeButton = modal.querySelector('.vmodal__close');
 
+  // Load YouTube's controller only for projects with a video.
+  let youtubeReady;
+  let youtubePlayer;
+  function pauseVideoOutsideView() {
+    if (typeof youtubePlayer?.pauseVideo !== 'function' || frameWrap.hidden || !frame.getAttribute('src')) return;
+    const video = frameWrap.getBoundingClientRect();
+    const bounds = panel.getBoundingClientRect();
+    const toolbar = modal.querySelector('.vmodal__top').getBoundingClientRect();
+    const visibleHeight = Math.max(0, Math.min(video.bottom, bounds.bottom, window.innerHeight) -
+      Math.max(video.top, bounds.top, toolbar.bottom, 0));
+    if (modal.hidden || document.hidden || visibleHeight < video.height * 0.15) {
+      youtubePlayer.pauseVideo();
+    }
+  }
+
+  function connectYouTubePlayer() {
+    if (!youtubeReady) {
+      youtubeReady = new Promise(resolve => {
+        if (window.YT?.Player) { resolve(); return; }
+        const previous = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = () => {
+          resolve();
+          if (typeof previous === 'function') previous();
+        };
+        const script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        document.head.append(script);
+      });
+    }
+    youtubeReady.then(() => {
+      if (youtubePlayer || modal.hidden || !frame.getAttribute('src')) return;
+      youtubePlayer = new window.YT.Player(frame, {
+        events: {
+          onReady: pauseVideoOutsideView,
+          onStateChange: event => {
+            if (event.data === window.YT.PlayerState.PLAYING) pauseVideoOutsideView();
+          }
+        }
+      });
+    });
+  }
+
+  panel.addEventListener('scroll', pauseVideoOutsideView, { passive: true });
+  window.addEventListener('resize', pauseVideoOutsideView, { passive: true });
+  document.addEventListener('visibilitychange', pauseVideoOutsideView);
+  frame.addEventListener('load', () => {
+    if (frame.getAttribute('src')) connectYouTubePlayer();
+  });
+
+
   let opener = null;
   let oldOverflow = '';
   let backgroundState = [];
@@ -320,7 +371,9 @@
       frame.src =
         'https://www.youtube.com/embed/' +
         encodeURIComponent(project.youtube) +
-        '?autoplay=1&rel=0&playsinline=1';
+        '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&origin=' +
+        encodeURIComponent(window.location.origin);
+      connectYouTubePlayer();
     } else {
       frameWrap.hidden = true;
       frame.removeAttribute('src');
