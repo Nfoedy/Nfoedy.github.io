@@ -99,8 +99,32 @@ window.PORTFOLIO_PROJECTS = [
         "ref": "release/v1.0.0",
         "youtube": "7MZSeV5ZUPU",
         "contribution": {
-          "role": {},
-          "highlights": [],
+          "role": {
+            "it": "Sviluppo UI e integrazione audio con FMOD",
+            "en": "UI development and audio integration with FMOD"
+          },
+          "highlights": [
+            {
+              "it": "Creazione dei menu e delle interfacce per la selezione dei giocatori e della mappa.",
+              "en": "Created menus and interfaces for player and map selection."
+            },
+            {
+              "it": "Implementazione delle impostazioni audio collegate a FMOD.",
+              "en": "Implemented audio settings connected to FMOD."
+            },
+            {
+              "it": "Realizzazione dell’HUD durante la partita.",
+              "en": "Built the in-game HUD."
+            },
+            {
+              "it": "Inserimento e configurazione dei suoni e delle musiche in FMOD.",
+              "en": "Added and configured sound effects and music in FMOD."
+            },
+            {
+              "it": "Creazione dei menu di vittoria e sconfitta.",
+              "en": "Created victory and defeat menus."
+            }
+          ],
           "challenge": {}
         }
       },
