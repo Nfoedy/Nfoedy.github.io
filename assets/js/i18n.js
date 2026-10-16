@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const italian = {
-  "Developed as a team with Unity and C# during the Global Game Jam in Verona on January 30. Escape a haunted museum by switching between a mask that reveals monsters and an unmasked view that reveals objects.": "Gioco sviluppato in gruppo con Unity e C# durante la Global Game Jam di Verona del 30 gennaio. Fuggi da un museo infestato alternando la maschera, che rivela i mostri, alla visione senza maschera, che rivela gli oggetti.",
+  "A team project developed with Unity and C# during the Global Game Jam. As the guard of a haunted museum, use a mask to reveal hidden dangers and find your way out.": "Progetto di gruppo sviluppato in Unity e C# durante la Global Game Jam. Nei panni del guardiano di un museo infestato, usa una maschera per rivelare i pericoli nascosti e trovare la via di fuga.",
   "View private repository on GitHub ↗": "Apri repository privata su GitHub ↗",
   "My contribution": "Il mio contributo",
   "Content coming soon.": "Contenuti in preparazione.",
