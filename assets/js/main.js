@@ -152,7 +152,6 @@
     'vmodal__details'
   );
 
-  const modalSummary = element('p', 'vmodal__summary');
   const videoNotice = element('p', 'vmodal__video-notice', t('Video not available yet.'));
   frameWrap.after(videoNotice);
   const projectImage = element('img', 'vmodal__image');
@@ -181,7 +180,7 @@
   readmeTitle.id = 'projectReadmeTitle';
   readmePanel.setAttribute('aria-labelledby', readmeTitle.id);
   readmePanel.append(readmeTitle, readmeContent);
-  modalDetails.append(modalRepository, modalSummary, readmePanel);
+  modalDetails.append(modalRepository, readmePanel);
 
   panel.append(modalDetails);
 
@@ -263,7 +262,6 @@
   }
 
   function showProjectVersion(project) {
-    modalSummary.textContent = t(project.description) + (project.role ? t(' My contribution: ') + project.role : '');
     videoNotice.hidden = Boolean(project.youtube || project.image);
     projectImage.hidden = Boolean(project.youtube || !project.image);
     if (!projectImage.hidden) {
