@@ -100,32 +100,35 @@ window.PORTFOLIO_PROJECTS = [
         "youtube": "7MZSeV5ZUPU",
         "contribution": {
           "role": {
-            "it": "Sviluppo UI e integrazione audio con FMOD",
-            "en": "UI development and audio integration with FMOD"
+            "it": "Sistemi di sessione, UI e integrazione audio",
+            "en": "Session systems, UI and audio integration"
           },
           "highlights": [
             {
-              "it": "Creazione dei menu e delle interfacce per la selezione dei giocatori e della mappa.",
-              "en": "Created menus and interfaces for player and map selection."
+              "it": "Creazione dei menu, della selezione di personaggi e mappa e delle schermate di vittoria e sconfitta.",
+              "en": "Created menus, character and map selection, and victory and defeat screens."
             },
             {
-              "it": "Implementazione delle impostazioni audio collegate a FMOD.",
-              "en": "Implemented audio settings connected to FMOD."
+              "it": "Sviluppo del flusso dal menu alla partita: configurazione degli slot per giocatori e AI, gestione della sessione, caricamento della mappa e spawn dei personaggi.",
+              "en": "Developed the menu-to-match flow: player and AI slot configuration, session management, map loading and character spawning."
             },
             {
-              "it": "Realizzazione dell’HUD durante la partita.",
-              "en": "Built the in-game HUD."
+              "it": "Integrazione dei sistemi di movimento, bombe, salute e input mobile con il flusso di inizializzazione del player.",
+              "en": "Integrated movement, bomb, health and mobile input systems into the player initialization flow."
             },
             {
-              "it": "Inserimento e configurazione dei suoni e delle musiche in FMOD.",
-              "en": "Added and configured sound effects and music in FMOD."
+              "it": "Realizzazione dell’HUD con collegamento dinamico degli indicatori delle vite ai personaggi.",
+              "en": "Built the HUD with life indicators dynamically linked to characters."
             },
             {
-              "it": "Creazione dei menu di vittoria e sconfitta.",
-              "en": "Created victory and defeat menus."
+              "it": "Inserimento di suoni e musiche in FMOD e implementazione delle impostazioni audio collegate ai menu.",
+              "en": "Added sound effects and music in FMOD and implemented audio settings connected to the menus."
             }
           ],
-          "challenge": {}
+          "challenge": {
+            "it": "Organizzare l’inizializzazione della partita separando i dati dei personaggi dalle informazioni runtime e collegando le scelte del menu allo spawn nella mappa selezionata.",
+            "en": "Organized match initialization by separating character data from runtime state and connecting menu selections to spawning on the selected map."
+          }
         }
       },
       {
@@ -133,9 +136,32 @@ window.PORTFOLIO_PROJECTS = [
         "ref": "release/v2.0.0",
         "youtube": "vvPt_-8rNBo",
         "contribution": {
-          "role": {},
-          "highlights": [],
-          "challenge": {}
+          "role": {
+            "it": "Integrazione multiplayer e networking con Photon PUN",
+            "en": "Multiplayer and networking integration with Photon PUN"
+          },
+          "highlights": [
+            {
+              "it": "Gestione della connessione a Photon, creazione e accesso alle Room, elenco delle partite e lobby con selezione sincronizzata di personaggi e mappa.",
+              "en": "Implemented Photon connection, Room creation and joining, the match browser, and a lobby with synchronized character and map selection."
+            },
+            {
+              "it": "Adattamento dei player al multiplayer: distinzione tra giocatori locali, remoti e AI, controllo dell’ownership tramite PhotonView e sincronizzazione del movimento.",
+              "en": "Adapted players for multiplayer: distinguished local players, remote players and AI, handled ownership through PhotonView, and synchronized movement."
+            },
+            {
+              "it": "Implementazione del flusso RPC per le bombe: richiesta del client e validazione sul Master Client di ownership, limite delle bombe e disponibilità della cella prima dello spawn in rete.",
+              "en": "Implemented the bomb RPC flow: client requests and Master Client validation of ownership, bomb limits and cell availability before network spawning."
+            },
+            {
+              "it": "Gestione sul Master Client di esplosioni, danni e morte, con sincronizzazione dei muri distruttibili e dei risultati della partita.",
+              "en": "Handled explosions, damage and death on the Master Client, synchronizing destructible walls and match results."
+            }
+          ],
+          "challenge": {
+            "it": "Adattare il gameplay alla rete riutilizzando i componenti comuni del Single player e separando le responsabilità di networking. Le azioni critiche vengono validate dal Master Client per mantenere coerente lo stato della partita tra i partecipanti.",
+            "en": "Adapted gameplay for networking by reusing shared Single player components and separating networking responsibilities. Critical actions are validated by the Master Client to keep match state consistent across participants."
+          }
         }
       }
     ],
