@@ -113,8 +113,8 @@ window.PORTFOLIO_PROJECTS = [
               "en": "Developed the menu-to-match flow: player and AI slot configuration, session management, map loading and character spawning."
             },
             {
-              "it": "Integrazione dei sistemi di movimento, bombe, salute e input mobile con il flusso di inizializzazione del player.",
-              "en": "Integrated movement, bomb, health and mobile input systems into the player initialization flow."
+              "it": "Integrazione dei controlli mobile nell’interfaccia di gioco.",
+              "en": "Integrated mobile controls into the game interface."
             },
             {
               "it": "Realizzazione dell’HUD con collegamento dinamico degli indicatori delle vite ai personaggi.",
@@ -279,9 +279,36 @@ window.PORTFOLIO_PROJECTS = [
     "updatedAt": "2025-12-22T14:05:38Z",
     "pushedAt": "2026-02-19T09:33:00Z",
     "contribution": {
-      "role": {},
-      "highlights": [],
-      "challenge": {}
+      "role": {
+        "it": "Programmazione gameplay — sistema di pickup ed effetti",
+        "en": "Gameplay programming — pickup and effect systems"
+      },
+      "highlights": [
+        {
+          "it": "Sviluppo in C++ con raylib di un sistema estendibile di pickup, organizzato attorno a una classe base, tipologie specializzate e un manager dedicato.",
+          "en": "Developed an extensible pickup system in C++ with raylib, structured around a base class, specialized pickup types and a dedicated manager."
+        },
+        {
+          "it": "Implementazione di monete, potenziamenti del salto, rallentamenti, moltiplicatori del punteggio e inversione dei controlli, con integrazione nel gameplay e nel sistema di punteggio.",
+          "en": "Implemented coins, jump boosts, slow effects, score multipliers and reversed controls, integrating them with gameplay and scoring."
+        },
+        {
+          "it": "Realizzazione di un sistema per gestire gli effetti temporanei e la loro durata.",
+          "en": "Built a system to manage temporary effects and their duration."
+        },
+        {
+          "it": "Integrazione del feedback visivo e sonoro della raccolta attraverso messaggi UI, animazioni, texture e suoni.",
+          "en": "Integrated visual and audio feedback for pickup collection through UI messages, animations, textures and sounds."
+        },
+        {
+          "it": "Interventi sulla gestione e sulla frequenza di generazione dei pickup.",
+          "en": "Refined pickup management and spawn frequency."
+        }
+      ],
+      "challenge": {
+        "it": "Separare la gestione degli oggetti collezionabili da quella degli effetti sul personaggio, mantenendo una struttura estendibile per aggiungere nuovi bonus e penalità.",
+        "en": "Separated collectible management from character effects, keeping the structure extensible for additional bonuses and penalties."
+      }
     }
   },
   {
