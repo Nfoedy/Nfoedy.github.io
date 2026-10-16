@@ -195,6 +195,12 @@
     const requestId = ++readmeLoadId;
     const cacheKey = JSON.stringify([project.repo, project.ref || '']);
 
+    const localReadme = project.readmeHtml?.[window.portfolioI18n.language] || project.readmeHtml?.en;
+    if (localReadme) {
+      window.renderPortfolioReadme(readmeContent, localReadme, project.repo, project.ref);
+      return;
+    }
+
     if (project.private) {
       readmeContent.textContent =
         t('The README is not publicly available for this project.');

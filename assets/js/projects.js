@@ -283,8 +283,8 @@ window.PORTFOLIO_PROJECTS = [
   {
     "repo": "Lord-Platypus/mask_museum",
     "section": "master",
-    "name": "mask_museum",
-    "description": "University team project. Source code is not publicly available.",
+    "name": "Mask Museum",
+    "description": "Developed as a team with Unity and C# during the Global Game Jam in Verona on January 30. Escape a haunted museum by switching between a mask that reveals monsters and an unmasked view that reveals objects.",
     "stack": [
       "Unity",
       "C#"
@@ -297,11 +297,35 @@ window.PORTFOLIO_PROJECTS = [
     "updatedAt": null,
     "pushedAt": null,
     "contribution": {
-      "role": {},
-      "highlights": [],
+      "role": {
+        "it": "Sviluppo UI e contributi all’IA dei nemici e agli effetti visivi",
+        "en": "UI development and contributions to enemy AI and visual effects"
+      },
+      "highlights": [
+        {
+          "it": "Creazione dell’interfaccia utente, del menu principale e del menu di game over.",
+          "en": "Created the user interface, main menu and game over menu."
+        },
+        {
+          "it": "Contributo allo sviluppo dell’intelligenza artificiale dei nemici.",
+          "en": "Contributed to enemy AI development."
+        },
+        {
+          "it": "Collaborazione con il graphic designer durante l’importazione degli asset di gioco, curata dal designer.",
+          "en": "Collaborated with the graphic designer during the game asset import process, which was handled by the designer."
+        },
+        {
+          "it": "Contributo all’effetto visivo di chiusura dello schermo alla morte del giocatore.",
+          "en": "Contributed to the screen-closing visual effect triggered by the player’s death."
+        }
+      ],
       "challenge": {}
     },
-    "showPrivateRepo": true
+    "showPrivateRepo": true,
+    "readmeHtml": {
+      "it": "<h1>Mask Museum</h1><h2>Panoramica</h2><p>Gioco sviluppato in gruppo con Unity e C# durante la Global Game Jam di Verona del 30 gennaio, sul tema “The mask”. Il protagonista è il guardiano di un museo infestato, che deve raggiungere l’uscita senza essere ucciso dai mostri.</p><h2>Meccanica della maschera</h2><p>La maschera cambia ciò che il giocatore può vedere:</p><ul><li><strong>Con la maschera:</strong> i mostri diventano visibili, mentre gli oggetti non sono visibili.</li><li><strong>Senza la maschera:</strong> gli oggetti sono visibili, ma i mostri non lo sono.</li></ul><p>Per fuggire, il giocatore deve alternare le due modalità di visione, orientarsi nel museo ed evitare i nemici fino all’uscita.</p><h2>Obiettivo</h2><p>Sopravvivere ai mostri e raggiungere l’uscita del museo.</p><h2>Tecnologie</h2><ul><li>Unity</li><li>C#</li></ul><h2>Contesto di sviluppo</h2><p>Progetto di gruppo realizzato durante una game jam. Il contributo personale è descritto nella sezione dedicata sopra questo README.</p><h2>Codice sorgente</h2><p>La repository è privata. Il collegamento è disponibile nel portfolio, ma l’accesso ai contenuti richiede i permessi del proprietario.</p>",
+      "en": "<h1>Mask Museum</h1><h2>Overview</h2><p>A team project developed with Unity and C# during the Global Game Jam in Verona on January 30, based on the theme “The mask”. The protagonist is a guard in a haunted museum who must reach the exit without being killed by monsters.</p><h2>Mask mechanic</h2><p>The mask changes what the player can see:</p><ul><li><strong>With the mask on:</strong> monsters become visible, while objects are hidden.</li><li><strong>With the mask off:</strong> objects are visible, but monsters are hidden.</li></ul><p>To escape, the player must switch between the two views, navigate the museum and avoid enemies on the way to the exit.</p><h2>Objective</h2><p>Survive the monsters and reach the museum exit.</p><h2>Technologies</h2><ul><li>Unity</li><li>C#</li></ul><h2>Development context</h2><p>A team project created during a game jam. My individual contributions are described in the dedicated section above this README.</p><h2>Source code</h2><p>The repository is private. Its link is available in the portfolio, but access to its contents requires permission from the owner.</p>"
+    }
   },
   {
     "repo": "Bosang6/cpp-raylib-platformer",
