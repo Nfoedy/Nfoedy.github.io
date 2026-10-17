@@ -244,11 +244,12 @@
 
   async function loadReadme(project) {
     const requestId = ++readmeLoadId;
-    const cacheKey = JSON.stringify([project.repo, project.ref || '']);
+    const readmeRef = project.readmeRef || project.ref;
+    const cacheKey = JSON.stringify([project.repo, readmeRef || '']);
 
     const localReadme = project.readmeHtml?.[window.portfolioI18n.language] || project.readmeHtml?.en;
     if (localReadme) {
-      window.renderPortfolioReadme(readmeContent, localReadme, project.repo, project.ref);
+      window.renderPortfolioReadme(readmeContent, localReadme, project.repo, readmeRef);
       return;
     }
 
@@ -259,14 +260,14 @@
     }
 
     if (readmeCache.has(cacheKey)) {
-      window.renderPortfolioReadme(readmeContent, readmeCache.get(cacheKey), project.repo, project.ref);
+      window.renderPortfolioReadme(readmeContent, readmeCache.get(cacheKey), project.repo, readmeRef);
       return;
     }
 
     readmeContent.textContent = t('Loading README...');
 
     try {
-      const content = await github('repos/' + repoPath(project.repo) + '/readme' + (project.ref ? '?ref=' + encodeURIComponent(project.ref) : ''), true);
+      const content = await github('repos/' + repoPath(project.repo) + '/readme' + (readmeRef ? '?ref=' + encodeURIComponent(readmeRef) : ''), true);
 
       readmeCache.set(cacheKey, content);
 
@@ -279,7 +280,7 @@
         return;
       }
 
-      window.renderPortfolioReadme(readmeContent, content, project.repo, project.ref);
+      window.renderPortfolioReadme(readmeContent, content, project.repo, readmeRef);
     } catch (error) {
       if (
         requestId !== readmeLoadId ||

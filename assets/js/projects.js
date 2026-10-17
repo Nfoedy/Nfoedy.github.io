@@ -213,7 +213,8 @@ window.PORTFOLIO_PROJECTS = [
       "role": {},
       "highlights": [],
       "challenge": {}
-    }
+    },
+    "readmeRef": "main"
   },
   {
     "repo": "Nfoedy/Goodbye",
