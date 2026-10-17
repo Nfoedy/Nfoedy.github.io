@@ -31,7 +31,7 @@ In `assets/js/projects.js` aggiungere un oggetto a `window.PORTFOLIO_PROJECTS`:
 ```
 
 L'ordine nell'array determina l'ordine di presentazione all'interno della categoria.
-Le tre collaborazioni confermate sono mask_museum, Breakline e PaoPao.
+Le tre collaborazioni confermate sono mask_museum, Knight to Sky e PaoPao.
 Goodbye e Sandborn sono Master Projects, in base a README e descrizione GitHub.
 MemoryManagerSystem è provvisoriamente in Other Projects: categoria da confermare.
 Non sono stati attribuiti stati di completamento o ruoli non verificati.
