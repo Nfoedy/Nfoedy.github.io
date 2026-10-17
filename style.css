@@ -171,6 +171,7 @@ a:hover{ text-decoration:none; }
 }
 
 .bio{
+  white-space: pre-line;
   margin: 0 0 14px;
   color: var(--muted);
   max-width: none;
