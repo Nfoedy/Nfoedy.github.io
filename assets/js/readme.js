@@ -39,6 +39,15 @@
       if (tag === 'img') {
         const src = safeUrl(node.getAttribute('src'), true);
         if (!src) return document.createTextNode(node.getAttribute('alt') || '');
+        // raw.githubusercontent.com serves pointer text for Git LFS files.
+        // Retry failed repository images through GitHub's media endpoint.
+        result.addEventListener('error', () => {
+          const original = new URL(src);
+          if (original.hostname !== 'raw.githubusercontent.com') return;
+          original.hostname = 'media.githubusercontent.com';
+          original.pathname = '/media' + original.pathname;
+          result.src = original.href;
+        }, { once: true });
         result.src = src;
         result.alt = node.getAttribute('alt') || '';
         result.loading = 'lazy';
