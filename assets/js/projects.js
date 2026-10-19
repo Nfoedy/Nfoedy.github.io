@@ -58,36 +58,40 @@ window.PORTFOLIO_PROJECTS = [
       },
       "highlights": [
         {
-          "it": "Movimento multiplayer e Network Prediction — Implementazione della Client-Side Prediction per il movimento multiplayer. Sincronizzazione di Dash, Roll, Sprint e Jump tramite C++, RPC e Network Prediction.",
-          "en": "Multiplayer Character Movement & Network Prediction — Implemented client-side prediction for multiplayer movement. Synchronized Dash, Roll, Sprint and Jump using C++, RPCs and Network Prediction."
+          "it": "Creazione e gestione delle sessioni multiplayer — Implementazione del flusso Host/Client per consentire a due giocatori di partecipare alla stessa partita, con creazione, ricerca delle sessioni disponibili e accesso tramite Join.",
+          "en": "Multiplayer Session Creation & Management — Implemented the Host/Client flow so two players can join the same match, including session creation, searching for available sessions and joining them."
         },
         {
-          "it": "Sistema di pausa multiplayer — Sviluppo di un sistema di pausa cooperativa gestito dal server. Sincronizzazione degli stati dei giocatori e ripresa del gameplay tramite sistema Ready.",
-          "en": "Multiplayer Pause System — Developed a server-managed cooperative pause system. Synchronized player states and resumed gameplay through a Ready system."
+          "it": "Movimento multiplayer e Network Prediction — Implementazione della Client-Side Prediction e sincronizzazione di Dash, Roll, Sprint e Jump tramite C++, RPC e Network Prediction.",
+          "en": "Multiplayer Movement & Network Prediction — Implemented client-side prediction and synchronized Dash, Roll, Sprint and Jump using C++, RPCs and Network Prediction."
         },
         {
-          "it": "Disconnessione e riconnessione dei giocatori — Gestione delle disconnessioni e riconnessioni multiplayer. Riconoscimento dei giocatori tramite UniqueNetId, ripristino degli stati e timeout di riconnessione.",
-          "en": "Player Disconnection & Reconnection — Handled multiplayer disconnections and reconnections. Identified players through UniqueNetId, restored their states and managed reconnection timeouts."
+          "it": "Disconnessione e riconnessione dei giocatori — Gestione delle disconnessioni e del rientro in partita, con riconoscimento tramite UniqueNetId, ripristino degli stati e timeout di riconnessione.",
+          "en": "Player Disconnection & Reconnection — Handled disconnections and rejoining matches, identifying players through UniqueNetId, restoring their states and managing reconnection timeouts."
         },
         {
-          "it": "Completamento dei livelli e Seamless Travel — Implementazione del completamento cooperativo dei livelli. Gestione del cambio mappa tramite Seamless Travel, preservando l’identità dei giocatori.",
-          "en": "Level Completion & Seamless Travel — Implemented cooperative level completion. Managed map transitions through Seamless Travel while preserving player identity."
+          "it": "Sistema di pausa multiplayer — Sviluppo di una pausa cooperativa gestita dal server, con sincronizzazione degli stati dei giocatori e ripresa del gameplay attraverso un sistema di conferma Ready.",
+          "en": "Multiplayer Pause System — Developed a server-managed cooperative pause system, synchronizing player states and resuming gameplay through a Ready confirmation system."
         },
         {
-          "it": "Sistema di respawn multiplayer — Sviluppo di un sistema di respawn autoritativo con punti dedicati ai giocatori. Gestione del riposizionamento e blocco temporaneo degli input.",
-          "en": "Multiplayer Respawn System — Developed an authoritative respawn system with dedicated player spawn points. Handled repositioning and temporary input blocking."
+          "it": "Completamento dei livelli e Seamless Travel — Implementazione del completamento cooperativo dei livelli e delle transizioni tra mappe tramite Seamless Travel, preservando l’identità dei giocatori.",
+          "en": "Level Completion & Seamless Travel — Implemented cooperative level completion and map transitions through Seamless Travel while preserving player identity."
         },
         {
-          "it": "Dialoghi locali e condivisi — Integrazione del networking nel sistema di dialoghi Inkpot. Gestione di dialoghi locali e condivisi, avanzamento indipendente e sincronizzazione degli stati Ready.",
-          "en": "Local & Shared Dialogue System — Integrated networking into the Inkpot dialogue system. Handled local and shared dialogues, independent progression and synchronized Ready states."
+          "it": "Sistema di respawn multiplayer — Sviluppo di un sistema di respawn autoritativo con punti dedicati ai giocatori, gestione del riposizionamento e blocco temporaneo degli input.",
+          "en": "Multiplayer Respawn System — Developed an authoritative respawn system with dedicated player spawn points, repositioning and temporary input blocking."
         },
         {
-          "it": "Architettura multiplayer e organizzazione del codice — Organizzazione delle responsabilità tra GameMode, GameState, PlayerController e PlayerState. Utilizzo di interfacce C++, RPC, RepNotify e refactoring del codice multiplayer.",
-          "en": "Multiplayer Architecture & Code Organization — Organized responsibilities across GameMode, GameState, PlayerController and PlayerState. Used C++ interfaces, RPCs and RepNotify, and refactored multiplayer code."
+          "it": "Dialoghi locali e condivisi — Integrazione del networking nel sistema di dialoghi Inkpot, supportando dialoghi locali e condivisi, avanzamento indipendente e sincronizzazione degli stati Ready.",
+          "en": "Local & Shared Dialogues — Integrated networking into the Inkpot dialogue system, supporting local and shared dialogues, independent progression and synchronized Ready states."
         },
         {
-          "it": "Test e debug multiplayer — Test in configurazione Listen Server, anche su due PC. Debug della replicazione, della sincronizzazione e dei principali sistemi multiplayer.",
-          "en": "Multiplayer Testing & Debugging — Tested Listen Server configurations, including sessions across two PCs. Debugged replication, synchronization and core multiplayer systems."
+          "it": "Architettura multiplayer e organizzazione del codice — Organizzazione delle responsabilità tra GameMode, GameState, PlayerController e PlayerState, con utilizzo di interfacce C++, RPC e RepNotify e attività di refactoring.",
+          "en": "Multiplayer Architecture & Code Organization — Organized responsibilities across GameMode, GameState, PlayerController and PlayerState, using C++ interfaces, RPCs and RepNotify and refactoring the code."
+        },
+        {
+          "it": "Test e debug multiplayer — Verifica dei sistemi in configurazione Listen Server, anche su due PC, e debug della replicazione, della sincronizzazione e dei principali flussi multiplayer.",
+          "en": "Multiplayer Testing & Debugging — Tested systems in Listen Server configurations, including sessions across two PCs, and debugged replication, synchronization and core multiplayer flows."
         }
       ],
       "challenge": {}
