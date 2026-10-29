@@ -137,7 +137,7 @@ window.PORTFOLIO_PROJECTS = [
     "pushedAt": "2026-10-06T21:31:24Z",
     "variants": [
       {
-        "label": "Single player",
+        "label": "Single Player",
         "ref": "release/v1.0.0",
         "youtube": "7MZSeV5ZUPU",
         "contribution": {
@@ -211,7 +211,7 @@ window.PORTFOLIO_PROJECTS = [
         }
       },
       {
-        "label": "Official",
+        "label": "Final Version",
         "ref": "main",
         "readmeRef": "main",
         "youtube": "vY9ex_s5akA",
@@ -272,7 +272,7 @@ window.PORTFOLIO_PROJECTS = [
       "challenge": {}
     },
     "readmeRef": "main",
-    "defaultVariant": "Official"
+    "defaultVariant": "Final Version"
   },
   {
     "repo": "Nfoedy/Goodbye",
