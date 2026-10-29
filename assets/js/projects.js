@@ -128,7 +128,7 @@ window.PORTFOLIO_PROJECTS = [
       "C#",
       "FMOD"
     ],
-    "youtube": "7MZSeV5ZUPU",
+    "youtube": "vY9ex_s5akA",
     "collaboration": true,
     "private": false,
     "status": "",
@@ -209,6 +209,61 @@ window.PORTFOLIO_PROJECTS = [
             "en": "Adapted gameplay for networking by reusing shared Single player components and separating networking responsibilities. Critical actions are validated by the Master Client to keep match state consistent across participants."
           }
         }
+      },
+      {
+        "label": "Official",
+        "ref": "main",
+        "readmeRef": "main",
+        "youtube": "vY9ex_s5akA",
+        "contribution": {
+          "role": {
+            "it": "Sviluppo UI, integrazione audio e networking multiplayer",
+            "en": "UI development, audio integration and multiplayer networking"
+          },
+          "highlights": [
+            {
+              "it": "Creazione dei menu, della selezione di personaggi e mappa e delle schermate di vittoria e sconfitta.",
+              "en": "Created menus, character and map selection, and victory and defeat screens."
+            },
+            {
+              "it": "Sviluppo del flusso dal menu alla partita: configurazione degli slot per giocatori e AI, gestione della sessione, caricamento della mappa e spawn dei personaggi.",
+              "en": "Developed the menu-to-match flow: player and AI slot configuration, session management, map loading and character spawning."
+            },
+            {
+              "it": "Integrazione dei controlli mobile nell’interfaccia di gioco.",
+              "en": "Integrated mobile controls into the game interface."
+            },
+            {
+              "it": "Realizzazione dell’HUD con collegamento dinamico degli indicatori delle vite ai personaggi.",
+              "en": "Built the HUD with life indicators dynamically linked to characters."
+            },
+            {
+              "it": "Inserimento di suoni e musiche in FMOD e implementazione delle impostazioni audio collegate ai menu.",
+              "en": "Added sound effects and music in FMOD and implemented audio settings connected to the menus."
+            },
+            {
+              "it": "Realizzazione della UI delle stanze multiplayer, con menu dedicati alla creazione delle stanze, all’accesso alle partite disponibili e alla gestione della lobby. Integrazione con la connessione a Photon e la selezione sincronizzata di personaggi e mappa.",
+              "en": "Built the multiplayer room UI, with dedicated menus for room creation, joining available matches and lobby management. Integrated it with Photon connectivity and synchronized character and map selection."
+            },
+            {
+              "it": "Creazione delle schermate di vittoria e sconfitta per il multiplayer, con un sistema di conferma dello stato “pronto” dei giocatori per coordinare l’avvio di una nuova partita.",
+              "en": "Created multiplayer victory and defeat screens, with a player readiness confirmation system to coordinate the start of a new match."
+            },
+            {
+              "it": "Adattamento dei player al multiplayer: distinzione tra giocatori locali, remoti e AI, controllo dell’ownership tramite PhotonView e sincronizzazione del movimento.",
+              "en": "Adapted players for multiplayer: distinguished local players, remote players and AI, handled ownership through PhotonView, and synchronized movement."
+            },
+            {
+              "it": "Implementazione del flusso RPC per le bombe: richiesta del client e validazione sul Master Client di ownership, limite delle bombe e disponibilità della cella prima dello spawn in rete.",
+              "en": "Implemented the bomb RPC flow: client requests and Master Client validation of ownership, bomb limits and cell availability before network spawning."
+            },
+            {
+              "it": "Gestione sul Master Client di esplosioni, danni e morte, con sincronizzazione dei muri distruttibili e dei risultati della partita.",
+              "en": "Handled explosions, damage and death on the Master Client, synchronizing destructible walls and match results."
+            }
+          ],
+          "challenge": {}
+        }
       }
     ],
     "contribution": {
@@ -216,7 +271,8 @@ window.PORTFOLIO_PROJECTS = [
       "highlights": [],
       "challenge": {}
     },
-    "readmeRef": "main"
+    "readmeRef": "main",
+    "defaultVariant": "Official"
   },
   {
     "repo": "Nfoedy/Goodbye",

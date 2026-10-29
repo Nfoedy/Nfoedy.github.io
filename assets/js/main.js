@@ -309,10 +309,10 @@
     versionButtons.replaceChildren();
     versionButtons.hidden = !project.variants?.length;
     versionButtons.setAttribute('aria-label', project.name);
-    for (const [index, variant] of (project.variants || []).entries()) {
+    for (const variant of project.variants || []) {
       const button = element('button', 'vmodal__version', variant.label);
       button.type = 'button';
-      button.setAttribute('aria-pressed', String(index === 0));
+      button.setAttribute('aria-pressed', String(variant === (project.variants.find(v => v.label === project.defaultVariant) || project.variants[0])));
       button.addEventListener('click', () => {
         if (button.getAttribute('aria-pressed') === 'true') return;
         for (const item of versionButtons.children) item.setAttribute('aria-pressed', String(item === button));
@@ -427,7 +427,8 @@
 
     closeButton.focus();
 
-    showProjectVersion(project.variants?.length ? { ...project, ...project.variants[0] } : project);
+    const initialVariant = project.variants?.find(v => v.label === project.defaultVariant) || project.variants?.[0];
+    showProjectVersion(initialVariant ? { ...project, ...initialVariant } : project);
   }
 
   // =========================================================
